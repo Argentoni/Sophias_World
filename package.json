@@ -15,5 +15,11 @@
   "devDependencies": {
     "typescript": "^5.9.3",
     "vite": "^6.4.2"
+  },
+  "dependencies": {
+    "idb-keyval": "^6.2.2",
+    "phaser": "^3.90.0",
+    "zod": "^3.25.76",
+    "zustand": "^5.0.13"
   }
 }
