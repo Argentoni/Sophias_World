@@ -23,7 +23,8 @@ export class MainScene extends Phaser.Scene {
     // real outfit on top without restructuring.
     this.character = this.add.container(width / 2, height / 2);
     const body = this.add.image(0, 0, "body-base").setOrigin(0.5, 0.6);
-    this.character.add(body);
+    const outfit = this.add.image(0, 0, "outfit-001").setOrigin(0.5, 0.6);
+    this.character.add([body, outfit]);
     this.character.setSize(body.width, body.height);
 
     // Drag setup. Hit area must align with the sprite's visible bounds.
