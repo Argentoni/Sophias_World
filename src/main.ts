@@ -14,6 +14,11 @@ new Phaser.Game({
   type: Phaser.AUTO,
   parent: "game",
   backgroundColor: "#FAF4E8",
+  input: {
+    mouse: {
+      target: "game"
+    }
+  },
   scale: {
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH,
