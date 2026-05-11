@@ -14,11 +14,6 @@ new Phaser.Game({
   type: Phaser.AUTO,
   parent: "game",
   backgroundColor: "#FAF4E8",
-  input: {
-    mouse: {
-      target: "game"
-    }
-  },
   scale: {
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH,
@@ -28,7 +23,6 @@ new Phaser.Game({
   scene: [BootScene, PreloadScene, MainScene]
 });
 
-// Ensure there is a save row in IndexedDB on first run, then request persist().
 (async () => {
   let current = await loadState();
   if (!current) {
