@@ -31,4 +31,6 @@ new Phaser.Game({
     await saveState(current);
   }
   await requestPersistentStorage();
-})();
+})().catch((err) => {
+  console.warn("[boot] save seed / persist failed", err);
+});

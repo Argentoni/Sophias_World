@@ -26,9 +26,15 @@ export class MainScene extends Phaser.Scene {
     this.character.add(body);
     this.character.setSize(body.width, body.height);
 
-    // Drag setup. Use the container's bounds as the hit area.
+    // Drag setup. Hit area must align with the sprite's visible bounds.
+    // Body uses setOrigin(0.5, 0.6) — top extends -0.6*h, bottom extends +0.4*h.
     this.character.setInteractive(
-      new Phaser.Geom.Rectangle(-body.width / 2, -body.height / 2, body.width, body.height),
+      new Phaser.Geom.Rectangle(
+        -body.width / 2,
+        -body.height * body.originY,
+        body.width,
+        body.height
+      ),
       Phaser.Geom.Rectangle.Contains
     );
     this.input.setDraggable(this.character);
@@ -48,8 +54,12 @@ export class MainScene extends Phaser.Scene {
       }
     );
 
-    // Tag scene-ready for Playwright smoke tests in M6.
+    // Tag scene-ready for Playwright smoke tests in M6. Cleared on shutdown
+    // so the marker reflects "currently-active scene" rather than "ever existed".
     (window as unknown as { __scene?: string }).__scene = "MainScene";
+    this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
+      delete (window as unknown as { __scene?: string }).__scene;
+    });
 
     // Touch the store once so the boundary is exercised at runtime.
     const _check = characterStore.getState().character.body.skinTone;
