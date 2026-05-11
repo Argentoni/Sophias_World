@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no"
+    />
+    <meta name="theme-color" content="#FAF4E8" />
+    <title>Sophia's World</title>
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+    <style>
+      html, body, #game { height: 100%; margin: 0; padding: 0; background: #FAF4E8; }
+      body { font-family: system-ui, -apple-system, sans-serif; overscroll-behavior: none; }
+      #loading {
+        position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
+        background: #FAF4E8; color: #6E4A2C; font-size: 24px; z-index: 9999;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="loading">Carregando…</div>
+    <div id="game"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
