@@ -6,13 +6,14 @@ export default defineConfig({
   build: { target: "es2022", sourcemap: true },
   plugins: [
     VitePWA({
-      registerType: "autoUpdate",
+      registerType: "prompt",
+      injectRegister: false,
       includeAssets: ["icons/*.png"],
       manifest: false,
       workbox: {
         globPatterns: ["**/*.{js,css,html,png,svg,json,woff2}"],
         cleanupOutdatedCaches: true,
-        clientsClaim: true,
+        clientsClaim: false,
         skipWaiting: false
       }
     })

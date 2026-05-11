@@ -3,23 +3,32 @@ import { Workbox } from "workbox-window";
 /**
  * Registers the service worker and shows a minimal DOM "Atualizando..."
  * overlay when a new version is waiting. We control the swap explicitly so
- * the player never sees the game reload mid-action.
+ * the player never sees the game reload mid-action. The controlling listener
+ * is wired ONLY from inside the waiting handler so first-install activation
+ * does not trigger a spurious reload.
  */
 export function setupPwaUpdates(): void {
   if (!("serviceWorker" in navigator)) return;
 
   const wb = new Workbox("/sw.js");
+  let refreshing = false;
 
   wb.addEventListener("waiting", () => {
     showUpdateOverlay();
-    // Wait one tick so the overlay is visible, then activate the new SW.
-    setTimeout(() => {
-      wb.messageSkipWaiting();
-    }, 800);
-  });
 
-  wb.addEventListener("controlling", () => {
-    window.location.reload();
+    const onControlling = () => {
+      if (refreshing) return;
+      refreshing = true;
+      window.location.reload();
+    };
+
+    wb.addEventListener("controlling", onControlling);
+
+    // Double rAF: wait until the overlay has actually painted before
+    // triggering the SW activation swap.
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      wb.messageSkipWaiting();
+    }));
   });
 
   wb.register().catch((err) => {
