@@ -63,3 +63,13 @@ Body base is in neutral T-pose (arms slightly down, not full T), facing camera, 
 - Default canvas: 512×512 px
 - Character body base canvas: 512×768 px (taller for full body)
 - Pivot/anchor: hip center, located at (256, 600) on the 512×768 canvas
+
+## Outfit log
+
+### outfit-001 — Pink star t-shirt
+- Tool: Gemini Nano Banana (web)
+- Date: 2026-05-11
+- Prompt: "A single piece of children's clothing: a soft pink t-shirt with a small white star on the chest. Flat 2D illustration in original kawaii manga style, soft pastel palette, soft shadows. The t-shirt is shown alone, centered, on a pure white background. No character, no body, no model — only the t-shirt as a flat clothing piece, like a sticker. NOT Avatar World style, NOT Toca Boca style, NOT any copyrighted character, NOT a specific anime franchise. Original design only."
+- Variations generated: 4
+- Pipeline: rembg → tools/align-outfit.py
+- Final asset: public/assets/sprites/outfit-001.png (512×768)
