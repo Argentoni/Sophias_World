@@ -1,0 +1,5 @@
+[
+  { "id": "dog-biscuit", "name": "Biscoito do pet", "price": 4, "asset": "objects/dog-biscuit.svg", "hunger": 20, "happiness": 6 },
+  { "id": "water-bowl", "name": "Tigela de água", "price": 3, "asset": "objects/water-bowl.svg", "hunger": 8, "happiness": 4 },
+  { "id": "apple-snack", "name": "Maçã cortadinha", "price": 5, "asset": "objects/apple-snack.svg", "hunger": 14, "happiness": 5 }
+]

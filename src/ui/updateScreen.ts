@@ -10,7 +10,7 @@ import { Workbox } from "workbox-window";
 export function setupPwaUpdates(): void {
   if (!("serviceWorker" in navigator)) return;
 
-  const wb = new Workbox("/sw.js");
+  const wb = new Workbox(`${import.meta.env.BASE_URL}sw.js`);
   let refreshing = false;
 
   wb.addEventListener("waiting", () => {

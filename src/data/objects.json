@@ -1,0 +1,205 @@
+[
+  {
+    "id": "bed-pink",
+    "name": "Cama",
+    "interactions": [
+      {
+        "trigger": "drop-character",
+        "label": "Dormir",
+        "icon": "sono",
+        "reward": 2,
+        "actions": [
+          { "type": "set-expression", "target": "character", "expression": "sleepy" },
+          { "type": "play-sound", "sound": "soft" },
+          { "type": "spawn-particle", "particle": "stars" },
+          { "type": "give-currency", "amount": 2, "firstTimeOnly": true }
+        ]
+      },
+      {
+        "trigger": "drop-pet",
+        "label": "Pet dorme",
+        "icon": "pet",
+        "reward": 2,
+        "actions": [
+          { "type": "pet-care", "energy": 20, "happiness": 4, "message": "O pet descansou" },
+          { "type": "play-sound", "sound": "soft" },
+          { "type": "give-currency", "amount": 2, "firstTimeOnly": true }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "chair-heart",
+    "name": "Cadeira",
+    "interactions": [
+      {
+        "trigger": "drop-character",
+        "label": "Sentar",
+        "icon": "sentar",
+        "reward": 1,
+        "actions": [
+          { "type": "set-expression", "target": "character", "expression": "happy" },
+          { "type": "play-sound", "sound": "tap" },
+          { "type": "give-currency", "amount": 1, "firstTimeOnly": true }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "juice-cup",
+    "name": "Suco",
+    "interactions": [
+      {
+        "trigger": "drop-character",
+        "label": "Beber",
+        "icon": "suco",
+        "reward": 2,
+        "actions": [
+          { "type": "set-expression", "target": "character", "expression": "yum" },
+          { "type": "play-sound", "sound": "sip" },
+          { "type": "spawn-particle", "particle": "hearts" },
+          { "type": "give-currency", "amount": 2, "firstTimeOnly": true }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "book-blue",
+    "name": "Livro",
+    "interactions": [
+      {
+        "trigger": "drop-character",
+        "label": "Ler",
+        "icon": "livro",
+        "reward": 2,
+        "actions": [
+          { "type": "set-expression", "target": "character", "expression": "curious" },
+          { "type": "play-sound", "sound": "page" },
+          { "type": "give-currency", "amount": 2, "firstTimeOnly": true }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "mirror-flower",
+    "name": "Espelho",
+    "interactions": [
+      {
+        "trigger": "drop-character",
+        "label": "Olhar",
+        "icon": "espelho",
+        "reward": 1,
+        "actions": [
+          { "type": "set-expression", "target": "character", "expression": "sparkle" },
+          { "type": "play-sound", "sound": "sparkle" },
+          { "type": "give-currency", "amount": 1, "firstTimeOnly": true }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "toy-horse",
+    "name": "Cavalinho",
+    "interactions": [
+      {
+        "trigger": "drop-character",
+        "label": "Brincar",
+        "icon": "brincar",
+        "reward": 3,
+        "actions": [
+          { "type": "set-expression", "target": "character", "expression": "happy" },
+          { "type": "play-sound", "sound": "pop" },
+          { "type": "spawn-particle", "particle": "stars" },
+          { "type": "give-currency", "amount": 3, "firstTimeOnly": true }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "swing",
+    "name": "Balanço",
+    "interactions": [
+      {
+        "trigger": "drop-character",
+        "label": "Balançar",
+        "icon": "balanco",
+        "reward": 3,
+        "actions": [
+          { "type": "set-expression", "target": "character", "expression": "happy" },
+          { "type": "play-sound", "sound": "pop" },
+          { "type": "give-currency", "amount": 3, "firstTimeOnly": true }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "slide",
+    "name": "Escorregador",
+    "interactions": [
+      {
+        "trigger": "drop-character",
+        "label": "Escorregar",
+        "icon": "parque",
+        "reward": 3,
+        "actions": [
+          { "type": "set-expression", "target": "character", "expression": "surprise" },
+          { "type": "play-sound", "sound": "slide" },
+          { "type": "spawn-particle", "particle": "stars" },
+          { "type": "give-currency", "amount": 3, "firstTimeOnly": true }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "pet-bowl",
+    "name": "Tigela",
+    "interactions": [
+      {
+        "trigger": "drop-item:food",
+        "label": "Alimentar",
+        "icon": "comida",
+        "reward": 2,
+        "actions": [
+          { "type": "pet-care", "hunger": 20, "happiness": 8, "message": "Pet alimentado" },
+          { "type": "play-sound", "sound": "sip" },
+          { "type": "give-currency", "amount": 2, "firstTimeOnly": true }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "pet-toy",
+    "name": "Bolinha do pet",
+    "interactions": [
+      {
+        "trigger": "drop-pet",
+        "label": "Brincar",
+        "icon": "bolinha",
+        "reward": 2,
+        "actions": [
+          { "type": "pet-care", "happiness": 18, "energy": -4, "message": "O pet brincou" },
+          { "type": "play-sound", "sound": "pop" },
+          { "type": "spawn-particle", "particle": "hearts" },
+          { "type": "give-currency", "amount": 2, "firstTimeOnly": true }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "pet-bed",
+    "name": "Caminha do pet",
+    "interactions": [
+      {
+        "trigger": "drop-pet",
+        "label": "Dormir",
+        "icon": "pet",
+        "reward": 2,
+        "actions": [
+          { "type": "pet-care", "energy": 24, "happiness": 6, "message": "O pet tirou uma soneca" },
+          { "type": "play-sound", "sound": "soft" },
+          { "type": "give-currency", "amount": 2, "firstTimeOnly": true }
+        ]
+      }
+    ]
+  }
+]

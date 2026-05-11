@@ -5,7 +5,23 @@ test("drag moves the character", async ({ page, browserName }) => {
 
   await page.goto("/");
 
-  // Wait until MainScene has registered the character.
+  await page.waitForFunction(
+    () => (window as unknown as { __scene?: string }).__scene === "MapScene",
+    null,
+    { timeout: 15_000 }
+  );
+
+  const mapCanvasInfo = await page.evaluate(() => {
+    const canvas = document.querySelector("canvas");
+    if (!canvas) return null;
+    const r = canvas.getBoundingClientRect();
+    return { left: r.left, top: r.top, width: r.width, height: r.height };
+  });
+  if (!mapCanvasInfo) throw new Error("no canvas");
+  const mapPoint = toViewport(mapCanvasInfo, 330, 435);
+  await page.mouse.click(mapPoint.x, mapPoint.y);
+
+  // Wait until HouseScene has registered the character.
   await page.waitForFunction(
     () => (window as unknown as { __character?: unknown }).__character !== undefined,
     null,
@@ -29,17 +45,10 @@ test("drag moves the character", async ({ page, browserName }) => {
   });
   if (!canvasInfo) throw new Error("no canvas");
 
-  const sx = canvasInfo.width / 1280;
-  const sy = canvasInfo.height / 720;
-  const toViewport = (gx: number, gy: number) => ({
-    x: canvasInfo.left + gx * sx,
-    y: canvasInfo.top + gy * sy
-  });
-
-  // Character is at game-coord (640, 360). Press there, move +150 right, +100 down.
-  const start = toViewport(startPos.x, startPos.y);
-  const mid = toViewport(startPos.x + 75, startPos.y + 50);
-  const end = toViewport(startPos.x + 150, startPos.y + 100);
+  // Character starts in HouseScene. Press there, move +150 right, +90 down.
+  const start = toViewport(canvasInfo, startPos.x, startPos.y);
+  const mid = toViewport(canvasInfo, startPos.x + 75, startPos.y + 45);
+  const end = toViewport(canvasInfo, startPos.x + 150, startPos.y + 90);
 
   // Phaser drag requires move BEFORE down on some browsers, then down,
   // then move(s) over the hit-area, then up.
@@ -67,3 +76,10 @@ test("drag moves the character", async ({ page, browserName }) => {
   expect(Math.abs(dx)).toBeGreaterThan(50);
   expect(Math.abs(dy)).toBeGreaterThan(30);
 });
+
+function toViewport(canvasInfo: { left: number; top: number; width: number; height: number }, gx: number, gy: number) {
+  return {
+    x: canvasInfo.left + gx * (canvasInfo.width / 1280),
+    y: canvasInfo.top + gy * (canvasInfo.height / 720)
+  };
+}

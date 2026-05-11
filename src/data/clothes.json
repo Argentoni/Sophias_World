@@ -1,0 +1,22 @@
+[
+  { "id": "outfit-001", "name": "Camiseta estrela rosa", "category": "top", "price": 0, "asset": "outfit-001.png", "defaultOwned": true },
+  { "id": "top-sky-heart", "name": "Blusa coração azul", "category": "top", "price": 12, "asset": "clothes/top-sky-heart.svg", "defaultOwned": true },
+  { "id": "top-mint-ribbon", "name": "Blusa laço mint", "category": "top", "price": 14, "asset": "clothes/top-mint-ribbon.svg", "defaultOwned": false },
+  { "id": "top-sunflower", "name": "Blusa girassol", "category": "top", "price": 16, "asset": "clothes/top-sunflower.svg", "defaultOwned": false },
+  { "id": "top-rainbow", "name": "Blusa arco-íris", "category": "top", "price": 18, "asset": "clothes/top-rainbow.svg", "defaultOwned": false },
+  { "id": "bottom-denim", "name": "Short jeans", "category": "bottom", "price": 0, "asset": "clothes/bottom-denim.svg", "defaultOwned": true },
+  { "id": "bottom-lilac", "name": "Saia lilás", "category": "bottom", "price": 16, "asset": "clothes/bottom-lilac.svg", "defaultOwned": false },
+  { "id": "bottom-mint", "name": "Short mint", "category": "bottom", "price": 14, "asset": "clothes/bottom-mint.svg", "defaultOwned": false },
+  { "id": "bottom-star-skirt", "name": "Saia de estrelas", "category": "bottom", "price": 20, "asset": "clothes/bottom-star-skirt.svg", "defaultOwned": false },
+  { "id": "dress-starry-blue", "name": "Vestido céu estrelado", "category": "dress", "price": 25, "asset": "clothes/dress-starry-blue.svg", "defaultOwned": false },
+  { "id": "dress-flower-pink", "name": "Vestido flor rosa", "category": "dress", "price": 25, "asset": "clothes/dress-flower-pink.svg", "defaultOwned": false },
+  { "id": "dress-moon-yellow", "name": "Vestido lua amarela", "category": "dress", "price": 28, "asset": "clothes/dress-moon-yellow.svg", "defaultOwned": false },
+  { "id": "shoes-pink", "name": "Tênis rosa", "category": "shoes", "price": 0, "asset": "clothes/shoes-pink.svg", "defaultOwned": true },
+  { "id": "shoes-yellow", "name": "Sapatinho amarelo", "category": "shoes", "price": 10, "asset": "clothes/shoes-yellow.svg", "defaultOwned": false },
+  { "id": "shoes-mint", "name": "Tênis mint", "category": "shoes", "price": 12, "asset": "clothes/shoes-mint.svg", "defaultOwned": false },
+  { "id": "acc-bow-pink", "name": "Laço rosa", "category": "accessory", "price": 8, "asset": "clothes/acc-bow-pink.svg", "defaultOwned": false },
+  { "id": "acc-glasses-star", "name": "Óculos estrela", "category": "accessory", "price": 12, "asset": "clothes/acc-glasses-star.svg", "defaultOwned": false },
+  { "id": "acc-bag-bunny", "name": "Bolsa coelhinha", "category": "accessory", "price": 15, "asset": "clothes/acc-bag-bunny.svg", "defaultOwned": false },
+  { "id": "acc-crown-soft", "name": "Coroa fofinha", "category": "accessory", "price": 15, "asset": "clothes/acc-crown-soft.svg", "defaultOwned": false },
+  { "id": "acc-necklace-heart", "name": "Colar coração", "category": "accessory", "price": 9, "asset": "clothes/acc-necklace-heart.svg", "defaultOwned": false }
+]

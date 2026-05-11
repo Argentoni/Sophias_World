@@ -3,7 +3,7 @@ import ts from "typescript-eslint";
 
 export default [
   {
-    ignores: ["dist/", "node_modules/", "art-source/", "public/"]
+    ignores: ["dist/", "node_modules/", "art-source/", "public/", "tools/"]
   },
   js.configs.recommended,
   ...ts.configs.recommended,

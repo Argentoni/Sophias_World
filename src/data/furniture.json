@@ -1,0 +1,20 @@
+[
+  { "id": "bed-pink", "name": "Cama nuvem rosa", "price": 35, "asset": "furniture/bed-pink.svg", "width": 210, "height": 130, "defaultOwned": true },
+  { "id": "desk-mint", "name": "Mesinha mint", "price": 28, "asset": "furniture/desk-mint.svg", "width": 150, "height": 110, "defaultOwned": true },
+  { "id": "rug-star", "name": "Tapete estrela", "price": 25, "asset": "furniture/rug-star.svg", "width": 210, "height": 90, "defaultOwned": true },
+  { "id": "pet-bed", "name": "Caminha do pet", "price": 30, "asset": "furniture/pet-bed.svg", "width": 135, "height": 85, "defaultOwned": true },
+  { "id": "chair-heart", "name": "Cadeira coração", "price": 28, "asset": "furniture/chair-heart.svg", "width": 100, "height": 120, "defaultOwned": false },
+  { "id": "mirror-flower", "name": "Espelho flor", "price": 32, "asset": "furniture/mirror-flower.svg", "width": 105, "height": 170, "defaultOwned": false },
+  { "id": "bookshelf-rainbow", "name": "Estante arco-íris", "price": 45, "asset": "furniture/bookshelf-rainbow.svg", "width": 140, "height": 185, "defaultOwned": false },
+  { "id": "lamp-moon", "name": "Luminária lua", "price": 22, "asset": "furniture/lamp-moon.svg", "width": 80, "height": 145, "defaultOwned": false },
+  { "id": "plant-smile", "name": "Planta sorridente", "price": 20, "asset": "furniture/plant-smile.svg", "width": 85, "height": 115, "defaultOwned": false },
+  { "id": "toy-horse", "name": "Cavalinho de madeira", "price": 40, "asset": "furniture/toy-horse.svg", "width": 155, "height": 120, "defaultOwned": false },
+  { "id": "closet-pastel", "name": "Guarda-roupa pastel", "price": 50, "asset": "furniture/closet-pastel.svg", "width": 155, "height": 205, "defaultOwned": false },
+  { "id": "sofa-cloud", "name": "Sofá nuvem", "price": 48, "asset": "furniture/sofa-cloud.svg", "width": 220, "height": 120, "defaultOwned": false },
+  { "id": "table-juice", "name": "Mesa do suco", "price": 34, "asset": "furniture/table-juice.svg", "width": 155, "height": 100, "defaultOwned": false },
+  { "id": "kitchen-stove", "name": "Fogão fofinho", "price": 50, "asset": "furniture/kitchen-stove.svg", "width": 145, "height": 165, "defaultOwned": false },
+  { "id": "fridge-star", "name": "Geladeira estrela", "price": 50, "asset": "furniture/fridge-star.svg", "width": 130, "height": 190, "defaultOwned": false },
+  { "id": "beanbag-pink", "name": "Pufe rosa", "price": 24, "asset": "furniture/beanbag-pink.svg", "width": 120, "height": 90, "defaultOwned": false },
+  { "id": "wall-shelf", "name": "Prateleira de laços", "price": 26, "asset": "furniture/wall-shelf.svg", "width": 155, "height": 85, "defaultOwned": false },
+  { "id": "toy-box", "name": "Baú de brinquedos", "price": 36, "asset": "furniture/toy-box.svg", "width": 150, "height": 105, "defaultOwned": false }
+]

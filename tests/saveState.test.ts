@@ -1,21 +1,12 @@
 import { describe, it, expect } from "vitest";
 import { SaveStateSchema, type SaveState } from "../src/schemas/saveState";
+import { defaultSaveState } from "../src/systems/saveSystem";
+import { migrateSave } from "../src/systems/saveMigrations";
 
-describe("SaveStateSchema (Fase 0)", () => {
-  const validSave: SaveState = {
-    version: 1,
-    appVersion: "0.1.0-fase0",
-    character: {
-      body: { skinTone: "1", bodyType: "kid" },
-      hair: { styleId: "default", color: "#1A1A24" },
-      face: { eyes: "eyes-default", mouth: "mouth-default" },
-      outfit: { accessories: [] }
-    },
-    currency: 0,
-    lastPlayed: 1715000000000
-  };
+describe("SaveStateSchema", () => {
+  const validSave: SaveState = defaultSaveState();
 
-  it("accepts a valid minimal save", () => {
+  it("accepts a valid MVP save", () => {
     expect(SaveStateSchema.parse(validSave)).toEqual(validSave);
   });
 
@@ -43,5 +34,20 @@ describe("SaveStateSchema (Fase 0)", () => {
       }
     };
     expect(SaveStateSchema.parse(save).character.outfit.accessories.length).toBe(2);
+  });
+
+  it("migrates a v1 save to v2 preserving character and currency floor", () => {
+    const migrated = migrateSave({
+      version: 1,
+      appVersion: "0.1.0-fase0",
+      character: validSave.character,
+      currency: 7,
+      lastPlayed: 1715000000000
+    });
+    const parsed = SaveStateSchema.parse(migrated);
+    expect(parsed.version).toBe(2);
+    expect(parsed.character).toEqual(validSave.character);
+    expect(parsed.currency).toBe(100);
+    expect(parsed.pet.breed).toBe("dog");
   });
 });

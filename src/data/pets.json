@@ -1,0 +1,14 @@
+{
+  "colors": [
+    { "id": "cream", "name": "Creme", "asset": "pets/dog-cream.svg" },
+    { "id": "caramel", "name": "Caramelo", "asset": "pets/dog-caramel.svg" },
+    { "id": "cocoa", "name": "Chocolate", "asset": "pets/dog-cocoa.svg" }
+  ],
+  "accessories": [
+    { "id": "pet-collar-pink", "name": "Coleira rosa", "asset": "pets/pet-collar-pink.svg" },
+    { "id": "pet-bow-blue", "name": "Laço azul", "asset": "pets/pet-bow-blue.svg" },
+    { "id": "pet-cape-star", "name": "Capinha estrela", "asset": "pets/pet-cape-star.svg" },
+    { "id": "pet-glasses-round", "name": "Óculos redondo", "asset": "pets/pet-glasses-round.svg" },
+    { "id": "pet-bandana-mint", "name": "Bandana mint", "asset": "pets/pet-bandana-mint.svg" }
+  ]
+}

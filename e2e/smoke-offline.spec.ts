@@ -4,7 +4,7 @@ test("built game runs offline after first visit", async ({ page, context, browse
   // First visit — let the service worker install and cache everything.
   await page.goto("/");
   await page.waitForFunction(
-    () => (window as unknown as { __scene?: string }).__scene === "MainScene",
+    () => (window as unknown as { __scene?: string }).__scene === "MapScene",
     null,
     { timeout: 15_000 }
   );
@@ -21,7 +21,7 @@ test("built game runs offline after first visit", async ({ page, context, browse
   if (browserName !== "webkit") {
     await page.reload({ waitUntil: "domcontentloaded", timeout: 20_000 });
     await page.waitForFunction(
-      () => (window as unknown as { __scene?: string }).__scene === "MainScene",
+      () => (window as unknown as { __scene?: string }).__scene === "MapScene",
       null,
       { timeout: 15_000 }
     );
