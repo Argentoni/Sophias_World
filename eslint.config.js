@@ -8,7 +8,7 @@ export default [
   js.configs.recommended,
   ...ts.configs.recommended,
   {
-    files: ["**/*.ts"],
+    files: ["**/*.{ts,tsx}"],
     rules: {
       "@typescript-eslint/no-unused-vars": [
         "error",

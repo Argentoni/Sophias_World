@@ -28,7 +28,7 @@ Children's "digital dollhouse" / sandbox of make-believe. The target player is a
 
 - All sprites must be on transparent background (PNG with alpha channel)
 
-## Palette (pastel saturated — placeholder, finalize in Step 2 of this task)
+## Palette (pastel saturated)
 
 | Slot | Name | Hex |
 |---|---|---|

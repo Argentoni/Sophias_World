@@ -1,9 +1,9 @@
 import { describe, it, expect } from "vitest";
 
 describe("dependency imports", () => {
-  it("zustand package exists", async () => {
-    const phaserPkg = await import("zustand/package.json");
-    expect(phaserPkg.default.name).toBe("zustand");
+  it("zustand", async () => {
+    const { createStore } = await import("zustand/vanilla");
+    expect(typeof createStore).toBe("function");
   });
 
   it("idb-keyval", async () => {
