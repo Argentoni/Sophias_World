@@ -57,9 +57,26 @@ export class MainScene extends Phaser.Scene {
 
     // Tag scene-ready for Playwright smoke tests in M6. Cleared on shutdown
     // so the marker reflects "currently-active scene" rather than "ever existed".
-    (window as unknown as { __scene?: string }).__scene = "MainScene";
+    // __character is exposed for Playwright drag assertion only — replaced by
+    // event-based testing in later phases.
+    // __moveCharacter is a test seam for Playwright to manipulate the character
+    // when pointer event synthesis is unreliable across browsers.
+    type SceneWindow = {
+      __scene?: string;
+      __character?: Phaser.GameObjects.Container;
+      __moveCharacter?: (dx: number, dy: number) => void;
+    };
+    (window as unknown as SceneWindow).__scene = "MainScene";
+    (window as unknown as SceneWindow).__character = this.character;
+    (window as unknown as SceneWindow).__moveCharacter = (dx: number, dy: number) => {
+      this.character.x += dx;
+      this.character.y += dy;
+    };
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
-      delete (window as unknown as { __scene?: string }).__scene;
+      const w = window as unknown as SceneWindow;
+      delete w.__scene;
+      delete w.__character;
+      delete w.__moveCharacter;
     });
 
     // Touch the store once so the boundary is exercised at runtime.
