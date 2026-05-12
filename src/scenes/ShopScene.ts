@@ -2,7 +2,8 @@ import Phaser from "phaser";
 import { clothes, foodItems, furniture } from "../data";
 import { gameStore } from "../store/gameStore";
 import { addButton, addSmallText, addTitle } from "../ui/phaserUi";
-import { fitClothingPreview, fitFurniturePreview } from "../ui/itemPreview";
+import { drawClothingIcon } from "../ui/chibiPreview";
+import { fitFurniturePreview } from "../ui/itemPreview";
 
 type ShopTab = "clothes" | "furniture" | "food";
 type ShopInit = { tab?: ShopTab };
@@ -37,7 +38,7 @@ export class ShopScene extends Phaser.Scene {
       const x = 210 + (index % 5) * 205;
       const y = 245 + Math.floor(index / 5) * 104;
       this.add.rectangle(x, y, 178, 92, 0xffffff, 0.68).setStrokeStyle(2, 0xffffff, 0.9).setDepth(4001);
-      fitClothingPreview(this.add.image(x - 56, y - 6, item.id).setDepth(4002), item.category, "shop");
+      drawClothingIcon(this, x - 56, y - 4, item.id, item.category, 0.58, 4002);
       addSmallText(this, x + 28, y - 22, item.name, 104).setDepth(4002);
       addButton(this, x + 28, y + 30, owned.includes(item.id) ? "Tenho" : `${item.price} ★`, () => {
         if (!owned.includes(item.id)) gameStore.getState().purchaseClothing(item.id);

@@ -3,7 +3,8 @@ import { clothesById, foodById, furnitureById } from "../data";
 import { gameStore } from "../store/gameStore";
 import { exportBackup, importBackup } from "../ui/backup";
 import { addButton, addSmallText, addTitle } from "../ui/phaserUi";
-import { fitClothingPreview, fitFurniturePreview } from "../ui/itemPreview";
+import { drawClothingIcon } from "../ui/chibiPreview";
+import { fitFurniturePreview } from "../ui/itemPreview";
 
 export class InventoryScene extends Phaser.Scene {
   constructor() {
@@ -24,7 +25,7 @@ export class InventoryScene extends Phaser.Scene {
       if (!item) return;
       const x = 190 + index * 82;
       this.add.rectangle(x, 285, 66, 76, 0xffffff, 0.62).setStrokeStyle(2, 0xffffff, 0.9).setDepth(4101);
-      fitClothingPreview(this.add.image(x, 285, item.id).setDepth(4102), item.category, "inventory");
+      drawClothingIcon(this, x, 285, item.id, item.category, 0.44, 4102);
     });
 
     this.add.text(185, 380, "Móveis", headerStyle()).setDepth(4101);

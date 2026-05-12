@@ -4,7 +4,7 @@ import { CharacterComposer, eyeStyles, hairColors, hairStyles, mouthStyles } fro
 import { PetComposer } from "../systems/petComposer";
 import { gameStore } from "../store/gameStore";
 import { addButton, addSmallText, addTitle } from "../ui/phaserUi";
-import { fitClothingPreview, fitPetAccessoryPreview } from "../ui/itemPreview";
+import { drawClothingIcon, drawPetAccessoryIcon } from "../ui/chibiPreview";
 import type { Character } from "../schemas/saveState";
 
 type WardrobeTab = "skin" | "hair" | "face" | "clothes" | "pet";
@@ -56,10 +56,10 @@ export class WardrobeScene extends Phaser.Scene {
 
   private renderPreview(): void {
     const save = gameStore.getState().save;
-    const character = new CharacterComposer(this, 260, 435, 0.5);
+    const character = new CharacterComposer(this, 260, 535, 0.39);
     character.render(save.character);
     character.container.setDepth(4202);
-    const pet = new PetComposer(this, 260, 625);
+    const pet = new PetComposer(this, 260, 625, 0.72);
     pet.render(save.pet);
     pet.container.setDepth(4202);
   }
@@ -118,8 +118,7 @@ export class WardrobeScene extends Phaser.Scene {
       const x = 470 + (index % 5) * 140;
       const y = 300 + Math.floor(index / 5) * 112;
       this.add.rectangle(x, y, 116, 98, 0xffffff, 0.62).setStrokeStyle(2, 0xffffff, 0.9).setDepth(4201);
-      const image = this.add.image(x, y - 15, item.id).setDepth(4202);
-      fitClothingPreview(image, item.category, "wardrobe");
+      drawClothingIcon(this, x, y - 12, item.id, item.category, 0.72, 4202);
       addButton(this, x, y + 38, item.category === "accessory" ? "Usar" : "Vestir", () => {
         if (item.category === "accessory") gameStore.getState().toggleAccessory(item.id);
         else gameStore.getState().setOutfitSlot(item.category, item.id);
@@ -138,7 +137,7 @@ export class WardrobeScene extends Phaser.Scene {
     petDefinition.accessories.forEach((item, index) => {
       const x = 470 + (index % 5) * 130;
       const y = 430 + Math.floor(index / 5) * 86;
-      fitPetAccessoryPreview(this.add.image(x, y - 16, item.id).setDepth(4202), item.id);
+      drawPetAccessoryIcon(this, x, y - 16, item.id, 0.74, 4202);
       addSmallText(this, x, y + 34, item.name, 110).setDepth(4202);
       this.add.rectangle(x, y - 16, 92, 62, 0xffffff, 0.001)
         .setDepth(4203)
@@ -156,11 +155,12 @@ export class WardrobeScene extends Phaser.Scene {
 }
 
 function hairLabel(style: string): string {
+  if (style === "bob") return "Sem cabelo";
   if (style === "pigtails") return "Maria";
   if (style === "braids") return "Tranças";
   if (style === "curly") return "Cacheado";
   if (style === "long") return "Longo";
-  return "Curto";
+  return "Cabelo";
 }
 
 function eyeLabel(style: string): string {
