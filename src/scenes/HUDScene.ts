@@ -29,11 +29,11 @@ export class HUDScene extends Phaser.Scene {
       fontSize: "17px",
       color: "#6E4A2C"
     }).setDepth(3001);
-    this.statusBg = this.add.rectangle(640, 88, 430, 42, 0xfaf4e8, 0.86)
+    this.statusBg = this.add.rectangle(684, 34, 280, 42, 0xfaf4e8, 0.86)
       .setStrokeStyle(2, 0xffffff, 0.75)
       .setDepth(3000)
       .setVisible(false);
-    this.statusText = this.add.text(640, 74, "", {
+    this.statusText = this.add.text(684, 20, "", {
       fontFamily: "Arial, sans-serif",
       fontSize: "20px",
       color: "#6E4A2C",

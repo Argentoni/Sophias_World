@@ -20,6 +20,7 @@ export interface GameStoreState {
   setCurrentScene: (sceneId: string) => void;
   setCharacterPosition: (sceneId: string, position: Position) => void;
   setPetPosition: (sceneId: string, position: Position) => void;
+  setSceneObjectPosition: (sceneId: string, objectId: string, position: Position) => void;
   discoverInteraction: (interactionId: string, reward: number) => boolean;
   purchaseClothing: (itemId: string) => boolean;
   purchaseFurniture: (itemId: string) => boolean;
@@ -93,6 +94,17 @@ export const gameStore = createStore<GameStoreState>((set, get) => ({
     updateSave(set, (save) => ({
       ...save,
       petPositionByScene: { ...save.petPositionByScene, [sceneId]: position }
+    })),
+  setSceneObjectPosition: (sceneId, objectId, position) =>
+    updateSave(set, (save) => ({
+      ...save,
+      objectPositionByScene: {
+        ...save.objectPositionByScene,
+        [sceneId]: {
+          ...(save.objectPositionByScene[sceneId] ?? {}),
+          [objectId]: position
+        }
+      }
     })),
   discoverInteraction: (interactionId, reward) => {
     if (get().save.discoveredInteractions.includes(interactionId)) return false;

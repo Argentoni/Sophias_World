@@ -1,5 +1,6 @@
 import type { Character, SaveState } from "../schemas/saveState";
 import { APP_VERSION } from "../version";
+import { starterFurnitureIds, starterFurniturePlacements } from "../data/starterWorld";
 
 type LegacySaveV1 = {
   version: 1;
@@ -9,15 +10,23 @@ type LegacySaveV1 = {
   lastPlayed?: number;
 };
 
-type SaveStateV2 = Omit<SaveState, "version"> & { version: 2 };
+type SaveStateV2 = Omit<SaveState, "version" | "objectPositionByScene"> & {
+  version: 2;
+  objectPositionByScene?: SaveState["objectPositionByScene"];
+};
+type SaveStateV3 = Omit<SaveState, "version" | "objectPositionByScene"> & {
+  version: 3;
+  objectPositionByScene?: SaveState["objectPositionByScene"];
+};
 
-export const CURRENT_SAVE_VERSION = 3;
+export const CURRENT_SAVE_VERSION = 4;
 
 export function migrateSave(raw: unknown): unknown {
   if (!isRecord(raw)) return raw;
   if (raw.version === CURRENT_SAVE_VERSION) return raw;
-  if (raw.version === 1) return migrateV2ToV3(migrateV1ToV2(raw as LegacySaveV1));
-  if (raw.version === 2) return migrateV2ToV3(raw as SaveStateV2);
+  if (raw.version === 1) return migrateV3ToV4(migrateV2ToV3(migrateV1ToV2(raw as LegacySaveV1)));
+  if (raw.version === 2) return migrateV3ToV4(migrateV2ToV3(raw as SaveStateV2));
+  if (raw.version === 3) return migrateV3ToV4(raw as SaveStateV3);
   return raw;
 }
 
@@ -41,7 +50,7 @@ function migrateV1ToV2(old: LegacySaveV1): SaveStateV2 {
     },
     petPositionByScene: {
       house: { x: 760, y: 500 },
-      park: { x: 660, y: 500 }
+      park: { x: 760, y: 520 }
     },
     inventory: {
       clothes: ["outfit-001", "top-sky-heart", "bottom-denim", "shoes-pink"],
@@ -88,7 +97,7 @@ function migrateV1ToV2(old: LegacySaveV1): SaveStateV2 {
   };
 }
 
-function migrateV2ToV3(old: SaveStateV2): SaveState {
+function migrateV2ToV3(old: SaveStateV2): SaveStateV3 {
   return {
     ...old,
     version: 3,
@@ -103,6 +112,35 @@ function migrateV2ToV3(old: SaveStateV2): SaveState {
       kitchen: old.scenes.kitchen ?? { furniturePlacement: [] }
     }
   };
+}
+
+function migrateV3ToV4(old: SaveStateV3): SaveState {
+  const starters = starterFurniturePlacements();
+  const inventoryFurniture = Array.from(new Set([...(old.inventory?.furniture ?? []), ...starterFurnitureIds]));
+  return {
+    ...old,
+    version: 4,
+    appVersion: APP_VERSION,
+    objectPositionByScene: old.objectPositionByScene ?? {},
+    inventory: {
+      ...old.inventory,
+      furniture: inventoryFurniture
+    },
+    scenes: {
+      ...old.scenes,
+      bedroom: fillScene(old.scenes.bedroom, starters.bedroom),
+      "living-room": fillScene(old.scenes["living-room"], starters["living-room"]),
+      kitchen: fillScene(old.scenes.kitchen, starters.kitchen)
+    }
+  };
+}
+
+function fillScene(
+  existing: SaveState["scenes"][string] | undefined,
+  starter: SaveState["scenes"][string]
+): SaveState["scenes"][string] {
+  if (!existing || existing.furniturePlacement.length === 0) return starter;
+  return existing;
 }
 
 function defaultCharacter(): Character {

@@ -5,6 +5,8 @@ import { PetComposer } from "../systems/petComposer";
 import { findInteraction, runInteraction, type InteractiveTarget } from "../systems/interactionSystem";
 import { gameStore } from "../store/gameStore";
 import { addButton, addTitle } from "../ui/phaserUi";
+import { applySceneObjectDisplay } from "../ui/sceneObjectPresentation";
+import { sceneObjectKey } from "../utils/assets";
 import { drawParkBackground } from "./sceneBackgrounds";
 
 export class ParkScene extends Phaser.Scene {
@@ -22,20 +24,38 @@ export class ParkScene extends Phaser.Scene {
     addButton(this, 110, 96, "Mapa", () => this.scene.start("MapScene"), { width: 118, height: 48, fontSize: 18 });
 
     const sceneData = sceneDefinitions.find((entry) => entry.id === "park");
+    const savedPositions = gameStore.getState().save.objectPositionByScene.park ?? {};
     for (const object of sceneData?.objects ?? []) {
-      const sparkle = this.add.text(object.x, object.y - 62, "✦", {
-        fontFamily: "Arial, sans-serif",
-        fontSize: "30px",
-        color: "#FFFFFF",
-        stroke: "#6E4A2C",
-        strokeThickness: 4
-      }).setOrigin(0.5).setDepth((object.depth ?? object.y) + 1).setAlpha(0.84);
-      this.tweens.add({ targets: sparkle, y: sparkle.y - 6, yoyo: true, repeat: -1, duration: 1200, ease: "Sine.easeInOut" });
-      this.targets.push({
+      const position = savedPositions[object.id] ?? { x: object.x, y: object.y };
+      const sprite = applySceneObjectDisplay(
+        this.add.image(position.x, position.y, sceneObjectKey(object.id)),
+        object.objectId,
+        object.scale
+      );
+      sprite.setDepth((object.depth ?? position.y) + 2);
+      sprite.setInteractive({ useHandCursor: true });
+      const target: InteractiveTarget = {
         objectId: object.objectId,
-        bounds: new Phaser.Geom.Rectangle(object.x - 82, object.y - 72, 164, 144),
-        x: object.x,
-        y: object.y
+        bounds: sprite.getBounds(),
+        x: sprite.x,
+        y: sprite.y
+      };
+      this.targets.push(target);
+      this.input.setDraggable(sprite);
+      this.input.on(
+        "drag",
+        (_pointer: Phaser.Input.Pointer, obj: Phaser.GameObjects.GameObject, dragX: number, dragY: number) => {
+          if (obj !== sprite) return;
+          sprite.setPosition(dragX, dragY);
+          sprite.setDepth(dragY + 2);
+          target.x = dragX;
+          target.y = dragY;
+          target.bounds = sprite.getBounds();
+        }
+      );
+      this.input.on("dragend", (_pointer: Phaser.Input.Pointer, obj: Phaser.GameObjects.GameObject) => {
+        if (obj !== sprite) return;
+        gameStore.getState().setSceneObjectPosition("park", object.id, { x: sprite.x, y: sprite.y });
       });
     }
 
@@ -51,7 +71,7 @@ export class ParkScene extends Phaser.Scene {
       }
     );
 
-    const petPosition = save.petPositionByScene.park ?? { x: 660, y: 500 };
+    const petPosition = save.petPositionByScene.park ?? { x: 760, y: 520 };
     const pet = new PetComposer(this, petPosition.x, petPosition.y);
     pet.render(save.pet);
     pet.enableDrag(

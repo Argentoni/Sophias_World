@@ -36,7 +36,7 @@ describe("SaveStateSchema", () => {
     expect(SaveStateSchema.parse(save).character.outfit.accessories.length).toBe(2);
   });
 
-  it("migrates a v1 save to v3 preserving character and currency floor", () => {
+  it("migrates a v1 save to v4 preserving character and adding separated starter objects", () => {
     const migrated = migrateSave({
       version: 1,
       appVersion: "0.1.0-fase0",
@@ -45,12 +45,14 @@ describe("SaveStateSchema", () => {
       lastPlayed: 1715000000000
     });
     const parsed = SaveStateSchema.parse(migrated);
-    expect(parsed.version).toBe(3);
+    expect(parsed.version).toBe(4);
     expect(parsed.character).toEqual(validSave.character);
     expect(parsed.currency).toBe(100);
     expect(parsed.pet.breed).toBe("dog");
-    expect(parsed.scenes.bedroom.furniturePlacement).toEqual([]);
-    expect(parsed.scenes["living-room"].furniturePlacement).toEqual([]);
-    expect(parsed.scenes.kitchen.furniturePlacement).toEqual([]);
+    expect(parsed.objectPositionByScene).toEqual({});
+    expect(parsed.scenes.bedroom.furniturePlacement.length).toBeGreaterThan(0);
+    expect(parsed.scenes["living-room"].furniturePlacement.length).toBeGreaterThan(0);
+    expect(parsed.scenes.kitchen.furniturePlacement.length).toBeGreaterThan(0);
+    expect(parsed.inventory.furniture).toContain("sofa-cloud");
   });
 });

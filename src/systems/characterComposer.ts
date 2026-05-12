@@ -4,6 +4,7 @@ import { clothesById } from "../data";
 
 const hairColors = ["#1A1A24", "#6E4A2C", "#D8AA82", "#FFB6D5"];
 const hairColorNumbers = [0x2f2633, 0x6e4a2c, 0xd8aa82, 0xffb6d5];
+const hairHighlightNumbers = [0x5b4a62, 0xa9784f, 0xffd2a5, 0xffd8e8];
 
 export const hairStyles = ["bob", "pigtails", "braids", "curly", "long"];
 export const eyeStyles = ["sparkle", "round", "smile", "star", "sleepy"];
@@ -33,8 +34,14 @@ export class CharacterComposer {
     const frontHair = this.drawHair(character, false);
     const face = this.drawFace(character);
     const mood = this.drawMood(character);
-    const clothing = this.clothingLayers(character);
-    this.container.add([shadow, backHair, body, ...clothing, frontHair, face, mood]);
+    const clothing = this.clothingLayers([
+      character.outfit.top,
+      character.outfit.bottom,
+      character.outfit.dress,
+      character.outfit.shoes
+    ]);
+    const accessories = this.clothingLayers(character.outfit.accessories);
+    this.container.add([shadow, backHair, body, ...clothing, frontHair, face, ...accessories, mood]);
     this.container.setDepth(this.container.y);
   }
 
@@ -63,14 +70,8 @@ export class CharacterComposer {
     );
   }
 
-  private clothingLayers(character: Character): Phaser.GameObjects.Image[] {
-    const ids = [
-      character.outfit.top,
-      character.outfit.bottom,
-      character.outfit.dress,
-      character.outfit.shoes,
-      ...character.outfit.accessories
-    ].filter((id): id is string => Boolean(id));
+  private clothingLayers(sourceIds: Array<string | undefined>): Phaser.GameObjects.Image[] {
+    const ids = sourceIds.filter((id): id is string => Boolean(id));
     return ids
       .filter((id) => clothesById.has(id))
       .map((id) => this.scene.add.image(0, 0, id).setOrigin(0.5, 0.6).setScale(this.scaleFactor));
@@ -78,32 +79,58 @@ export class CharacterComposer {
 
   private drawHair(character: Character, back: boolean): Phaser.GameObjects.Graphics {
     const graphics = this.scene.add.graphics();
-    const color = hairColorNumbers[hairColors.indexOf(character.hair.color)] ?? 0x1a1a24;
+    const colorIndex = hairColors.indexOf(character.hair.color);
+    const color = hairColorNumbers[colorIndex] ?? 0x1a1a24;
+    const highlight = hairHighlightNumbers[colorIndex] ?? 0x5b4a62;
+    graphics.lineStyle(4, 0x6e4a2c, 0.35);
     graphics.fillStyle(color, 1);
     if (back) {
-      if (character.hair.styleId === "long") graphics.fillRoundedRect(-58, -154, 116, 122, 44);
+      if (character.hair.styleId === "long") {
+        graphics.fillRoundedRect(-60, -158, 120, 136, 46);
+        graphics.strokeRoundedRect(-60, -158, 120, 136, 46);
+      }
       if (character.hair.styleId === "bob" || character.hair.styleId === "curly") {
-        graphics.fillRoundedRect(-56, -154, 112, 88, 42);
+        graphics.fillRoundedRect(-58, -156, 116, 94, 42);
+        graphics.strokeRoundedRect(-58, -156, 116, 94, 42);
       }
       if (character.hair.styleId === "pigtails") {
         graphics.fillCircle(-68, -106, 28);
         graphics.fillCircle(68, -106, 28);
+        graphics.strokeCircle(-68, -106, 28);
+        graphics.strokeCircle(68, -106, 28);
       }
       if (character.hair.styleId === "braids") {
         graphics.fillRoundedRect(-76, -120, 26, 124, 16);
         graphics.fillRoundedRect(50, -120, 26, 124, 16);
+        graphics.strokeRoundedRect(-76, -120, 26, 124, 16);
+        graphics.strokeRoundedRect(50, -120, 26, 124, 16);
+        graphics.lineStyle(4, highlight, 0.45);
+        for (let y = -98; y <= -14; y += 26) {
+          graphics.lineBetween(-73, y, -53, y + 13);
+          graphics.lineBetween(53, y, 73, y + 13);
+        }
       }
       return graphics;
     }
-    graphics.fillEllipse(0, -146, 112, 52);
-    graphics.fillRoundedRect(-58, -132, 25, 62, 14);
-    graphics.fillRoundedRect(33, -132, 25, 62, 14);
+    graphics.fillEllipse(0, -149, 116, 58);
+    graphics.strokeEllipse(0, -149, 116, 58);
+    graphics.fillRoundedRect(-58, -136, 24, 66, 15);
+    graphics.fillRoundedRect(34, -136, 24, 66, 15);
+    graphics.strokeRoundedRect(-58, -136, 24, 66, 15);
+    graphics.strokeRoundedRect(34, -136, 24, 66, 15);
     if (character.hair.styleId === "curly") {
-      for (let i = -48; i <= 48; i += 24) graphics.fillCircle(i, -128, 17);
+      for (let i = -50; i <= 50; i += 20) {
+        graphics.fillCircle(i, -128 + Math.abs(i / 12), 16);
+      }
     } else {
       graphics.fillTriangle(-42, -128, -12, -126, -34, -106);
       graphics.fillTriangle(8, -126, 42, -128, 32, -106);
     }
+    graphics.lineStyle(5, highlight, 0.38);
+    graphics.beginPath();
+    graphics.arc(-18, -153, 28, Math.PI * 1.05, Math.PI * 1.65, false);
+    graphics.arc(22, -150, 22, Math.PI * 1.12, Math.PI * 1.55, false);
+    graphics.strokePath();
     return graphics;
   }
 

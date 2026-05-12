@@ -50,4 +50,9 @@ describe("gameStore", () => {
     expect(moved?.x).toBe(608);
     expect(moved?.y).toBe(512);
   });
+
+  it("stores moved scene object positions separately from the background", () => {
+    gameStore.getState().setSceneObjectPosition("park", "swing-park", { x: 444, y: 390 });
+    expect(gameStore.getState().save.objectPositionByScene.park["swing-park"]).toEqual({ x: 444, y: 390 });
+  });
 });

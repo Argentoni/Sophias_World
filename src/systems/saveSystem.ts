@@ -4,12 +4,13 @@ import { SaveStateSchema, type SaveState } from "../schemas/saveState";
 import { APP_VERSION } from "../version";
 import { localDateKey, migrateSave } from "./saveMigrations";
 import type { GameStoreState } from "../store/gameStore";
+import { starterFurnitureIds, starterFurniturePlacements } from "../data/starterWorld";
 
 const SAVE_KEY = "sophias-world:save";
 
 export function defaultSaveState(): SaveState {
   return {
-    version: 3,
+    version: 4,
     appVersion: APP_VERSION,
     character: {
       body: { skinTone: "1", bodyType: "kid" },
@@ -36,18 +37,15 @@ export function defaultSaveState(): SaveState {
     },
     petPositionByScene: {
       house: { x: 760, y: 500 },
-      park: { x: 660, y: 500 }
+      park: { x: 760, y: 520 }
     },
+    objectPositionByScene: {},
     inventory: {
       clothes: ["outfit-001", "top-sky-heart", "bottom-denim", "shoes-pink"],
-      furniture: ["bed-pink", "desk-mint", "rug-star", "pet-bed"],
+      furniture: starterFurnitureIds,
       food: [{ itemId: "dog-biscuit", count: 3 }]
     },
-    scenes: {
-      bedroom: { furniturePlacement: [] },
-      "living-room": { furniturePlacement: [] },
-      kitchen: { furniturePlacement: [] }
-    },
+    scenes: starterFurniturePlacements(),
     discoveredInteractions: [],
     settings: { sfxVolume: 0.7, parentalLockEnabled: true },
     flags: { welcomeBonusGiven: true, dailyBonusLastDate: localDateKey() },

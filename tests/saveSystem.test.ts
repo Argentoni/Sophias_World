@@ -19,6 +19,10 @@ describe("saveSystem", () => {
 
   it("round-trips a save", async () => {
     const initial = defaultSaveState();
+    expect(initial.version).toBe(4);
+    expect(initial.objectPositionByScene).toEqual({});
+    expect(initial.petPositionByScene.park).toEqual({ x: 760, y: 520 });
+    expect(initial.scenes.bedroom.furniturePlacement.length).toBeGreaterThan(0);
     await saveState(initial);
     const loaded = await loadState();
     expect(loaded).toEqual(initial);

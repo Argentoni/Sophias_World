@@ -50,7 +50,7 @@ export const FurniturePlacementSchema = z.object({
 });
 
 export const SaveStateSchema = z.object({
-  version: z.literal(3),
+  version: z.literal(4),
   appVersion: z.string().min(1),
   character: CharacterSchema,
   pet: PetSchema,
@@ -58,6 +58,7 @@ export const SaveStateSchema = z.object({
   currentScene: z.string().min(1),
   characterPositionByScene: z.record(PositionSchema),
   petPositionByScene: z.record(PositionSchema),
+  objectPositionByScene: z.record(z.record(PositionSchema)),
   inventory: z.object({
     clothes: z.array(z.string().min(1)),
     furniture: z.array(z.string().min(1)),

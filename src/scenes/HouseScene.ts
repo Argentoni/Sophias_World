@@ -5,6 +5,8 @@ import { PetComposer } from "../systems/petComposer";
 import { findInteraction, runInteraction, type InteractiveTarget } from "../systems/interactionSystem";
 import { gameStore } from "../store/gameStore";
 import { addButton, addPanel, addSmallText, addTitle } from "../ui/phaserUi";
+import { applySceneObjectDisplay } from "../ui/sceneObjectPresentation";
+import { sceneObjectKey } from "../utils/assets";
 import { drawRoomBackground } from "./sceneBackgrounds";
 
 type HouseInit = { roomId?: string; decorate?: boolean };
@@ -29,12 +31,12 @@ export class HouseScene extends Phaser.Scene {
     this.targets = [];
     drawRoomBackground(this, this.roomId);
     const sceneData = sceneDefinitions.find((entry) => entry.id === this.roomId);
-    addTitle(this, 640, 95, sceneData?.name ?? "Casa");
+    addTitle(this, 640, 156, sceneData?.name ?? "Casa");
 
     this.addRoomNav();
-    this.renderFixedObjects();
+    this.renderSceneObjects();
     this.renderFurniture();
-    this.renderFoodDrag();
+    if (!this.decorate) this.renderFoodDrag();
     this.renderCharacters();
     this.renderDecorPanel();
 
@@ -53,25 +55,50 @@ export class HouseScene extends Phaser.Scene {
     }, { width: 150, height: 48, fontSize: 18, fill: this.decorate ? 0xb5e6c5 : 0xffe8a8 });
   }
 
-  private renderFixedObjects(): void {
+  private renderSceneObjects(): void {
     const sceneData = sceneDefinitions.find((entry) => entry.id === this.roomId);
     if (!sceneData) return;
+    const savedPositions = gameStore.getState().save.objectPositionByScene[this.roomId] ?? {};
     for (const object of sceneData.objects) {
-      const zone = this.add.zone(object.x, object.y, 150, 130).setInteractive({ useHandCursor: true });
-      const sparkle = this.add.text(object.x, object.y - 58, "✦", {
-        fontFamily: "Arial, sans-serif",
-        fontSize: "28px",
-        color: "#FFFFFF",
-        stroke: "#6E4A2C",
-        strokeThickness: 4
-      }).setOrigin(0.5).setDepth((object.depth ?? object.y) + 1).setAlpha(0.82);
-      this.tweens.add({ targets: sparkle, y: sparkle.y - 6, yoyo: true, repeat: -1, duration: 1200, ease: "Sine.easeInOut" });
-      zone.on("pointerdown", () => this.runTap(object.objectId, object.x, object.y));
-      this.targets.push({
+      const position = savedPositions[object.id] ?? { x: object.x, y: object.y };
+      const sprite = applySceneObjectDisplay(
+        this.add.image(position.x, position.y, sceneObjectKey(object.id)),
+        object.objectId,
+        object.scale
+      );
+      sprite.setDepth((object.depth ?? position.y) + 2);
+      sprite.setInteractive({ useHandCursor: true });
+      const target: InteractiveTarget = {
         objectId: object.objectId,
-        bounds: new Phaser.Geom.Rectangle(object.x - 75, object.y - 65, 150, 130),
-        x: object.x,
-        y: object.y
+        bounds: sprite.getBounds(),
+        x: sprite.x,
+        y: sprite.y
+      };
+      this.targets.push(target);
+      let didDrag = false;
+      this.input.setDraggable(sprite);
+      sprite.on("pointerdown", () => {
+        didDrag = false;
+        gameStore.getState().setStatusMessage(objectsById.get(object.objectId)?.name ?? "Objeto");
+      });
+      sprite.on("pointerup", () => {
+        if (!this.decorate && !didDrag) this.runTap(object.objectId, sprite.x, sprite.y);
+      });
+      this.input.on(
+        "drag",
+        (_pointer: Phaser.Input.Pointer, obj: Phaser.GameObjects.GameObject, dragX: number, dragY: number) => {
+          if (obj !== sprite) return;
+          didDrag = true;
+          sprite.setPosition(dragX, dragY);
+          sprite.setDepth(dragY + 2);
+          target.x = dragX;
+          target.y = dragY;
+          target.bounds = sprite.getBounds();
+        }
+      );
+      this.input.on("dragend", (_pointer: Phaser.Input.Pointer, obj: Phaser.GameObjects.GameObject) => {
+        if (obj !== sprite) return;
+        gameStore.getState().setSceneObjectPosition(this.roomId, object.id, { x: sprite.x, y: sprite.y });
       });
     }
   }
@@ -86,10 +113,19 @@ export class HouseScene extends Phaser.Scene {
       sprite.setAngle(placement.rotation);
       sprite.setDepth(placement.y);
       sprite.setInteractive({ useHandCursor: true });
-      if (this.decorate && !placement.locked) {
+      const target: InteractiveTarget | null = objectsById.has(item.id)
+        ? {
+            objectId: item.id,
+            bounds: sprite.getBounds(),
+            x: placement.x,
+            y: placement.y
+          }
+        : null;
+      if (target) this.targets.push(target);
+      if (!placement.locked) {
         this.input.setDraggable(sprite);
         sprite.on("pointerdown", () => {
-          this.selectedPlacementId = placement.placementId;
+          if (this.decorate) this.selectedPlacementId = placement.placementId;
           gameStore.getState().setStatusMessage(item.name);
         });
         this.input.on(
@@ -98,19 +134,16 @@ export class HouseScene extends Phaser.Scene {
             if (obj !== sprite) return;
             sprite.setPosition(dragX, dragY);
             sprite.setDepth(dragY);
+            if (target) {
+              target.x = dragX;
+              target.y = dragY;
+              target.bounds = sprite.getBounds();
+            }
           }
         );
         this.input.on("dragend", (_pointer: Phaser.Input.Pointer, obj: Phaser.GameObjects.GameObject) => {
           if (obj !== sprite) return;
           gameStore.getState().moveFurniture(this.roomId, placement.placementId, { x: sprite.x, y: sprite.y });
-        });
-      }
-      if (objectsById.has(item.id)) {
-        this.targets.push({
-          objectId: item.id,
-          bounds: sprite.getBounds(),
-          x: placement.x,
-          y: placement.y
         });
       }
     }
@@ -119,10 +152,10 @@ export class HouseScene extends Phaser.Scene {
   private renderFoodDrag(): void {
     const food = gameStore.getState().save.inventory.food[0];
     if (!food || food.count <= 0) return;
-    const item = this.add.image(1160, 640, food.itemId).setScale(0.82).setDepth(2500);
+    const item = this.add.image(1160, 636, food.itemId).setDisplaySize(88, 74).setDepth(2500);
     item.setInteractive({ useHandCursor: true });
     this.input.setDraggable(item);
-    addSmallText(this, 1160, 695, `${food.count}x`, 70).setDepth(2500);
+    addSmallText(this, 1160, 690, `${food.count}x`, 70).setDepth(2500);
     this.input.on(
       "drag",
       (_pointer: Phaser.Input.Pointer, obj: Phaser.GameObjects.GameObject, dragX: number, dragY: number) => {
