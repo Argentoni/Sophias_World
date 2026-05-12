@@ -1,5 +1,5 @@
 [
-  { "id": "outfit-001", "name": "Camiseta estrela rosa", "category": "top", "price": 0, "asset": "outfit-001.png", "defaultOwned": true },
+  { "id": "outfit-001", "name": "Camiseta estrela rosa", "category": "top", "price": 0, "asset": "clothes/outfit-001.svg", "defaultOwned": true },
   { "id": "top-sky-heart", "name": "Blusa coração azul", "category": "top", "price": 12, "asset": "clothes/top-sky-heart.svg", "defaultOwned": true },
   { "id": "top-mint-ribbon", "name": "Blusa laço mint", "category": "top", "price": 14, "asset": "clothes/top-mint-ribbon.svg", "defaultOwned": false },
   { "id": "top-sunflower", "name": "Blusa girassol", "category": "top", "price": 16, "asset": "clothes/top-sunflower.svg", "defaultOwned": false },

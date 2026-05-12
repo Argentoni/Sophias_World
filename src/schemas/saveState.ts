@@ -50,7 +50,7 @@ export const FurniturePlacementSchema = z.object({
 });
 
 export const SaveStateSchema = z.object({
-  version: z.literal(2),
+  version: z.literal(3),
   appVersion: z.string().min(1),
   character: CharacterSchema,
   pet: PetSchema,

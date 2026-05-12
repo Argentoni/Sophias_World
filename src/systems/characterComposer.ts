@@ -2,16 +2,8 @@ import Phaser from "phaser";
 import type { Character } from "../schemas/saveState";
 import { clothesById } from "../data";
 
-const skinTints: Record<Character["body"]["skinTone"], number> = {
-  "1": 0xf5d7b5,
-  "2": 0xd8aa82,
-  "3": 0xa6754f,
-  "4": 0x6e4a2c,
-  "5": 0xf0d5c0
-};
-
 const hairColors = ["#1A1A24", "#6E4A2C", "#D8AA82", "#FFB6D5"];
-const hairColorNumbers = [0x1a1a24, 0x6e4a2c, 0xd8aa82, 0xffb6d5];
+const hairColorNumbers = [0x2f2633, 0x6e4a2c, 0xd8aa82, 0xffb6d5];
 
 export const hairStyles = ["bob", "pigtails", "braids", "curly", "long"];
 export const eyeStyles = ["sparkle", "round", "smile", "star", "sleepy"];
@@ -34,15 +26,15 @@ export class CharacterComposer {
   render(character: Character): void {
     this.container.removeAll(true);
     const shadow = this.scene.add.ellipse(0, 112, 150, 34, 0x6e4a2c, 0.18);
-    const body = this.scene.add.image(0, 0, "body-base").setOrigin(0.5, 0.6);
-    body.setTint(skinTints[character.body.skinTone]);
+    const body = this.scene.add.image(0, 0, `body-base-${character.body.skinTone}`).setOrigin(0.5, 0.6);
     body.setScale(this.scaleFactor);
 
     const backHair = this.drawHair(character, true);
     const frontHair = this.drawHair(character, false);
     const face = this.drawFace(character);
+    const mood = this.drawMood(character);
     const clothing = this.clothingLayers(character);
-    this.container.add([shadow, backHair, body, ...clothing, face, frontHair]);
+    this.container.add([shadow, backHair, body, ...clothing, frontHair, face, mood]);
     this.container.setDepth(this.container.y);
   }
 
@@ -89,57 +81,128 @@ export class CharacterComposer {
     const color = hairColorNumbers[hairColors.indexOf(character.hair.color)] ?? 0x1a1a24;
     graphics.fillStyle(color, 1);
     if (back) {
-      if (character.hair.styleId === "long") graphics.fillRoundedRect(-62, -156, 124, 132, 50);
+      if (character.hair.styleId === "long") graphics.fillRoundedRect(-58, -154, 116, 122, 44);
+      if (character.hair.styleId === "bob" || character.hair.styleId === "curly") {
+        graphics.fillRoundedRect(-56, -154, 112, 88, 42);
+      }
       if (character.hair.styleId === "pigtails") {
-        graphics.fillCircle(-74, -92, 32);
-        graphics.fillCircle(74, -92, 32);
+        graphics.fillCircle(-68, -106, 28);
+        graphics.fillCircle(68, -106, 28);
       }
       if (character.hair.styleId === "braids") {
-        graphics.fillRoundedRect(-82, -118, 28, 125, 18);
-        graphics.fillRoundedRect(54, -118, 28, 125, 18);
+        graphics.fillRoundedRect(-76, -120, 26, 124, 16);
+        graphics.fillRoundedRect(50, -120, 26, 124, 16);
       }
       return graphics;
     }
-    graphics.fillRoundedRect(-55, -166, 110, 78, 42);
+    graphics.fillEllipse(0, -146, 112, 52);
+    graphics.fillRoundedRect(-58, -132, 25, 62, 14);
+    graphics.fillRoundedRect(33, -132, 25, 62, 14);
     if (character.hair.styleId === "curly") {
-      for (let i = -48; i <= 48; i += 24) graphics.fillCircle(i, -96, 20);
+      for (let i = -48; i <= 48; i += 24) graphics.fillCircle(i, -128, 17);
     } else {
-      graphics.fillTriangle(-48, -110, -10, -110, -44, -72);
-      graphics.fillTriangle(8, -110, 50, -110, 42, -72);
+      graphics.fillTriangle(-42, -128, -12, -126, -34, -106);
+      graphics.fillTriangle(8, -126, 42, -128, 32, -106);
     }
     return graphics;
   }
 
-  private drawFace(character: Character): Phaser.GameObjects.Graphics {
+  private drawFace(character: Character): Phaser.GameObjects.Container {
+    const container = this.scene.add.container(0, 0);
     const graphics = this.scene.add.graphics();
-    graphics.fillStyle(0x2f2430, 1);
-    const eyesY = -108;
-    if (character.face.eyes === "sleepy") {
-      graphics.lineStyle(5, 0x2f2430, 1);
-      graphics.beginPath();
-      graphics.arc(-22, eyesY, 12, 0, Math.PI);
-      graphics.arc(22, eyesY, 12, 0, Math.PI);
-      graphics.strokePath();
-    } else {
-      graphics.fillCircle(-22, eyesY, character.face.eyes === "round" ? 8 : 10);
-      graphics.fillCircle(22, eyesY, character.face.eyes === "round" ? 8 : 10);
-      if (character.face.eyes === "sparkle" || character.face.eyes === "star") {
-        graphics.fillStyle(0xffffff, 1);
-        graphics.fillCircle(-26, eyesY - 4, 3);
-        graphics.fillCircle(18, eyesY - 4, 3);
-      }
-    }
-    graphics.lineStyle(5, 0x2f2430, 1);
-    if (character.face.mouth === "open" || character.face.mouth === "yum") {
-      graphics.fillStyle(0xff7aa7, 1);
-      graphics.fillCircle(0, -76, 10);
-    } else if (character.face.mouth === "sleepy") {
-      graphics.strokeCircle(0, -76, 8);
-    } else {
-      graphics.beginPath();
-      graphics.arc(0, -82, 18, 0, Math.PI);
-      graphics.strokePath();
-    }
-    return graphics;
+    graphics.fillStyle(0xff9bb1, 0.3);
+    graphics.fillEllipse(-28, -105, 18, 10);
+    graphics.fillEllipse(28, -105, 18, 10);
+    this.drawEyes(graphics, character.face.eyes);
+    this.drawMouth(graphics, character.face.mouth);
+    container.add(graphics);
+    return container;
   }
+
+  private drawEyes(graphics: Phaser.GameObjects.Graphics, style: string): void {
+    graphics.lineStyle(3, 0x6e4a2c, 1);
+    graphics.fillStyle(0x3f2a1c, 1);
+    if (style === "sleepy" || style === "smile") {
+      graphics.beginPath();
+      graphics.arc(-20, -119, 9, 0.1, Math.PI - 0.1, false);
+      graphics.arc(20, -119, 9, 0.1, Math.PI - 0.1, false);
+      graphics.strokePath();
+      return;
+    }
+    if (style === "star") {
+      this.drawSparkle(graphics, -20, -119, 11);
+      this.drawSparkle(graphics, 20, -119, 11);
+      return;
+    }
+    graphics.fillCircle(-20, -119, style === "round" ? 7 : 8);
+    graphics.fillCircle(20, -119, style === "round" ? 7 : 8);
+    if (style === "sparkle") {
+      graphics.fillStyle(0xffffff, 1);
+      graphics.fillCircle(-17, -122, 3);
+      graphics.fillCircle(23, -122, 3);
+    }
+  }
+
+  private drawMouth(graphics: Phaser.GameObjects.Graphics, style: string): void {
+    graphics.lineStyle(3, 0x6e4a2c, 1);
+    if (style === "open" || style === "yum") {
+      graphics.fillStyle(style === "yum" ? 0xff8fb0 : 0x6e4a2c, 1);
+      graphics.fillCircle(0, -100, style === "yum" ? 6 : 7);
+      return;
+    }
+    if (style === "sleepy") {
+      graphics.beginPath();
+      graphics.moveTo(-9, -100);
+      graphics.lineTo(9, -100);
+      graphics.strokePath();
+      return;
+    }
+    if (style === "curious") {
+      graphics.beginPath();
+      graphics.arc(0, -101, 7, Math.PI * 0.1, Math.PI * 0.85, false);
+      graphics.strokePath();
+      return;
+    }
+    graphics.beginPath();
+    graphics.arc(0, -106, 12, 0.2, Math.PI - 0.2, false);
+    graphics.strokePath();
+  }
+
+  private drawSparkle(graphics: Phaser.GameObjects.Graphics, x: number, y: number, radius: number): void {
+    graphics.fillStyle(0x6e4a2c, 1);
+    graphics.beginPath();
+    graphics.moveTo(x, y - radius);
+    graphics.lineTo(x + radius * 0.33, y - radius * 0.33);
+    graphics.lineTo(x + radius, y);
+    graphics.lineTo(x + radius * 0.33, y + radius * 0.33);
+    graphics.lineTo(x, y + radius);
+    graphics.lineTo(x - radius * 0.33, y + radius * 0.33);
+    graphics.lineTo(x - radius, y);
+    graphics.lineTo(x - radius * 0.33, y - radius * 0.33);
+    graphics.closePath();
+    graphics.fillPath();
+  }
+
+  private drawMood(character: Character): Phaser.GameObjects.Container {
+    const mood = moodText(character.face.mouth);
+    const container = this.scene.add.container(70, -182);
+    if (!mood) return container;
+    const bubble = this.scene.add.circle(0, 0, 25, 0xffffff, 0.82).setStrokeStyle(4, 0x6e4a2c, 0.75);
+    const text = this.scene.add.text(0, -1, mood, {
+      fontFamily: "Arial, sans-serif",
+      fontSize: "25px",
+      color: "#6E4A2C",
+      fontStyle: "bold"
+    }).setOrigin(0.5);
+    container.add([bubble, text]);
+    return container;
+  }
+}
+
+function moodText(mouth: string): string {
+  if (mouth === "yum") return "♥";
+  if (mouth === "curious") return "?";
+  if (mouth === "sleepy") return "Z";
+  if (mouth === "open") return "!";
+  return "";
 }

@@ -9,7 +9,7 @@ const SAVE_KEY = "sophias-world:save";
 
 export function defaultSaveState(): SaveState {
   return {
-    version: 2,
+    version: 3,
     appVersion: APP_VERSION,
     character: {
       body: { skinTone: "1", bodyType: "kid" },
@@ -44,37 +44,9 @@ export function defaultSaveState(): SaveState {
       food: [{ itemId: "dog-biscuit", count: 3 }]
     },
     scenes: {
-      bedroom: {
-        furniturePlacement: [
-          {
-            placementId: "starter-bed",
-            itemId: "bed-pink",
-            x: 250,
-            y: 455,
-            rotation: 0,
-            scale: 1,
-            locked: false
-          },
-          {
-            placementId: "starter-rug",
-            itemId: "rug-star",
-            x: 620,
-            y: 565,
-            rotation: 0,
-            scale: 1,
-            locked: false
-          },
-          {
-            placementId: "starter-pet-bed",
-            itemId: "pet-bed",
-            x: 960,
-            y: 545,
-            rotation: 0,
-            scale: 1,
-            locked: false
-          }
-        ]
-      }
+      bedroom: { furniturePlacement: [] },
+      "living-room": { furniturePlacement: [] },
+      kitchen: { furniturePlacement: [] }
     },
     discoveredInteractions: [],
     settings: { sfxVolume: 0.7, parentalLockEnabled: true },

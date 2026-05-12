@@ -9,16 +9,19 @@ type LegacySaveV1 = {
   lastPlayed?: number;
 };
 
-export const CURRENT_SAVE_VERSION = 2;
+type SaveStateV2 = Omit<SaveState, "version"> & { version: 2 };
+
+export const CURRENT_SAVE_VERSION = 3;
 
 export function migrateSave(raw: unknown): unknown {
   if (!isRecord(raw)) return raw;
   if (raw.version === CURRENT_SAVE_VERSION) return raw;
-  if (raw.version === 1) return migrateV1ToV2(raw as LegacySaveV1);
+  if (raw.version === 1) return migrateV2ToV3(migrateV1ToV2(raw as LegacySaveV1));
+  if (raw.version === 2) return migrateV2ToV3(raw as SaveStateV2);
   return raw;
 }
 
-function migrateV1ToV2(old: LegacySaveV1): SaveState {
+function migrateV1ToV2(old: LegacySaveV1): SaveStateV2 {
   const now = Date.now();
   return {
     version: 2,
@@ -82,6 +85,23 @@ function migrateV1ToV2(old: LegacySaveV1): SaveState {
     settings: { sfxVolume: 0.7, parentalLockEnabled: true },
     flags: { welcomeBonusGiven: true, dailyBonusLastDate: localDateKey(now) },
     lastPlayed: old.lastPlayed ?? now
+  };
+}
+
+function migrateV2ToV3(old: SaveStateV2): SaveState {
+  return {
+    ...old,
+    version: 3,
+    scenes: {
+      ...old.scenes,
+      bedroom: {
+        furniturePlacement: (old.scenes.bedroom?.furniturePlacement ?? []).filter(
+          (placement) => !placement.placementId.startsWith("starter-")
+        )
+      },
+      "living-room": old.scenes["living-room"] ?? { furniturePlacement: [] },
+      kitchen: old.scenes.kitchen ?? { furniturePlacement: [] }
+    }
   };
 }
 

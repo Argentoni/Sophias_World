@@ -3,4 +3,4 @@
 // produced this save?" later.
 //
 // MUST be a simple string literal so the bundler can statically inline it.
-export const APP_VERSION = "0.1.0-fase0";
+export const APP_VERSION = "0.2.0-art-refresh";

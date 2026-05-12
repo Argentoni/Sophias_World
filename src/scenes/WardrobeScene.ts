@@ -3,7 +3,7 @@ import { clothes, petDefinition } from "../data";
 import { CharacterComposer, eyeStyles, hairColors, hairStyles, mouthStyles } from "../systems/characterComposer";
 import { PetComposer } from "../systems/petComposer";
 import { gameStore } from "../store/gameStore";
-import { addButton, addPanel, addSmallText, addTitle } from "../ui/phaserUi";
+import { addButton, addSmallText, addTitle } from "../ui/phaserUi";
 import type { Character } from "../schemas/saveState";
 
 type WardrobeTab = "skin" | "hair" | "face" | "clothes" | "pet";
@@ -23,7 +23,7 @@ export class WardrobeScene extends Phaser.Scene {
   }
 
   create(): void {
-    addPanel(this, 640, 390, 1120, 580, 0xfaf4e8).setDepth(4200);
+    this.add.rectangle(640, 390, 1120, 580, 0xfaf4e8, 0.98).setStrokeStyle(3, 0xffffff, 0.85).setDepth(4200);
     addTitle(this, 640, 135, "Guarda-roupa").setDepth(4201);
     addButton(this, 1045, 136, "Fechar", () => this.scene.stop(), { width: 140, height: 46, fontSize: 18 }).setDepth(4201);
     this.renderTabs();
@@ -57,8 +57,10 @@ export class WardrobeScene extends Phaser.Scene {
     const save = gameStore.getState().save;
     const character = new CharacterComposer(this, 260, 435, 0.5);
     character.render(save.character);
+    character.container.setDepth(4202);
     const pet = new PetComposer(this, 260, 625);
     pet.render(save.pet);
+    pet.container.setDepth(4202);
   }
 
   private renderSkin(): void {
@@ -113,13 +115,15 @@ export class WardrobeScene extends Phaser.Scene {
     const owned = clothes.filter((item) => save.inventory.clothes.includes(item.id));
     owned.forEach((item, index) => {
       const x = 470 + (index % 5) * 140;
-      const y = 285 + Math.floor(index / 5) * 105;
-      this.add.image(x, y, item.id).setDisplaySize(62, 90).setDepth(4202);
-      addButton(this, x, y + 62, item.category === "accessory" ? "Usar" : "Vestir", () => {
+      const y = 300 + Math.floor(index / 5) * 112;
+      this.add.rectangle(x, y, 116, 98, 0xffffff, 0.62).setStrokeStyle(2, 0xffffff, 0.9).setDepth(4201);
+      const image = this.add.image(x, y - 15, item.id).setDepth(4202);
+      fitClothingPreview(image, item.category);
+      addButton(this, x, y + 38, item.category === "accessory" ? "Usar" : "Vestir", () => {
         if (item.category === "accessory") gameStore.getState().toggleAccessory(item.id);
         else gameStore.getState().setOutfitSlot(item.category, item.id);
         this.scene.restart({ tab: "clothes" });
-      }, { width: 92, height: 34, fontSize: 15, fill: 0xffe8a8 }).setDepth(4202);
+      }, { width: 88, height: 30, fontSize: 14, fill: 0xffe8a8 }).setDepth(4202);
     });
   }
 
@@ -172,4 +176,24 @@ function mouthLabel(style: string): string {
   if (style === "curious") return "Curiosa";
   if (style === "sleepy") return "Sono";
   return "Sorriso";
+}
+
+function fitClothingPreview(image: Phaser.GameObjects.Image, category: string): void {
+  if (category === "top") {
+    image.setCrop(128, 220, 256, 250).setDisplaySize(86, 84);
+    return;
+  }
+  if (category === "bottom") {
+    image.setCrop(146, 382, 220, 210).setDisplaySize(82, 82);
+    return;
+  }
+  if (category === "dress") {
+    image.setCrop(126, 220, 260, 420).setDisplaySize(76, 96);
+    return;
+  }
+  if (category === "shoes") {
+    image.setCrop(126, 585, 260, 120).setDisplaySize(88, 42);
+    return;
+  }
+  image.setDisplaySize(76, 76);
 }

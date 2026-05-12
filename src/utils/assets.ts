@@ -1,10 +1,18 @@
 import Phaser from "phaser";
 
 export function assetUrl(path: string): string {
+  return publicAssetUrl(`assets/sprites/${path}`);
+}
+
+export function backgroundUrl(path: string): string {
+  return publicAssetUrl(`assets/backgrounds/${path}`);
+}
+
+export function publicAssetUrl(path: string): string {
   const base = import.meta.env.BASE_URL.endsWith("/")
     ? import.meta.env.BASE_URL
     : `${import.meta.env.BASE_URL}/`;
-  return `${base}assets/sprites/${path}`;
+  return `${base}${path}`;
 }
 
 export function loadSpriteAsset(scene: Phaser.Scene, key: string, path: string): void {

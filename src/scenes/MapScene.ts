@@ -11,11 +11,12 @@ export class MapScene extends Phaser.Scene {
   create(): void {
     gameStore.getState().setCurrentScene("map");
     drawMapBackground(this);
-    addTitle(this, 640, 76, "Sophia's World");
+    this.add.rectangle(640, 94, 520, 72, 0xfaf4e8, 0.76).setStrokeStyle(2, 0xffffff, 0.8);
+    addTitle(this, 640, 94, "Sophia's World");
 
-    this.addLocation(330, 300, "Casa", 0xffb6d5, () => this.scene.start("HouseScene", { roomId: "bedroom" }));
-    this.addLocation(640, 410, "Parque", 0xb5e6c5, () => this.scene.start("ParkScene"));
-    this.addLocation(960, 300, "Shopping", 0xa0d8f0, () => this.scene.start("ShoppingScene"));
+    this.addLocation(330, 360, "Casa", 0xffb6d5, () => this.scene.start("HouseScene", { roomId: "bedroom" }));
+    this.addLocation(640, 480, "Parque", 0xb5e6c5, () => this.scene.start("ParkScene"));
+    this.addLocation(960, 420, "Shopping", 0xa0d8f0, () => this.scene.start("ShoppingScene"));
 
     addButton(this, 640, 625, "Guarda-roupa", () => this.scene.launch("WardrobeScene"), {
       width: 240,
@@ -28,8 +29,9 @@ export class MapScene extends Phaser.Scene {
   }
 
   private addLocation(x: number, y: number, label: string, color: number, onClick: () => void): void {
-    this.add.circle(x, y, 108, color, 0.9).setStrokeStyle(7, 0x6e4a2c);
-    addButton(this, x, y + 135, label, onClick, { width: 190, fill: color });
+    this.add.ellipse(x, y + 42, 240, 98, color, 0.24).setStrokeStyle(3, 0xffffff, 0.65);
+    addButton(this, x, y + 42, label, onClick, { width: 190, fill: color });
+    this.add.zone(x, y + 42, 260, 150).setInteractive({ useHandCursor: true }).on("pointerdown", onClick);
   }
 }
 

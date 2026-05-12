@@ -13,16 +13,17 @@ export class HUDScene extends Phaser.Scene {
   }
 
   create(): void {
-    this.add.rectangle(640, 34, 1280, 68, 0xfaf4e8, 0.92).setDepth(3000);
+    this.add.rectangle(64, 34, 110, 48, 0xfaf4e8, 0.78).setStrokeStyle(2, 0xffffff, 0.75).setDepth(3000);
+    this.add.rectangle(366, 34, 330, 48, 0xfaf4e8, 0.72).setStrokeStyle(2, 0xffffff, 0.65).setDepth(3000);
     this.currencyText = this.add.text(24, 18, "", {
       fontFamily: "Arial, sans-serif",
       fontSize: "24px",
       color: "#6E4A2C",
       fontStyle: "bold"
     }).setDepth(3001);
-    this.petText = this.add.text(235, 18, "", {
+    this.petText = this.add.text(220, 20, "", {
       fontFamily: "Arial, sans-serif",
-      fontSize: "18px",
+      fontSize: "17px",
       color: "#6E4A2C"
     }).setDepth(3001);
     this.statusText = this.add.text(640, 18, "", {
@@ -32,9 +33,9 @@ export class HUDScene extends Phaser.Scene {
       align: "center"
     }).setOrigin(0.5, 0).setDepth(3001);
 
-    addButton(this, 885, 34, "Mapa", () => this.goMap(), { width: 112, height: 44, fontSize: 18 }).setDepth(3001);
-    addButton(this, 1015, 34, "Roupas", () => this.scene.launch("WardrobeScene"), { width: 122, height: 44, fontSize: 18 }).setDepth(3001);
-    addButton(this, 1152, 34, "Mochila", () => this.scene.launch("InventoryScene"), { width: 128, height: 44, fontSize: 18 }).setDepth(3001);
+    addButton(this, 890, 34, "Mapa", () => this.goMap(), { width: 104, height: 42, fontSize: 17, fill: 0xfaf4e8 }).setDepth(3001);
+    addButton(this, 1015, 34, "Roupas", () => this.scene.launch("WardrobeScene"), { width: 118, height: 42, fontSize: 17, fill: 0xffd2e5 }).setDepth(3001);
+    addButton(this, 1150, 34, "Mochila", () => this.scene.launch("InventoryScene"), { width: 126, height: 42, fontSize: 17, fill: 0xd5f3e0 }).setDepth(3001);
 
     this.portraitOverlay = this.add.container(640, 360).setDepth(5000);
     this.portraitOverlay.add([

@@ -6,7 +6,6 @@ import { findInteraction, runInteraction, type InteractiveTarget } from "../syst
 import { gameStore } from "../store/gameStore";
 import { addButton, addTitle } from "../ui/phaserUi";
 import { drawParkBackground } from "./sceneBackgrounds";
-import { sceneObjectKey } from "../utils/assets";
 
 export class ParkScene extends Phaser.Scene {
   private targets: InteractiveTarget[] = [];
@@ -24,9 +23,20 @@ export class ParkScene extends Phaser.Scene {
 
     const sceneData = sceneDefinitions.find((entry) => entry.id === "park");
     for (const object of sceneData?.objects ?? []) {
-      const sprite = this.add.image(object.x, object.y, sceneObjectKey(object.id)).setScale(object.scale);
-      sprite.setDepth(object.depth ?? object.y);
-      this.targets.push({ objectId: object.objectId, bounds: sprite.getBounds(), x: object.x, y: object.y });
+      const sparkle = this.add.text(object.x, object.y - 62, "✦", {
+        fontFamily: "Arial, sans-serif",
+        fontSize: "30px",
+        color: "#FFFFFF",
+        stroke: "#6E4A2C",
+        strokeThickness: 4
+      }).setOrigin(0.5).setDepth((object.depth ?? object.y) + 1).setAlpha(0.84);
+      this.tweens.add({ targets: sparkle, y: sparkle.y - 6, yoyo: true, repeat: -1, duration: 1200, ease: "Sine.easeInOut" });
+      this.targets.push({
+        objectId: object.objectId,
+        bounds: new Phaser.Geom.Rectangle(object.x - 82, object.y - 72, 164, 144),
+        x: object.x,
+        y: object.y
+      });
     }
 
     const save = gameStore.getState().save;

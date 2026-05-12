@@ -6,7 +6,6 @@ import { findInteraction, runInteraction, type InteractiveTarget } from "../syst
 import { gameStore } from "../store/gameStore";
 import { addButton, addPanel, addSmallText, addTitle } from "../ui/phaserUi";
 import { drawRoomBackground } from "./sceneBackgrounds";
-import { sceneObjectKey } from "../utils/assets";
 
 type HouseInit = { roomId?: string; decorate?: boolean };
 
@@ -58,13 +57,19 @@ export class HouseScene extends Phaser.Scene {
     const sceneData = sceneDefinitions.find((entry) => entry.id === this.roomId);
     if (!sceneData) return;
     for (const object of sceneData.objects) {
-      const sprite = this.add.image(object.x, object.y, sceneObjectKey(object.id)).setScale(object.scale);
-      sprite.setDepth(object.depth ?? object.y);
-      sprite.setInteractive({ useHandCursor: true });
-      sprite.on("pointerdown", () => this.runTap(object.objectId, sprite));
+      const zone = this.add.zone(object.x, object.y, 150, 130).setInteractive({ useHandCursor: true });
+      const sparkle = this.add.text(object.x, object.y - 58, "✦", {
+        fontFamily: "Arial, sans-serif",
+        fontSize: "28px",
+        color: "#FFFFFF",
+        stroke: "#6E4A2C",
+        strokeThickness: 4
+      }).setOrigin(0.5).setDepth((object.depth ?? object.y) + 1).setAlpha(0.82);
+      this.tweens.add({ targets: sparkle, y: sparkle.y - 6, yoyo: true, repeat: -1, duration: 1200, ease: "Sine.easeInOut" });
+      zone.on("pointerdown", () => this.runTap(object.objectId, object.x, object.y));
       this.targets.push({
         objectId: object.objectId,
-        bounds: sprite.getBounds(),
+        bounds: new Phaser.Geom.Rectangle(object.x - 75, object.y - 65, 150, 130),
         x: object.x,
         y: object.y
       });
@@ -192,11 +197,11 @@ export class HouseScene extends Phaser.Scene {
     }, { width: 128, height: 46, fontSize: 17, fill: 0xffb6d5 }).setDepth(2201);
   }
 
-  private runTap(objectId: string, sprite: Phaser.GameObjects.Image): void {
+  private runTap(objectId: string, x: number, y: number): void {
     const object = objectsById.get(objectId);
     const interaction = object?.interactions.find((entry) => entry.trigger === "tap");
     if (!interaction) return;
-    void runInteraction(this, { objectId, bounds: sprite.getBounds(), x: sprite.x, y: sprite.y }, interaction);
+    void runInteraction(this, { objectId, bounds: new Phaser.Geom.Rectangle(x - 75, y - 65, 150, 130), x, y }, interaction);
   }
 }
 
