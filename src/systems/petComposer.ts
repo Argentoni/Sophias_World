@@ -8,15 +8,15 @@ export class PetComposer {
   constructor(scene: Phaser.Scene, x: number, y: number) {
     this.scene = scene;
     this.container = scene.add.container(x, y);
-    this.container.setSize(130, 95);
+    this.container.setSize(150, 115);
     this.container.setDepth(y);
   }
 
   render(pet: Pet): void {
     this.container.removeAll(true);
     const shadow = this.scene.add.ellipse(0, 42, 100, 24, 0x6e4a2c, 0.16);
-    const body = this.scene.add.image(0, 0, `pet-${pet.color}`).setScale(0.68);
-    const accessories = pet.accessories.map((id) => this.scene.add.image(0, 0, id).setScale(0.68));
+    const body = this.scene.add.image(0, 0, `pet-${pet.color}`).setScale(0.72);
+    const accessories = pet.accessories.map((id) => this.scene.add.image(0, 0, id).setScale(0.72));
     this.container.add([shadow, body, ...accessories]);
     this.container.setDepth(this.container.y);
   }

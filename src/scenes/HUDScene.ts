@@ -4,9 +4,12 @@ import { gameStore } from "../store/gameStore";
 
 export class HUDScene extends Phaser.Scene {
   private currencyText!: Phaser.GameObjects.Text;
+  private statusBg!: Phaser.GameObjects.Rectangle;
   private statusText!: Phaser.GameObjects.Text;
   private petText!: Phaser.GameObjects.Text;
   private portraitOverlay!: Phaser.GameObjects.Container;
+  private lastStatus = "";
+  private clearStatusEvent?: Phaser.Time.TimerEvent;
 
   constructor() {
     super("HUDScene");
@@ -26,9 +29,13 @@ export class HUDScene extends Phaser.Scene {
       fontSize: "17px",
       color: "#6E4A2C"
     }).setDepth(3001);
-    this.statusText = this.add.text(640, 18, "", {
+    this.statusBg = this.add.rectangle(640, 88, 430, 42, 0xfaf4e8, 0.86)
+      .setStrokeStyle(2, 0xffffff, 0.75)
+      .setDepth(3000)
+      .setVisible(false);
+    this.statusText = this.add.text(640, 74, "", {
       fontFamily: "Arial, sans-serif",
-      fontSize: "22px",
+      fontSize: "20px",
       color: "#6E4A2C",
       align: "center"
     }).setOrigin(0.5, 0).setDepth(3001);
@@ -64,8 +71,23 @@ export class HUDScene extends Phaser.Scene {
     const pet = state.save.pet.state;
     this.currencyText.setText(`★ ${state.save.currency}`);
     this.petText.setText(`Pet  Fome ${pet.hunger}  Energia ${pet.energy}  Alegria ${pet.happiness}`);
-    this.statusText.setText(state.statusMessage);
+    this.updateStatus(state.statusMessage);
     this.portraitOverlay.setVisible(window.innerHeight > window.innerWidth);
+  }
+
+  private updateStatus(message: string): void {
+    if (message !== this.lastStatus) {
+      this.lastStatus = message;
+      this.clearStatusEvent?.remove(false);
+      if (message) {
+        this.clearStatusEvent = this.time.delayedCall(2600, () => {
+          if (gameStore.getState().statusMessage === message) gameStore.getState().setStatusMessage("");
+        });
+      }
+    }
+    this.statusBg.setVisible(Boolean(message));
+    this.statusText.setVisible(Boolean(message));
+    this.statusText.setText(message);
   }
 
   private goMap(): void {

@@ -2,7 +2,8 @@ import Phaser from "phaser";
 import { clothesById, foodById, furnitureById } from "../data";
 import { gameStore } from "../store/gameStore";
 import { exportBackup, importBackup } from "../ui/backup";
-import { addButton, addPanel, addSmallText, addTitle } from "../ui/phaserUi";
+import { addButton, addSmallText, addTitle } from "../ui/phaserUi";
+import { fitClothingPreview, fitFurniturePreview } from "../ui/itemPreview";
 
 export class InventoryScene extends Phaser.Scene {
   constructor() {
@@ -11,7 +12,7 @@ export class InventoryScene extends Phaser.Scene {
 
   create(): void {
     const save = gameStore.getState().save;
-    addPanel(this, 640, 390, 1040, 540, 0xfaf4e8).setDepth(4100);
+    this.add.rectangle(640, 390, 1040, 540, 0xfaf4e8, 0.98).setStrokeStyle(3, 0xffffff, 0.85).setDepth(4100);
     addTitle(this, 640, 150, "Mochila").setDepth(4101);
     addButton(this, 1040, 150, "Fechar", () => this.scene.stop(), { width: 140, height: 46, fontSize: 18 }).setDepth(4101);
     addButton(this, 870, 150, "Backup", () => void exportBackup(), { width: 130, height: 46, fontSize: 17, fill: 0xffe8a8 }).setDepth(4101);
@@ -22,7 +23,8 @@ export class InventoryScene extends Phaser.Scene {
       const item = clothesById.get(id);
       if (!item) return;
       const x = 190 + index * 82;
-      this.add.image(x, 285, item.id).setDisplaySize(48, 70).setDepth(4102);
+      this.add.rectangle(x, 285, 66, 76, 0xffffff, 0.62).setStrokeStyle(2, 0xffffff, 0.9).setDepth(4101);
+      fitClothingPreview(this.add.image(x, 285, item.id).setDepth(4102), item.category, "inventory");
     });
 
     this.add.text(185, 380, "Móveis", headerStyle()).setDepth(4101);
@@ -30,7 +32,8 @@ export class InventoryScene extends Phaser.Scene {
       const item = furnitureById.get(id);
       if (!item) return;
       const x = 190 + index * 82;
-      this.add.image(x, 455, item.id).setDisplaySize(56, 44).setDepth(4102);
+      this.add.rectangle(x, 455, 66, 70, 0xffffff, 0.62).setStrokeStyle(2, 0xffffff, 0.9).setDepth(4101);
+      fitFurniturePreview(this.add.image(x, 455, item.id).setDepth(4102), item.width, item.height, 58, 50);
     });
 
     this.add.text(185, 535, "Petiscos", headerStyle()).setDepth(4101);
@@ -38,6 +41,7 @@ export class InventoryScene extends Phaser.Scene {
       const item = foodById.get(entry.itemId);
       if (!item) return;
       const x = 215 + index * 190;
+      this.add.rectangle(x, 604, 170, 70, 0xffffff, 0.62).setStrokeStyle(2, 0xffffff, 0.9).setDepth(4101);
       this.add.image(x - 42, 604, item.id).setDisplaySize(54, 42).setDepth(4102);
       addSmallText(this, x + 28, 604, `${item.name}\n${entry.count}x`, 118).setDepth(4102);
     });

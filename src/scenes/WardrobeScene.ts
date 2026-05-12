@@ -4,6 +4,7 @@ import { CharacterComposer, eyeStyles, hairColors, hairStyles, mouthStyles } fro
 import { PetComposer } from "../systems/petComposer";
 import { gameStore } from "../store/gameStore";
 import { addButton, addSmallText, addTitle } from "../ui/phaserUi";
+import { fitClothingPreview, fitPetAccessoryPreview } from "../ui/itemPreview";
 import type { Character } from "../schemas/saveState";
 
 type WardrobeTab = "skin" | "hair" | "face" | "clothes" | "pet";
@@ -118,7 +119,7 @@ export class WardrobeScene extends Phaser.Scene {
       const y = 300 + Math.floor(index / 5) * 112;
       this.add.rectangle(x, y, 116, 98, 0xffffff, 0.62).setStrokeStyle(2, 0xffffff, 0.9).setDepth(4201);
       const image = this.add.image(x, y - 15, item.id).setDepth(4202);
-      fitClothingPreview(image, item.category);
+      fitClothingPreview(image, item.category, "wardrobe");
       addButton(this, x, y + 38, item.category === "accessory" ? "Usar" : "Vestir", () => {
         if (item.category === "accessory") gameStore.getState().toggleAccessory(item.id);
         else gameStore.getState().setOutfitSlot(item.category, item.id);
@@ -137,7 +138,7 @@ export class WardrobeScene extends Phaser.Scene {
     petDefinition.accessories.forEach((item, index) => {
       const x = 470 + (index % 5) * 130;
       const y = 430 + Math.floor(index / 5) * 86;
-      this.add.image(x, y - 16, item.id).setDisplaySize(62, 48).setDepth(4202);
+      fitPetAccessoryPreview(this.add.image(x, y - 16, item.id).setDepth(4202), item.id);
       addSmallText(this, x, y + 34, item.name, 110).setDepth(4202);
       this.add.rectangle(x, y - 16, 92, 62, 0xffffff, 0.001)
         .setDepth(4203)
@@ -176,24 +177,4 @@ function mouthLabel(style: string): string {
   if (style === "curious") return "Curiosa";
   if (style === "sleepy") return "Sono";
   return "Sorriso";
-}
-
-function fitClothingPreview(image: Phaser.GameObjects.Image, category: string): void {
-  if (category === "top") {
-    image.setCrop(128, 220, 256, 250).setDisplaySize(86, 84);
-    return;
-  }
-  if (category === "bottom") {
-    image.setCrop(146, 382, 220, 210).setDisplaySize(82, 82);
-    return;
-  }
-  if (category === "dress") {
-    image.setCrop(126, 220, 260, 420).setDisplaySize(76, 96);
-    return;
-  }
-  if (category === "shoes") {
-    image.setCrop(126, 585, 260, 120).setDisplaySize(88, 42);
-    return;
-  }
-  image.setDisplaySize(76, 76);
 }
