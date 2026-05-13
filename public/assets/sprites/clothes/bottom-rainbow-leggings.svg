@@ -1,7 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="512" height="768" viewBox="0 0 512 768">
+<svg xmlns="http://www.w3.org/2000/svg" width="406" height="844" viewBox="0 0 406 844">
 <defs>
-  <g id="art-source" stroke-linecap="round" stroke-linejoin="round"><path d="M202 418 L310 418 L330 548 L282 548 L256 468 L230 548 L182 548 Z" fill="#FAF4E8" stroke="#6E4A2C" stroke-width="7" stroke-linejoin="round"/><path d="M210 438 H302" stroke="#FFB6D5" stroke-width="16"/><path d="M214 468 H298" stroke="#FFE8A8" stroke-width="16"/><path d="M220 498 H292" stroke="#B5E6C5" stroke-width="16"/><path d="M226 528 H286" stroke="#A0D8F0" stroke-width="16"/><path d="M256 466 L232 548 M256 466 L280 548" stroke="#6E4A2C" stroke-width="5"/></g>
-  <mask id="art-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="512" height="768">
+  <g id="art-source" stroke-linecap="round" stroke-linejoin="round"><path d="M126 462 C146 474 178 480 203 480 C228 480 260 474 280 462 L294 608 L247 608 L226 512 L180 608 L132 608 Z" fill="#FFF7E8" stroke="#7A4C34" stroke-width="5"/>
+<path d="M136 497 H270" stroke="#F49ABB" stroke-width="14" opacity="0.82"/><path d="M136 522 H270" stroke="#F7D66B" stroke-width="14" opacity="0.82"/><path d="M136 547 H270" stroke="#9DD8B6" stroke-width="14" opacity="0.82"/><path d="M136 572 H270" stroke="#83C7EB" stroke-width="14" opacity="0.82"/>
+<path d="M203 484 L180 608 M203 484 L226 512 L247 608" stroke="#7A4C34" stroke-width="4" opacity="0.55"/></g>
+  <mask id="art-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="406" height="844">
     <use href="#art-source" fill="#fff" stroke="#fff"/>
   </mask>
   <linearGradient id="gloss" x1="0" x2="0" y1="0" y2="1">
@@ -12,14 +14,8 @@
   <filter id="soft-shadow" x="-20%" y="-20%" width="140%" height="145%">
     <feDropShadow dx="0" dy="8" stdDeviation="5" flood-color="#6E4A2C" flood-opacity="0.18"/>
   </filter>
-  <filter id="sticker-edge" x="-18%" y="-18%" width="136%" height="136%">
-    <feMorphology in="SourceAlpha" operator="dilate" radius="4" result="expanded"/>
-    <feFlood flood-color="#FFF9EF" flood-opacity="0.95" result="paper"/>
-    <feComposite in="paper" in2="expanded" operator="in"/>
-  </filter>
 </defs>
 <use href="#art-source" filter="url(#soft-shadow)"/>
-<use href="#art-source" filter="url(#sticker-edge)"/>
 <use href="#art-source"/>
-<ellipse cx="174.08" cy="138.24" rx="174.08" ry="153.60000000000002" fill="url(#gloss)" mask="url(#art-mask)" pointer-events="none"/>
+<ellipse cx="138.04000000000002" cy="151.92" rx="138.04000000000002" ry="168.8" fill="url(#gloss)" mask="url(#art-mask)" pointer-events="none"/>
 </svg>

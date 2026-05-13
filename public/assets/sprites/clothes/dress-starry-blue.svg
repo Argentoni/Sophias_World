@@ -1,7 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="512" height="768" viewBox="0 0 512 768">
+<svg xmlns="http://www.w3.org/2000/svg" width="406" height="844" viewBox="0 0 406 844">
 <defs>
-  <g id="art-source" stroke-linecap="round" stroke-linejoin="round"><path d="M180 270 Q256 222 332 270 L360 358 L322 378 L304 340 L354 590 Q256 640 158 590 L208 340 L190 378 L152 358 Z" fill="#A0D8F0" stroke="#6E4A2C" stroke-width="7" stroke-linejoin="round"/><g fill="#FFE8A8"><path d="M252 348 l8 17 18 2-13 13 3 18-16-9-16 9 3-18-13-13 18-2z"/><path d="M292 500 l7 14 15 2-11 11 3 15-14-7-14 7 3-15-11-11 15-2z"/></g></g>
-  <mask id="art-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="512" height="768">
+  <g id="art-source" stroke-linecap="round" stroke-linejoin="round"><path d="M116 506 C94 500 78 480 82 456 L105 383 C112 358 129 344 153 338 C167 354 184 363 203 363 C222 363 239 354 253 338 C277 344 294 358 301 383 L324 456 C328 480 312 500 290 506 L270 438 L318 650 C270 702 136 702 88 650 L136 438 Z" fill="#84C8EB" stroke="#7A4C34" stroke-width="5"/>
+<path d="M153 338 C168 370 185 386 203 386 C221 386 238 370 253 338 L238 329 C228 344 217 352 203 352 C189 352 178 344 168 329 Z" fill="#FFF8F1" stroke="#7A4C34" stroke-width="4"/>
+<path d="M108 454 L132 466 M298 466 L322 454" stroke="#FFF8F1" stroke-width="6" opacity="0.7"/>
+<path d="M118 642 C160 676 246 676 288 642" fill="none" stroke="#FFFFFF" stroke-width="8" opacity="0.28"/>
+<path d="M146 427 C164 446 242 446 260 427" fill="none" stroke="#FFFFFF" stroke-width="7" opacity="0.28"/>
+<path d="M203 490 L211.1 508.8 L231.5 510.7 L216.1 524.3 L220.6 544.3 L203 533.8 L185.4 544.3 L189.9 524.3 L174.5 510.7 L194.9 508.8 Z" fill="#FFF8F1" stroke="#7A4C34" stroke-width="5"/><path d="M245 563 L249.1 572.4 L259.3 573.4 L251.6 580.1 L253.8 590.1 L245 584.9 L236.2 590.1 L238.4 580.1 L230.7 573.4 L240.9 572.4 Z" fill="#FFE27A" stroke="#7A4C34" stroke-width="3"/></g>
+  <mask id="art-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="406" height="844">
     <use href="#art-source" fill="#fff" stroke="#fff"/>
   </mask>
   <linearGradient id="gloss" x1="0" x2="0" y1="0" y2="1">
@@ -12,14 +17,8 @@
   <filter id="soft-shadow" x="-20%" y="-20%" width="140%" height="145%">
     <feDropShadow dx="0" dy="8" stdDeviation="5" flood-color="#6E4A2C" flood-opacity="0.18"/>
   </filter>
-  <filter id="sticker-edge" x="-18%" y="-18%" width="136%" height="136%">
-    <feMorphology in="SourceAlpha" operator="dilate" radius="4" result="expanded"/>
-    <feFlood flood-color="#FFF9EF" flood-opacity="0.95" result="paper"/>
-    <feComposite in="paper" in2="expanded" operator="in"/>
-  </filter>
 </defs>
 <use href="#art-source" filter="url(#soft-shadow)"/>
-<use href="#art-source" filter="url(#sticker-edge)"/>
 <use href="#art-source"/>
-<ellipse cx="174.08" cy="138.24" rx="174.08" ry="153.60000000000002" fill="url(#gloss)" mask="url(#art-mask)" pointer-events="none"/>
+<ellipse cx="138.04000000000002" cy="151.92" rx="138.04000000000002" ry="168.8" fill="url(#gloss)" mask="url(#art-mask)" pointer-events="none"/>
 </svg>

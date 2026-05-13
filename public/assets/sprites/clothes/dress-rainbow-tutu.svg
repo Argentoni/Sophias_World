@@ -1,7 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="512" height="768" viewBox="0 0 512 768">
+<svg xmlns="http://www.w3.org/2000/svg" width="406" height="844" viewBox="0 0 406 844">
 <defs>
-  <g id="art-source" stroke-linecap="round" stroke-linejoin="round"><path d="M182 270 Q256 224 330 270 L358 356 L320 378 L304 342 L338 466 Q256 506 174 466 L208 342 L192 378 L154 356 Z" fill="#FAF4E8" stroke="#6E4A2C" stroke-width="7" stroke-linejoin="round"/><path d="M204 380 A52 52 0 0 1 308 380" fill="none" stroke="#FFB6D5" stroke-width="11"/><path d="M220 380 A36 36 0 0 1 292 380" fill="none" stroke="#FFE8A8" stroke-width="11"/><path d="M236 380 A20 20 0 0 1 276 380" fill="none" stroke="#A0D8F0" stroke-width="11"/><path d="M174 466 Q256 616 338 466 L364 590 Q256 646 148 590 Z" fill="#FFD7E8" stroke="#6E4A2C" stroke-width="7" stroke-linejoin="round"/></g>
-  <mask id="art-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="512" height="768">
+  <g id="art-source" stroke-linecap="round" stroke-linejoin="round"><path d="M116 506 C94 500 78 480 82 456 L105 383 C112 358 129 344 153 338 C167 354 184 363 203 363 C222 363 239 354 253 338 C277 344 294 358 301 383 L324 456 C328 480 312 500 290 506 L270 438 L318 650 C270 702 136 702 88 650 L136 438 Z" fill="#FFF7E8" stroke="#7A4C34" stroke-width="5"/>
+<path d="M153 338 C168 370 185 386 203 386 C221 386 238 370 253 338 L238 329 C228 344 217 352 203 352 C189 352 178 344 168 329 Z" fill="#FFF8F1" stroke="#7A4C34" stroke-width="4"/>
+<path d="M108 454 L132 466 M298 466 L322 454" stroke="#FFF8F1" stroke-width="6" opacity="0.7"/>
+<path d="M118 642 C160 676 246 676 288 642" fill="none" stroke="#FFFFFF" stroke-width="8" opacity="0.28"/>
+<path d="M146 427 C164 446 242 446 260 427" fill="none" stroke="#FFFFFF" stroke-width="7" opacity="0.28"/>
+<path d="M155 538 A48 48 0 0 1 251 538" fill="none" stroke="#F6A4C6" stroke-width="10"/><path d="M169 538 A34 34 0 0 1 237 538" fill="none" stroke="#F7D66B" stroke-width="10"/><path d="M183 538 A20 20 0 0 1 223 538" fill="none" stroke="#8ED0F0" stroke-width="10"/></g>
+  <mask id="art-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="406" height="844">
     <use href="#art-source" fill="#fff" stroke="#fff"/>
   </mask>
   <linearGradient id="gloss" x1="0" x2="0" y1="0" y2="1">
@@ -12,14 +17,8 @@
   <filter id="soft-shadow" x="-20%" y="-20%" width="140%" height="145%">
     <feDropShadow dx="0" dy="8" stdDeviation="5" flood-color="#6E4A2C" flood-opacity="0.18"/>
   </filter>
-  <filter id="sticker-edge" x="-18%" y="-18%" width="136%" height="136%">
-    <feMorphology in="SourceAlpha" operator="dilate" radius="4" result="expanded"/>
-    <feFlood flood-color="#FFF9EF" flood-opacity="0.95" result="paper"/>
-    <feComposite in="paper" in2="expanded" operator="in"/>
-  </filter>
 </defs>
 <use href="#art-source" filter="url(#soft-shadow)"/>
-<use href="#art-source" filter="url(#sticker-edge)"/>
 <use href="#art-source"/>
-<ellipse cx="174.08" cy="138.24" rx="174.08" ry="153.60000000000002" fill="url(#gloss)" mask="url(#art-mask)" pointer-events="none"/>
+<ellipse cx="138.04000000000002" cy="151.92" rx="138.04000000000002" ry="168.8" fill="url(#gloss)" mask="url(#art-mask)" pointer-events="none"/>
 </svg>

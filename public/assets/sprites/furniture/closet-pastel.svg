@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="180" height="230" viewBox="0 0 180 230">
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="245" viewBox="0 0 200 245">
 <defs>
-  <g id="art-source" stroke-linecap="round" stroke-linejoin="round"><rect x="26" y="24" width="128" height="178" rx="18" fill="#FFB6D5" stroke="#6E4A2C" stroke-width="8"/><path d="M90 28 V198" stroke="#6E4A2C" stroke-width="6"/><circle cx="74" cy="114" r="5" fill="#6E4A2C"/><circle cx="106" cy="114" r="5" fill="#6E4A2C"/><path d="M44 52 Q90 24 136 52" fill="none" stroke="#FAF4E8" stroke-width="7"/></g>
-  <mask id="art-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="180" height="230">
+  <g id="art-source" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="100" cy="224" rx="62" ry="14" fill="#7A4C34" opacity="0.12"/><rect x="32" y="28" width="136" height="190" rx="22" fill="#F6A4C6" stroke="#7A4C34" stroke-width="7"/><path d="M100 32 V214" stroke="#7A4C34" stroke-width="5"/><circle cx="82" cy="124" r="5" fill="#7A4C34"/><circle cx="118" cy="124" r="5" fill="#7A4C34"/><path d="M50 58 C76 36 124 36 150 58" fill="none" stroke="#FFF8F1" stroke-width="7" opacity="0.66"/></g>
+  <mask id="art-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="200" height="245">
     <use href="#art-source" fill="#fff" stroke="#fff"/>
   </mask>
   <linearGradient id="gloss" x1="0" x2="0" y1="0" y2="1">
@@ -12,14 +12,8 @@
   <filter id="soft-shadow" x="-20%" y="-20%" width="140%" height="145%">
     <feDropShadow dx="0" dy="8" stdDeviation="5" flood-color="#6E4A2C" flood-opacity="0.18"/>
   </filter>
-  <filter id="sticker-edge" x="-18%" y="-18%" width="136%" height="136%">
-    <feMorphology in="SourceAlpha" operator="dilate" radius="4" result="expanded"/>
-    <feFlood flood-color="#FFF9EF" flood-opacity="0.95" result="paper"/>
-    <feComposite in="paper" in2="expanded" operator="in"/>
-  </filter>
 </defs>
 <use href="#art-source" filter="url(#soft-shadow)"/>
-<use href="#art-source" filter="url(#sticker-edge)"/>
 <use href="#art-source"/>
-<ellipse cx="61.2" cy="41.4" rx="61.2" ry="46" fill="url(#gloss)" mask="url(#art-mask)" pointer-events="none"/>
+<ellipse cx="68" cy="44.1" rx="68" ry="49" fill="url(#gloss)" mask="url(#art-mask)" pointer-events="none"/>
 </svg>

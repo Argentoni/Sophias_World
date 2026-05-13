@@ -101,17 +101,19 @@ export class CharacterComposer {
     this.dragZone.setDepth(this.container.depth + 1);
   }
 
-  private drawOutfit(character: Character): Phaser.GameObjects.Graphics {
-    const g = this.layer();
+  private drawOutfit(character: Character): Phaser.GameObjects.Container {
+    const container = this.scene.add.container(0, 0);
     const outfit = character.outfit;
     if (outfit.dress) {
-      drawDress(g, outfit.dress);
+      container.add(this.wearableImage(outfit.dress) ?? drawDressLayer(this.scene, this.scaleFactor, outfit.dress));
     } else {
-      drawTop(g, outfit.top ?? "outfit-001");
-      drawBottom(g, outfit.bottom ?? "bottom-denim");
+      const top = this.wearableImage(outfit.top ?? "outfit-001");
+      const bottom = this.wearableImage(outfit.bottom ?? "bottom-denim");
+      container.add(top ?? drawTopLayer(this.scene, this.scaleFactor, outfit.top ?? "outfit-001"));
+      container.add(bottom ?? drawBottomLayer(this.scene, this.scaleFactor, outfit.bottom ?? "bottom-denim"));
     }
-    drawShoes(g, outfit.shoes ?? "shoes-pink");
-    return g;
+    container.add(this.wearableImage(outfit.shoes ?? "shoes-pink") ?? drawShoesLayer(this.scene, this.scaleFactor, outfit.shoes ?? "shoes-pink"));
+    return container;
   }
 
   private drawHair(character: Character, layer: "back" | "front"): Phaser.GameObjects.Graphics {
@@ -127,9 +129,15 @@ export class CharacterComposer {
     return g;
   }
 
-  private drawAccessories(character: Character): Phaser.GameObjects.Graphics {
+  private drawAccessories(character: Character): Phaser.GameObjects.Container {
+    const container = this.scene.add.container(0, 0);
     const g = this.layer();
     for (const id of character.outfit.accessories) {
+      const image = this.wearableImage(id);
+      if (image) {
+        container.add(image);
+        continue;
+      }
       if (id === "acc-bow-pink") drawBow(g, 104, 142, 17, 0xff9fc8);
       if (id === "acc-crown-soft") drawCrown(g, 203, 35);
       if (id === "acc-glasses-star") drawGlasses(g);
@@ -141,7 +149,13 @@ export class CharacterComposer {
       if (id === "acc-magic-wand") drawWand(g);
       if (id === "acc-kitty-ear") drawCatEars(g);
     }
-    return g;
+    container.add(g);
+    return container;
+  }
+
+  private wearableImage(id: string | undefined): Phaser.GameObjects.Image | null {
+    if (!id || !this.scene.textures.exists(id)) return null;
+    return this.scene.add.image(0, 0, id).setOrigin(0.5, 1).setScale(this.scaleFactor);
   }
 
   private drawFaceBase(): Phaser.GameObjects.Graphics {
@@ -208,6 +222,30 @@ function lx(x: number): number {
 
 function ly(y: number): number {
   return y - dollHeight;
+}
+
+function drawTopLayer(scene: Phaser.Scene, scale: number, id: string): Phaser.GameObjects.Graphics {
+  const g = scene.add.graphics().setScale(scale);
+  drawTop(g, id);
+  return g;
+}
+
+function drawBottomLayer(scene: Phaser.Scene, scale: number, id: string): Phaser.GameObjects.Graphics {
+  const g = scene.add.graphics().setScale(scale);
+  drawBottom(g, id);
+  return g;
+}
+
+function drawDressLayer(scene: Phaser.Scene, scale: number, id: string): Phaser.GameObjects.Graphics {
+  const g = scene.add.graphics().setScale(scale);
+  drawDress(g, id);
+  return g;
+}
+
+function drawShoesLayer(scene: Phaser.Scene, scale: number, id: string): Phaser.GameObjects.Graphics {
+  const g = scene.add.graphics().setScale(scale);
+  drawShoes(g, id);
+  return g;
 }
 
 function drawBackHair(g: Phaser.GameObjects.Graphics, style: string, color: number): void {

@@ -42,7 +42,7 @@ export class ShopScene extends Phaser.Scene {
       const x = 210 + (index % 5) * 205;
       const y = 245 + Math.floor(index / 5) * 104;
       this.add.rectangle(x, y, 178, 92, 0xffffff, 0.68).setStrokeStyle(2, 0xffffff, 0.9).setDepth(4001);
-      drawClothingIcon(this, x - 56, y - 4, item.id, item.category, 0.58, 4002);
+      drawClothingIcon(this, x - 56, y - 4, item.id, item.category, 0.66, 4002);
       addSmallText(this, x + 28, y - 22, item.name, 104).setDepth(4002);
       addButton(this, x + 28, y + 30, owned.includes(item.id) ? "Tenho" : `${item.price} ★`, () => {
         const canUse = owned.includes(item.id) || gameStore.getState().purchaseClothing(item.id);

@@ -126,7 +126,7 @@ export class WardrobeScene extends Phaser.Scene {
       const x = 470 + (index % 5) * 140;
       const y = 300 + Math.floor(index / 5) * 112;
       this.add.rectangle(x, y, 116, 98, 0xffffff, 0.62).setStrokeStyle(2, 0xffffff, 0.9).setDepth(4201);
-      drawClothingIcon(this, x, y - 12, item.id, item.category, 0.72, 4202);
+      drawClothingIcon(this, x, y - 12, item.id, item.category, 0.78, 4202);
       addButton(this, x, y + 38, item.category === "accessory" ? "Usar" : "Vestir", () => {
         if (item.category === "accessory") gameStore.getState().toggleAccessory(item.id);
         else gameStore.getState().setOutfitSlot(item.category, item.id);

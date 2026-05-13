@@ -1,9 +1,24 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="512" height="768" viewBox="0 0 512 768">
-  <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFD8E4"/><stop offset="1" stop-color="#FFADC8"/></linearGradient></defs>
-  
-  <path d="M176 270 Q256 228 336 270 L370 352 L326 378 L306 332 L306 442 L206 442 L206 332 L186 378 L142 352 Z" fill="url(#g)" stroke="#6E4A2C" stroke-width="8" stroke-linejoin="round"/>
-  <path d="M199 284 Q256 256 313 284" fill="none" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round" opacity="0.55"/>
-  <path d="M166 342 Q178 356 190 360 M346 342 Q334 356 322 360" fill="none" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round" opacity="0.45"/>
-  <path d="M256 318 L271 349 L305 354 L280 378 L286 412 L256 396 L226 412 L232 378 L207 354 L241 349 Z" fill="#FFFFFF"/>
-
+<svg xmlns="http://www.w3.org/2000/svg" width="406" height="844" viewBox="0 0 406 844">
+<defs>
+  <g id="art-source" stroke-linecap="round" stroke-linejoin="round"><path d="M118 500 C94 494 78 475 82 454 L104 382 C110 360 127 346 151 340 C166 351 184 358 203 358 C222 358 240 351 255 340 C279 346 296 360 302 382 L324 454 C328 475 312 494 288 500 L263 427 L263 487 C247 501 225 509 203 509 C181 509 159 501 143 487 L143 427 Z" fill="#F9A8C9" stroke="#7A4C34" stroke-width="5"/>
+<path d="M151 340 C166 366 184 380 203 380 C222 380 240 366 255 340 L240 330 C229 344 218 351 203 351 C188 351 177 344 166 330 Z" fill="#FFF8F1" stroke="#7A4C34" stroke-width="4"/>
+<path d="M97 452 L126 465 M309 452 L280 465" stroke="#FFF8F1" stroke-width="6" opacity="0.72"/>
+<path d="M147 486 C166 498 183 503 203 503 C223 503 240 498 259 486" fill="none" stroke="#FFF8F1" stroke-width="5" opacity="0.64"/>
+<path d="M160 370 C176 388 230 388 246 370" fill="none" stroke="#FFFFFF" stroke-width="8" opacity="0.24"/>
+<path d="M203 384 L211.1 402.8 L231.5 404.7 L216.1 418.3 L220.6 438.3 L203 427.8 L185.4 438.3 L189.9 418.3 L174.5 404.7 L194.9 402.8 Z" fill="#FFF8F1" stroke="#7A4C34" stroke-width="5"/></g>
+  <mask id="art-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="406" height="844">
+    <use href="#art-source" fill="#fff" stroke="#fff"/>
+  </mask>
+  <linearGradient id="gloss" x1="0" x2="0" y1="0" y2="1">
+    <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.45"/>
+    <stop offset="0.42" stop-color="#FFFFFF" stop-opacity="0.12"/>
+    <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+  </linearGradient>
+  <filter id="soft-shadow" x="-20%" y="-20%" width="140%" height="145%">
+    <feDropShadow dx="0" dy="8" stdDeviation="5" flood-color="#6E4A2C" flood-opacity="0.18"/>
+  </filter>
+</defs>
+<use href="#art-source" filter="url(#soft-shadow)"/>
+<use href="#art-source"/>
+<ellipse cx="138.04000000000002" cy="151.92" rx="138.04000000000002" ry="168.8" fill="url(#gloss)" mask="url(#art-mask)" pointer-events="none"/>
 </svg>

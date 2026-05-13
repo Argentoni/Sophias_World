@@ -24,8 +24,8 @@ export class InventoryScene extends Phaser.Scene {
       const item = clothesById.get(id);
       if (!item) return;
       const x = 190 + index * 82;
-      this.add.rectangle(x, 285, 66, 76, 0xffffff, 0.62).setStrokeStyle(2, 0xffffff, 0.9).setDepth(4101);
-      drawClothingIcon(this, x, 285, item.id, item.category, 0.44, 4102);
+      this.add.rectangle(x, 285, 74, 76, 0xffffff, 0.62).setStrokeStyle(2, 0xffffff, 0.9).setDepth(4101);
+      drawClothingIcon(this, x, 285, item.id, item.category, 0.58, 4102);
     });
 
     this.add.text(185, 380, "Móveis", headerStyle()).setDepth(4101);

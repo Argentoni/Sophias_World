@@ -61,11 +61,294 @@ const files = new Map([
 ]);
 
 addExpandedAssets();
+rebuildDollhouseAssetPack();
 
 for (const [path, svg] of files) {
   const fullPath = join(root, path);
   mkdirSync(dirname(fullPath), { recursive: true });
   writeFileSync(fullPath, svg);
+}
+
+function rebuildDollhouseAssetPack() {
+  files.clear();
+
+  const tops = [
+    ["outfit-001", "rose", "#F9A8C9", "#FFF5F8", "star"],
+    ["top-sky-heart", "sky", "#8FD4F3", "#FF9FC8", "heart"],
+    ["top-mint-ribbon", "mint", "#9EDDBA", "#F7A5CA", "bow"],
+    ["top-sunflower", "sun", "#F8D46B", "#9CCB7B", "flower"],
+    ["top-rainbow", "rainbow", "#F5B5CD", "#7EC7E8", "rainbow"],
+    ["top-cat-pocket", "pocket", "#F7B2D1", "#FFF5F8", "pocket"],
+    ["top-cloud-dream", "cloud", "#B9E8F8", "#FFE27A", "cloud"],
+    ["top-strawberry", "berry", "#FF9CB6", "#8BCB78", "strawberry"],
+    ["top-sailor-bow", "sailor", "#FFF7E8", "#78BFE8", "sailor"]
+  ];
+  for (const [id, , base, accent, motif] of tops) {
+    files.set(`clothes/${id}.svg`, topWearable(base, accent, motif));
+  }
+
+  const bottoms = [
+    ["bottom-denim", "#6FA7D7", "#F9D26F", "short"],
+    ["bottom-lilac", "#C9A6EF", "#FFF5F8", "skirt"],
+    ["bottom-mint", "#9EDDBA", "#FFF5F8", "short"],
+    ["bottom-star-skirt", "#7FC4E7", "#FFE27A", "star-skirt"],
+    ["bottom-tutu-pink", "#F7A9CD", "#FFE6F0", "tutu"],
+    ["bottom-rainbow-leggings", "#FFF7E8", "#85C8EA", "leggings"],
+    ["bottom-heart-shorts", "#F59ABC", "#FFF5F8", "heart-short"],
+    ["bottom-cloud-skirt", "#B9E8F8", "#FFF5F8", "cloud-skirt"]
+  ];
+  for (const [id, base, accent, kind] of bottoms) {
+    files.set(`clothes/${id}.svg`, bottomWearable(base, accent, kind));
+  }
+
+  const dresses = [
+    ["dress-starry-blue", "#84C8EB", "#FFE27A", "stars"],
+    ["dress-flower-pink", "#F6A4C6", "#FFF5F8", "flower"],
+    ["dress-moon-yellow", "#F7D66B", "#FFF5F8", "moon"],
+    ["dress-cupcake-lilac", "#C6A6EE", "#F9A8C9", "cupcake"],
+    ["dress-rainbow-tutu", "#FFF7E8", "#F6A4C6", "rainbow"],
+    ["dress-rose-red", "#F1829F", "#FFF5F8", "rose"]
+  ];
+  for (const [id, base, accent, motif] of dresses) {
+    files.set(`clothes/${id}.svg`, dressWearable(base, accent, motif));
+  }
+
+  const shoes = [
+    ["shoes-pink", "#F69FC4", "#FFF5F8"],
+    ["shoes-yellow", "#F7D66B", "#FFF5F8"],
+    ["shoes-mint", "#93D9B1", "#FFF5F8"],
+    ["shoes-lilac-boots", "#BFA0EB", "#FFF5F8"],
+    ["shoes-blue-sneakers", "#7EC7E8", "#FFF5F8"]
+  ];
+  for (const [id, base, accent] of shoes) files.set(`clothes/${id}.svg`, shoesWearable(base, accent));
+
+  const accessories = [
+    ["acc-bow-pink", accessoryWearable("bow", "#F59ABC", "#FFF0F6")],
+    ["acc-glasses-star", accessoryWearable("glasses", "#F7D66B", "#83C7EB")],
+    ["acc-bag-bunny", accessoryWearable("bag", "#FFF5F8", "#F6A4C6")],
+    ["acc-crown-soft", accessoryWearable("crown", "#F7D66B", "#F59ABC")],
+    ["acc-necklace-heart", accessoryWearable("necklace", "#F59ABC", "#F7D66B")],
+    ["acc-hat-bear", accessoryWearable("hat", "#D7A978", "#FFF2D8")],
+    ["acc-flower-clip", accessoryWearable("flower", "#F59ABC", "#F7D66B")],
+    ["acc-wing-backpack", accessoryWearable("wings", "#FFF8F2", "#9FD8F0")],
+    ["acc-magic-wand", accessoryWearable("wand", "#F7D66B", "#F59ABC")],
+    ["acc-kitty-ear", accessoryWearable("ears", "#F59ABC", "#FFF0F6")]
+  ];
+  for (const [id, svg] of accessories) files.set(`clothes/${id}.svg`, svg);
+
+  Object.entries(furnitureAssets()).forEach(([id, svg]) => files.set(`furniture/${id}.svg`, svg));
+  Object.entries(objectAssets()).forEach(([id, svg]) => files.set(`objects/${id}.svg`, svg));
+
+  files.set("pets/dog-cream.svg", dogDollhouse("#F5D7B5", "#E8B68E"));
+  files.set("pets/dog-caramel.svg", dogDollhouse("#D8A066", "#9E6941"));
+  files.set("pets/dog-cocoa.svg", dogDollhouse("#8D5A3A", "#5E3A28"));
+  Object.entries(petAccessoryAssets()).forEach(([id, svg]) => files.set(`pets/${id}.svg`, svg));
+}
+
+function wearableSvg(content) {
+  return wrapSvg(406, 844, content);
+}
+
+function topWearable(base, accent, motif) {
+  const motifSvg = wearableMotif(motif, accent);
+  return wearableSvg(`<path d="M118 500 C94 494 78 475 82 454 L104 382 C110 360 127 346 151 340 C166 351 184 358 203 358 C222 358 240 351 255 340 C279 346 296 360 302 382 L324 454 C328 475 312 494 288 500 L263 427 L263 487 C247 501 225 509 203 509 C181 509 159 501 143 487 L143 427 Z" fill="${base}" stroke="#7A4C34" stroke-width="5"/>
+<path d="M151 340 C166 366 184 380 203 380 C222 380 240 366 255 340 L240 330 C229 344 218 351 203 351 C188 351 177 344 166 330 Z" fill="#FFF8F1" stroke="#7A4C34" stroke-width="4"/>
+<path d="M97 452 L126 465 M309 452 L280 465" stroke="#FFF8F1" stroke-width="6" opacity="0.72"/>
+<path d="M147 486 C166 498 183 503 203 503 C223 503 240 498 259 486" fill="none" stroke="#FFF8F1" stroke-width="5" opacity="0.64"/>
+<path d="M160 370 C176 388 230 388 246 370" fill="none" stroke="#FFFFFF" stroke-width="8" opacity="0.24"/>
+${motifSvg}`);
+}
+
+function bottomWearable(base, accent, kind) {
+  if (kind === "skirt" || kind === "star-skirt" || kind === "tutu" || kind === "cloud-skirt") {
+    const frill = kind === "tutu" ? `<path d="M111 560 C148 625 258 625 295 560 L324 610 C270 660 136 660 82 610 Z" fill="${accent}" stroke="#7A4C34" stroke-width="5" opacity="0.9"/>` : "";
+    const motif = kind === "star-skirt" ? star(203, 545, 24, accent) : kind === "cloud-skirt" ? cloud(203, 548, "#FFF8F1") : "";
+    return wearableSvg(`<path d="M123 464 C144 477 178 484 203 484 C228 484 262 477 283 464 L316 590 C270 634 136 634 90 590 Z" fill="${base}" stroke="#7A4C34" stroke-width="5"/>
+<path d="M126 466 C170 491 236 491 280 466" fill="none" stroke="#FFF8F1" stroke-width="7" opacity="0.78"/>
+<path d="M112 568 C160 596 246 596 294 568" fill="none" stroke="#FFFFFF" stroke-width="7" opacity="0.26"/>
+${frill}${motif}`);
+  }
+  if (kind === "leggings") {
+    return wearableSvg(`<path d="M126 462 C146 474 178 480 203 480 C228 480 260 474 280 462 L294 608 L247 608 L226 512 L180 608 L132 608 Z" fill="${base}" stroke="#7A4C34" stroke-width="5"/>
+${[0, 1, 2, 3].map((i) => `<path d="M136 ${497 + i * 25} H270" stroke="${["#F49ABB", "#F7D66B", "#9DD8B6", "#83C7EB"][i]}" stroke-width="14" opacity="0.82"/>`).join("")}
+<path d="M203 484 L180 608 M203 484 L226 512 L247 608" stroke="#7A4C34" stroke-width="4" opacity="0.55"/>`);
+  }
+  const motif = kind === "heart-short" ? `${heart(164, 514, 15, accent)}${heart(242, 514, 15, accent)}` : "";
+  return wearableSvg(`<path d="M124 462 C145 474 178 480 203 480 C228 480 261 474 282 462 L296 560 L247 574 L203 514 L159 574 L110 560 Z" fill="${base}" stroke="#7A4C34" stroke-width="5"/>
+<path d="M128 470 C169 494 237 494 278 470" fill="none" stroke="#FFF8F1" stroke-width="7" opacity="0.68"/>
+<path d="M203 494 L203 552" stroke="#FFF8F1" stroke-width="4" opacity="0.66"/>
+${motif}`);
+}
+
+function dressWearable(base, accent, motif) {
+  const motifSvg = wearableMotif(motif, accent, 520);
+  return wearableSvg(`<path d="M116 506 C94 500 78 480 82 456 L105 383 C112 358 129 344 153 338 C167 354 184 363 203 363 C222 363 239 354 253 338 C277 344 294 358 301 383 L324 456 C328 480 312 500 290 506 L270 438 L318 650 C270 702 136 702 88 650 L136 438 Z" fill="${base}" stroke="#7A4C34" stroke-width="5"/>
+<path d="M153 338 C168 370 185 386 203 386 C221 386 238 370 253 338 L238 329 C228 344 217 352 203 352 C189 352 178 344 168 329 Z" fill="#FFF8F1" stroke="#7A4C34" stroke-width="4"/>
+<path d="M108 454 L132 466 M298 466 L322 454" stroke="#FFF8F1" stroke-width="6" opacity="0.7"/>
+<path d="M118 642 C160 676 246 676 288 642" fill="none" stroke="#FFFFFF" stroke-width="8" opacity="0.28"/>
+<path d="M146 427 C164 446 242 446 260 427" fill="none" stroke="#FFFFFF" stroke-width="7" opacity="0.28"/>
+${motifSvg}`);
+}
+
+function shoesWearable(base, accent) {
+  return wearableSvg(`<path d="M119 794 C137 776 170 778 184 798 L181 828 L116 828 C101 816 104 802 119 794 Z" fill="${base}" stroke="#7A4C34" stroke-width="5"/>
+<path d="M287 794 C269 776 236 778 222 798 L225 828 L290 828 C305 816 302 802 287 794 Z" fill="${base}" stroke="#7A4C34" stroke-width="5"/>
+<path d="M126 803 H174 M232 803 H280" stroke="${accent}" stroke-width="6" opacity="0.86"/>
+<path d="M126 817 H178 M228 817 H280" stroke="#FFFFFF" stroke-width="5" opacity="0.34"/>`);
+}
+
+function accessoryWearable(kind, base, accent) {
+  if (kind === "bow") return wearableSvg(`<path d="M171 134 C137 108 113 126 122 164 C140 174 158 168 184 148 Z" fill="${base}" stroke="#7A4C34" stroke-width="5"/><path d="M235 148 C262 168 280 174 298 164 C307 126 283 108 235 134 Z" fill="${base}" stroke="#7A4C34" stroke-width="5"/><circle cx="203" cy="142" r="17" fill="${accent}" stroke="#7A4C34" stroke-width="5"/>`);
+  if (kind === "glasses") return wearableSvg(`<circle cx="146" cy="226" r="32" fill="none" stroke="${base}" stroke-width="6"/><circle cx="260" cy="226" r="32" fill="none" stroke="${base}" stroke-width="6"/><path d="M178 226 H228" stroke="${base}" stroke-width="6"/><path d="M113 190 L104 210 L84 213 L99 227 L95 248 L113 238 L132 248 L128 227 L143 213 L122 210 Z" fill="${accent}" stroke="#7A4C34" stroke-width="4"/>`);
+  if (kind === "bag") return wearableSvg(`<path d="M312 520 C314 472 356 462 378 506 L366 608 C346 632 306 625 292 598 Z" fill="${base}" stroke="#7A4C34" stroke-width="5"/><path d="M317 516 C330 478 358 478 369 516" fill="none" stroke="#7A4C34" stroke-width="5"/><path d="M328 546 C316 528 296 542 305 564 C313 584 334 594 334 594 C334 594 356 584 364 564 C373 542 352 528 340 546 Z" fill="${accent}"/>`);
+  if (kind === "crown") return wearableSvg(`<path d="M142 124 L170 72 L203 125 L236 72 L264 124 L254 164 C220 178 186 178 152 164 Z" fill="${base}" stroke="#7A4C34" stroke-width="5"/><circle cx="170" cy="74" r="9" fill="${accent}"/><circle cx="236" cy="74" r="9" fill="#83C7EB"/>`);
+  if (kind === "necklace") return wearableSvg(`<path d="M160 350 C176 384 230 384 246 350" fill="none" stroke="#7A4C34" stroke-width="5"/><path d="M203 375 C192 360 174 371 182 389 C188 402 203 410 203 410 C203 410 218 402 224 389 C232 371 214 360 203 375 Z" fill="${base}" stroke="#7A4C34" stroke-width="4"/>`);
+  if (kind === "hat") return wearableSvg(`<path d="M109 154 C128 82 278 82 297 154 C268 187 138 187 109 154 Z" fill="${base}" stroke="#7A4C34" stroke-width="5"/><circle cx="146" cy="112" r="27" fill="${base}" stroke="#7A4C34" stroke-width="5"/><circle cx="260" cy="112" r="27" fill="${base}" stroke="#7A4C34" stroke-width="5"/><path d="M164 156 C184 171 222 171 242 156" fill="none" stroke="${accent}" stroke-width="6"/>`);
+  if (kind === "flower") return wearableSvg(`${flower(112, 154, base, accent, 1.1)}`);
+  if (kind === "wings") return wearableSvg(`<path d="M70 432 C34 380 48 330 122 382 C130 428 113 466 80 488 Z" fill="${base}" stroke="#7A4C34" stroke-width="5"/><path d="M336 432 C372 380 358 330 284 382 C276 428 293 466 326 488 Z" fill="${base}" stroke="#7A4C34" stroke-width="5"/><path d="M95 404 L122 455 M311 404 L284 455" stroke="${accent}" stroke-width="5" opacity="0.7"/>`);
+  if (kind === "wand") return wearableSvg(`<path d="M298 552 L360 448" stroke="#7A4C34" stroke-width="7"/><path d="M361 414 L376 444 L409 449 L385 472 L391 505 L361 489 L331 505 L337 472 L313 449 L346 444 Z" fill="${base}" stroke="#7A4C34" stroke-width="5"/><circle cx="334" cy="491" r="6" fill="${accent}"/><circle cx="374" cy="438" r="5" fill="#83C7EB"/>`);
+  return wearableSvg(`<path d="M112 147 L152 76 L181 157 Z" fill="${base}" stroke="#7A4C34" stroke-width="5"/><path d="M294 147 L254 76 L225 157 Z" fill="${base}" stroke="#7A4C34" stroke-width="5"/><path d="M150 154 C184 136 222 136 256 154" fill="none" stroke="#7A4C34" stroke-width="5"/>`);
+}
+
+function wearableMotif(motif, accent, y = 414) {
+  if (motif === "star" || motif === "stars") return star(203, y, 30, "#FFF8F1") + (motif === "stars" ? star(245, y + 58, 15, accent) : "");
+  if (motif === "heart" || motif === "rose") return heart(203, y, 28, accent);
+  if (motif === "bow" || motif === "sailor") return bow(203, y, 24, accent);
+  if (motif === "flower") return flower(203, y, "#FFF8F1", accent, 1.15);
+  if (motif === "rainbow") return rainbow(203, y + 18, 48);
+  if (motif === "cloud") return cloud(203, y, "#FFF8F1") + star(238, y + 42, 13, accent);
+  if (motif === "strawberry") return strawberry(203, y, 1.1);
+  if (motif === "pocket") return `<path d="M167 ${y - 30} H239 V${y + 28} C220 ${y + 50} 186 ${y + 50} 167 ${y + 28} Z" fill="#FFF8F1" stroke="#7A4C34" stroke-width="4"/><circle cx="187" cy="${y}" r="5" fill="#7A4C34"/><circle cx="219" cy="${y}" r="5" fill="#7A4C34"/><path d="M190 ${y + 18} C198 ${y + 25} 208 ${y + 25} 216 ${y + 18}" fill="none" stroke="#7A4C34" stroke-width="4"/>`;
+  if (motif === "cupcake") return `<path d="M164 ${y - 24} H242 L232 ${y + 48} C215 ${y + 62} 191 ${y + 62} 174 ${y + 48} Z" fill="#F7D66B" stroke="#7A4C34" stroke-width="4"/><path d="M164 ${y - 24} C170 ${y - 58} 236 ${y - 58} 242 ${y - 24} Z" fill="${accent}" stroke="#7A4C34" stroke-width="4"/><circle cx="203" cy="${y - 58}" r="8" fill="#E95E7E"/>`;
+  if (motif === "moon") return `<path d="M222 ${y - 38} A43 43 0 1 1 178 ${y + 18} A32 32 0 1 0 222 ${y - 38} Z" fill="#FFF8F1"/>`;
+  return "";
+}
+
+function furnitureAssets() {
+  return {
+    "bed-pink": icon(300, 210, `<ellipse cx="150" cy="174" rx="118" ry="24" fill="#7A4C34" opacity="0.12"/><path d="M42 100 H254 C270 100 282 112 282 128 V164 H36 V106 C36 103 39 100 42 100 Z" fill="#F6A4C6" stroke="#7A4C34" stroke-width="6"/><path d="M58 66 H136 C151 66 162 78 162 93 V112 H42 V82 C42 73 49 66 58 66 Z" fill="#FFF8F1" stroke="#7A4C34" stroke-width="5"/><path d="M150 100 H282 V128 H150 Z" fill="#FFE7F0"/><circle cx="220" cy="118" r="25" fill="#F7D66B"/><path d="M58 164 V190 M258 164 V190" stroke="#7A4C34" stroke-width="7"/>`),
+    "desk-mint": icon(220, 170, `<ellipse cx="110" cy="140" rx="72" ry="18" fill="#7A4C34" opacity="0.12"/><path d="M40 68 C70 54 150 54 180 68 L170 106 H50 Z" fill="#9EDDBA" stroke="#7A4C34" stroke-width="6"/><path d="M62 106 L50 152 M158 106 L170 152" stroke="#7A4C34" stroke-width="6"/><rect x="82" y="34" width="56" height="44" rx="13" fill="#F7D66B" stroke="#7A4C34" stroke-width="5"/><path d="M52 82 C85 93 135 93 168 82" fill="none" stroke="#FFF8F1" stroke-width="6" opacity="0.7"/>`),
+    "rug-star": icon(300, 140, `<ellipse cx="150" cy="74" rx="120" ry="46" fill="#7EC7E8" stroke="#7A4C34" stroke-width="6"/><ellipse cx="150" cy="68" rx="92" ry="28" fill="#A7DDF2" opacity="0.55"/><path d="M150 34 L162 59 L190 63 L170 83 L175 112 L150 98 L125 112 L130 83 L110 63 L138 59 Z" fill="#F7D66B" stroke="#7A4C34" stroke-width="4"/>`),
+    "pet-bed": icon(190, 135, `<ellipse cx="95" cy="105" rx="72" ry="20" fill="#7A4C34" opacity="0.12"/><path d="M36 72 C45 36 145 36 154 72 L146 108 C119 124 71 124 44 108 Z" fill="#D7A978" stroke="#7A4C34" stroke-width="6"/><ellipse cx="95" cy="76" rx="48" ry="22" fill="#FFF2D8"/><path d="M54 69 C76 47 114 47 136 69" fill="none" stroke="#7A4C34" stroke-width="5"/>`),
+    "chair-heart": icon(180, 190, `<ellipse cx="90" cy="162" rx="54" ry="16" fill="#7A4C34" opacity="0.12"/><path d="M90 58 C64 20 18 42 31 85 C43 122 90 144 90 144 C90 144 137 122 149 85 C162 42 116 20 90 58 Z" fill="#F6A4C6" stroke="#7A4C34" stroke-width="6"/><path d="M66 130 L54 176 M114 130 L126 176" stroke="#7A4C34" stroke-width="6"/><path d="M55 80 C68 109 90 122 90 122 C90 122 112 109 125 80" fill="none" stroke="#FFF8F1" stroke-width="6" opacity="0.65"/>`),
+    "mirror-flower": icon(150, 230, `<ellipse cx="75" cy="203" rx="42" ry="12" fill="#7A4C34" opacity="0.12"/><g fill="#F6A4C6" stroke="#7A4C34" stroke-width="4"><ellipse cx="75" cy="24" rx="14" ry="24"/><ellipse cx="75" cy="178" rx="14" ry="24"/><ellipse cx="20" cy="100" rx="23" ry="13"/><ellipse cx="130" cy="100" rx="23" ry="13"/></g><ellipse cx="75" cy="100" rx="46" ry="72" fill="#DDF3FF" stroke="#7A4C34" stroke-width="6"/><path d="M55 70 C68 55 92 55 105 70" stroke="#FFFFFF" stroke-width="7" opacity="0.7"/><path d="M75 169 V215" stroke="#7A4C34" stroke-width="6"/>`),
+    "bookshelf-rainbow": icon(190, 235, `<ellipse cx="95" cy="214" rx="58" ry="14" fill="#7A4C34" opacity="0.12"/><rect x="34" y="28" width="122" height="178" rx="20" fill="#FFF8F1" stroke="#7A4C34" stroke-width="7"/><path d="M43 86 H147 M43 140 H147" stroke="#7A4C34" stroke-width="5"/><rect x="54" y="48" width="16" height="36" rx="4" fill="#F6A4C6"/><rect x="77" y="43" width="17" height="41" rx="4" fill="#7EC7E8"/><rect x="102" y="99" width="20" height="39" rx="5" fill="#9EDDBA"/><path d="M58 162 H132 C138 162 142 167 142 173 C130 190 69 190 48 173 C48 167 52 162 58 162 Z" fill="#F7D66B"/>`),
+    "lamp-moon": icon(135, 190, `<ellipse cx="68" cy="172" rx="43" ry="12" fill="#7A4C34" opacity="0.12"/><path d="M82 24 A46 46 0 1 1 43 91 A34 34 0 1 0 82 24 Z" fill="#F7D66B" stroke="#7A4C34" stroke-width="6"/><path d="M68 100 V159" stroke="#7A4C34" stroke-width="6"/><ellipse cx="68" cy="164" rx="38" ry="13" fill="#F6A4C6" stroke="#7A4C34" stroke-width="5"/>`),
+    "plant-smile": icon(145, 175, `<ellipse cx="72" cy="155" rx="45" ry="12" fill="#7A4C34" opacity="0.12"/><path d="M48 78 C16 46 39 20 68 62" fill="#9EDDBA" stroke="#7A4C34" stroke-width="5"/><path d="M82 82 C72 34 118 22 113 72" fill="#9EDDBA" stroke="#7A4C34" stroke-width="5"/><rect x="34" y="88" width="76" height="56" rx="18" fill="#D7A978" stroke="#7A4C34" stroke-width="6"/><circle cx="59" cy="114" r="4" fill="#7A4C34"/><circle cx="85" cy="114" r="4" fill="#7A4C34"/><path d="M62 128 C68 135 76 135 82 128" fill="none" stroke="#7A4C34" stroke-width="4"/>`),
+    "toy-horse": icon(220, 170, `<ellipse cx="110" cy="143" rx="76" ry="14" fill="#7A4C34" opacity="0.12"/><path d="M55 106 C48 64 82 48 118 59 C150 67 158 88 149 114 L125 114 L116 83 H84 L76 114 Z" fill="#D7A978" stroke="#7A4C34" stroke-width="6"/><path d="M124 59 L165 36 L158 78" fill="#D7A978" stroke="#7A4C34" stroke-width="6"/><circle cx="138" cy="67" r="4" fill="#7A4C34"/><path d="M34 132 C80 157 140 157 186 132" fill="none" stroke="#7A4C34" stroke-width="8"/><path d="M71 78 C92 67 118 70 138 84" fill="none" stroke="#FFF8F1" stroke-width="5" opacity="0.55"/>`),
+    "closet-pastel": icon(200, 245, `<ellipse cx="100" cy="224" rx="62" ry="14" fill="#7A4C34" opacity="0.12"/><rect x="32" y="28" width="136" height="190" rx="22" fill="#F6A4C6" stroke="#7A4C34" stroke-width="7"/><path d="M100 32 V214" stroke="#7A4C34" stroke-width="5"/><circle cx="82" cy="124" r="5" fill="#7A4C34"/><circle cx="118" cy="124" r="5" fill="#7A4C34"/><path d="M50 58 C76 36 124 36 150 58" fill="none" stroke="#FFF8F1" stroke-width="7" opacity="0.66"/>`),
+    "sofa-cloud": icon(300, 170, `<ellipse cx="150" cy="142" rx="112" ry="18" fill="#7A4C34" opacity="0.12"/><path d="M52 96 C40 54 82 42 104 58 C124 26 160 35 172 62 C212 43 252 62 239 102 L242 136 H48 Z" fill="#FFF8F1" stroke="#7A4C34" stroke-width="7"/><path d="M70 136 L60 158 M230 136 L240 158" stroke="#7A4C34" stroke-width="6"/><path d="M83 91 C120 112 182 112 219 91" fill="none" stroke="#F6A4C6" stroke-width="8" opacity="0.62"/>`),
+    "table-juice": icon(220, 165, `<ellipse cx="110" cy="144" rx="70" ry="13" fill="#7A4C34" opacity="0.12"/><path d="M42 84 C74 71 146 71 178 84 L168 112 H52 Z" fill="#F7D66B" stroke="#7A4C34" stroke-width="6"/><path d="M66 112 L54 154 M154 112 L166 154" stroke="#7A4C34" stroke-width="6"/><path d="M92 34 H132 L126 76 H98 Z" fill="#7EC7E8" stroke="#7A4C34" stroke-width="5"/><path d="M112 34 L128 14" stroke="#7A4C34" stroke-width="4"/>`),
+    "kitchen-stove": icon(185, 225, `<ellipse cx="92" cy="206" rx="54" ry="13" fill="#7A4C34" opacity="0.12"/><rect x="32" y="36" width="120" height="160" rx="22" fill="#FFF8F1" stroke="#7A4C34" stroke-width="7"/><rect x="50" y="101" width="84" height="62" rx="14" fill="#B9E8F8" stroke="#7A4C34" stroke-width="5"/><circle cx="60" cy="70" r="9" fill="#F6A4C6"/><circle cx="92" cy="70" r="9" fill="#9EDDBA"/><circle cx="124" cy="70" r="9" fill="#F7D66B"/><path d="M59 126 H125" stroke="#FFFFFF" stroke-width="5" opacity="0.62"/>`),
+    "fridge-star": icon(180, 245, `<ellipse cx="90" cy="224" rx="53" ry="14" fill="#7A4C34" opacity="0.12"/><rect x="36" y="28" width="108" height="190" rx="24" fill="#9FD8F0" stroke="#7A4C34" stroke-width="7"/><path d="M36 93 H144" stroke="#7A4C34" stroke-width="5"/><path d="M102 140 L111 158 L131 161 L116 175 L120 196 L102 186 L84 196 L88 175 L73 161 L93 158 Z" fill="#F7D66B"/><path d="M122 55 V78 M122 118 V170" stroke="#FFF8F1" stroke-width="6"/>`),
+    "beanbag-pink": icon(180, 135, `<ellipse cx="90" cy="113" rx="61" ry="15" fill="#7A4C34" opacity="0.12"/><path d="M42 102 C18 57 65 18 112 28 C156 38 154 105 93 111 C67 115 50 111 42 102 Z" fill="#F6A4C6" stroke="#7A4C34" stroke-width="7"/><path d="M62 54 C82 39 114 43 132 63" fill="none" stroke="#FFF8F1" stroke-width="7" opacity="0.65"/>`),
+    "wall-shelf": icon(205, 125, `<ellipse cx="102" cy="112" rx="72" ry="8" fill="#7A4C34" opacity="0.09"/><rect x="30" y="66" width="145" height="20" rx="10" fill="#D7A978" stroke="#7A4C34" stroke-width="5"/><path d="M52 87 L37 113 M153 87 L168 113" stroke="#7A4C34" stroke-width="5"/><path d="M84 48 L58 34 C49 56 62 70 84 62 Z" fill="#F6A4C6" stroke="#7A4C34" stroke-width="4"/><path d="M120 48 L146 34 C155 56 142 70 120 62 Z" fill="#7EC7E8" stroke="#7A4C34" stroke-width="4"/>`),
+    "toy-box": icon(205, 155, `<ellipse cx="102" cy="135" rx="72" ry="13" fill="#7A4C34" opacity="0.12"/><rect x="26" y="70" width="153" height="58" rx="17" fill="#F7D66B" stroke="#7A4C34" stroke-width="6"/><path d="M43 70 C70 36 135 36 162 70 Z" fill="#F6A4C6" stroke="#7A4C34" stroke-width="6"/><circle cx="102" cy="96" r="11" fill="#7EC7E8" stroke="#7A4C34" stroke-width="4"/>`),
+    "dollhouse-pastel": icon(220, 215, `<ellipse cx="110" cy="194" rx="66" ry="13" fill="#7A4C34" opacity="0.12"/><path d="M32 92 L110 28 L188 92 V180 H32 Z" fill="#F7B2D1" stroke="#7A4C34" stroke-width="7"/><path d="M63 96 H96 V130 H63 Z M124 96 H157 V130 H124 Z" fill="#B9E8F8" stroke="#7A4C34" stroke-width="4"/><path d="M88 180 V140 H132 V180" fill="#F7D66B" stroke="#7A4C34" stroke-width="5"/><path d="M32 92 H188" stroke="#FFF8F1" stroke-width="5"/>`),
+    "art-easel": icon(170, 205, `<ellipse cx="85" cy="188" rx="54" ry="12" fill="#7A4C34" opacity="0.12"/><path d="M85 26 L38 184 M85 26 L132 184 M56 139 H114" stroke="#7A4C34" stroke-width="7"/><rect x="42" y="50" width="86" height="82" rx="13" fill="#FFF8F1" stroke="#7A4C34" stroke-width="6"/><path d="M57 93 C75 67 99 68 114 94" fill="none" stroke="#F6A4C6" stroke-width="7"/><circle cx="67" cy="109" r="8" fill="#7EC7E8"/><circle cx="101" cy="111" r="7" fill="#F7D66B"/>`),
+    "floor-cushion-star": icon(170, 120, `<ellipse cx="85" cy="100" rx="55" ry="12" fill="#7A4C34" opacity="0.12"/><path d="M85 18 L103 52 L141 58 L114 84 L120 121 L85 103 L50 121 L56 84 L29 58 L67 52 Z" fill="#F7D66B" stroke="#7A4C34" stroke-width="6"/><path d="M58 70 C75 84 95 84 112 70" fill="none" stroke="#FFF8F1" stroke-width="5"/>`),
+    "tea-table": icon(205, 155, `<ellipse cx="102" cy="136" rx="72" ry="13" fill="#7A4C34" opacity="0.12"/><ellipse cx="102" cy="80" rx="68" ry="27" fill="#FFF8F1" stroke="#7A4C34" stroke-width="6"/><path d="M64 102 L52 145 M140 102 L152 145" stroke="#7A4C34" stroke-width="6"/><path d="M80 48 H124 L118 76 H86 Z" fill="#F6A4C6" stroke="#7A4C34" stroke-width="5"/><circle cx="146" cy="76" r="12" fill="#F7D66B" stroke="#7A4C34" stroke-width="4"/>`),
+    "play-tent": icon(220, 230, `<ellipse cx="110" cy="209" rx="70" ry="13" fill="#7A4C34" opacity="0.12"/><path d="M32 200 L110 26 L188 200 Z" fill="#B9E8F8" stroke="#7A4C34" stroke-width="7"/><path d="M110 26 V200" stroke="#7A4C34" stroke-width="5"/><path d="M110 105 C75 132 74 166 74 200 H146 C146 166 145 132 110 105 Z" fill="#FFF8F1" stroke="#7A4C34" stroke-width="5"/><path d="M60 103 H160" stroke="#F6A4C6" stroke-width="9"/><path d="M48 145 H172" stroke="#F7D66B" stroke-width="9"/>`),
+    "toy-kitchen": icon(200, 225, `<ellipse cx="100" cy="205" rx="60" ry="13" fill="#7A4C34" opacity="0.12"/><rect x="28" y="42" width="144" height="150" rx="22" fill="#F7B2D1" stroke="#7A4C34" stroke-width="7"/><rect x="47" y="101" width="106" height="62" rx="14" fill="#FFF8F1" stroke="#7A4C34" stroke-width="5"/><circle cx="63" cy="72" r="8" fill="#7EC7E8"/><circle cx="100" cy="72" r="8" fill="#F7D66B"/><circle cx="137" cy="72" r="8" fill="#9EDDBA"/><path d="M61 130 H139" stroke="#F6A4C6" stroke-width="7"/>`),
+    "aquarium-bubble": icon(190, 155, `<ellipse cx="95" cy="137" rx="66" ry="12" fill="#7A4C34" opacity="0.12"/><rect x="27" y="38" width="136" height="88" rx="20" fill="#B9E8F8" stroke="#7A4C34" stroke-width="6"/><path d="M36 91 C70 75 110 107 154 86" fill="none" stroke="#7EC7E8" stroke-width="8"/><path d="M80 73 C101 55 124 73 103 91 C96 88 88 82 80 73 Z" fill="#F7D66B" stroke="#7A4C34" stroke-width="4"/><circle cx="51" cy="62" r="6" fill="#FFF8F1"/><circle cx="143" cy="57" r="5" fill="#FFF8F1"/><path d="M44 126 H146" stroke="#7A4C34" stroke-width="6"/>`),
+    "vanity-heart": icon(205, 220, `<ellipse cx="102" cy="200" rx="62" ry="13" fill="#7A4C34" opacity="0.12"/><ellipse cx="102" cy="67" rx="47" ry="53" fill="#DDF3FF" stroke="#7A4C34" stroke-width="6"/><path d="M102 51 C84 31 54 46 64 72 C73 97 102 111 102 111 C102 111 131 97 140 72 C150 46 120 31 102 51 Z" fill="#F7B2D1" opacity="0.65"/><rect x="42" y="124" width="120" height="46" rx="16" fill="#F6A4C6" stroke="#7A4C34" stroke-width="6"/><path d="M64 170 L52 207 M140 170 L152 207" stroke="#7A4C34" stroke-width="6"/><circle cx="102" cy="148" r="7" fill="#F7D66B"/>`),
+    "plush-bunny": icon(135, 160, `<ellipse cx="68" cy="144" rx="44" ry="12" fill="#7A4C34" opacity="0.12"/><path d="M49 52 C34 2 62 4 68 56" fill="#FFF8F1" stroke="#7A4C34" stroke-width="6"/><path d="M86 52 C101 2 73 4 67 56" fill="#FFF8F1" stroke="#7A4C34" stroke-width="6"/><circle cx="68" cy="80" r="43" fill="#FFF8F1" stroke="#7A4C34" stroke-width="6"/><ellipse cx="68" cy="121" rx="34" ry="28" fill="#F7B2D1" stroke="#7A4C34" stroke-width="5"/><circle cx="55" cy="74" r="5" fill="#7A4C34"/><circle cx="81" cy="74" r="5" fill="#7A4C34"/><path d="M59 93 C64 99 72 99 77 93" fill="none" stroke="#7A4C34" stroke-width="4"/>`),
+    "blocks-rainbow": icon(165, 125, `<ellipse cx="83" cy="108" rx="58" ry="11" fill="#7A4C34" opacity="0.12"/><rect x="18" y="61" width="45" height="37" rx="9" fill="#F6A4C6" stroke="#7A4C34" stroke-width="5"/><rect x="62" y="36" width="46" height="62" rx="9" fill="#F7D66B" stroke="#7A4C34" stroke-width="5"/><rect x="106" y="53" width="39" height="45" rx="9" fill="#7EC7E8" stroke="#7A4C34" stroke-width="5"/><path d="M40 73 L46 85 L59 87 L49 96 L52 109 L40 103 L28 109 L31 96 L21 87 L34 85 Z" fill="#FFF8F1"/><circle cx="85" cy="61" r="8" fill="#FFF8F1"/><path d="M119 76 H134" stroke="#FFF8F1" stroke-width="5"/>`)
+  };
+}
+
+function objectAssets() {
+  return {
+    "juice-cup": icon(92, 118, `<ellipse cx="46" cy="106" rx="30" ry="8" fill="#7A4C34" opacity="0.12"/><path d="M20 25 H72 L64 98 H28 Z" fill="#F6A4C6" stroke="#7A4C34" stroke-width="6"/><path d="M29 42 H63" stroke="#FFF8F1" stroke-width="6"/><path d="M47 25 L64 7" stroke="#7A4C34" stroke-width="5"/><path d="M34 66 C43 78 52 78 61 66" fill="none" stroke="#FFF8F1" stroke-width="5" opacity="0.72"/>`),
+    "book-blue": icon(118, 92, `<ellipse cx="59" cy="78" rx="42" ry="8" fill="#7A4C34" opacity="0.12"/><path d="M16 26 C33 14 49 14 59 27 C69 14 85 14 102 26 V72 C84 62 70 62 59 75 C48 62 34 62 16 72 Z" fill="#8ED0F0" stroke="#7A4C34" stroke-width="6"/><path d="M59 27 V75" stroke="#7A4C34" stroke-width="5"/><path d="M29 39 C38 35 46 36 52 42 M72 42 C80 36 88 35 96 39" stroke="#FFF8F1" stroke-width="4" opacity="0.7"/>`),
+    "pet-bowl": bowl("#9FD8F0", "#F6A4C6"),
+    "water-bowl": bowl("#9EDDBA", "#8ED0F0"),
+    "pet-toy": icon(98, 98, `<ellipse cx="49" cy="84" rx="34" ry="8" fill="#7A4C34" opacity="0.12"/><circle cx="49" cy="48" r="34" fill="#F6A4C6" stroke="#7A4C34" stroke-width="6"/><path d="M24 48 H74 M49 23 V73" stroke="#FFF8F1" stroke-width="7"/><path d="M30 28 C42 40 55 42 68 32" fill="none" stroke="#FFFFFF" stroke-width="5" opacity="0.34"/>`),
+    "dog-biscuit": icon(105, 78, `<ellipse cx="52" cy="66" rx="35" ry="7" fill="#7A4C34" opacity="0.12"/><path d="M25 19 C34 6 48 10 52 22 C56 10 71 6 80 19 C93 28 88 45 75 49 C72 62 57 63 52 52 C47 63 33 62 29 49 C16 45 12 28 25 19 Z" fill="#D7A978" stroke="#7A4C34" stroke-width="6"/><circle cx="42" cy="35" r="4" fill="#7A4C34"/><circle cx="63" cy="39" r="4" fill="#7A4C34"/>`),
+    "apple-snack": icon(102, 92, `<ellipse cx="51" cy="78" rx="33" ry="8" fill="#7A4C34" opacity="0.12"/><path d="M51 35 C34 11 9 32 20 61 C29 84 51 72 51 72 C51 72 73 84 82 61 C93 32 68 11 51 35 Z" fill="#F1829F" stroke="#7A4C34" stroke-width="6"/><path d="M53 34 C52 19 60 11 72 9" stroke="#7A4C34" stroke-width="5"/><path d="M59 18 C73 15 80 24 70 35 C60 34 54 27 59 18 Z" fill="#9EDDBA" stroke="#7A4C34" stroke-width="4"/>`),
+    "swing": icon(250, 235, `<ellipse cx="125" cy="214" rx="82" ry="12" fill="#7A4C34" opacity="0.12"/><path d="M45 204 L90 32 H160 L205 204" fill="none" stroke="#7A4C34" stroke-width="8"/><path d="M96 40 L89 143 M154 40 L161 143" stroke="#7A4C34" stroke-width="5"/><path d="M78 143 C102 156 148 156 172 143 L163 172 H87 Z" fill="#F6A4C6" stroke="#7A4C34" stroke-width="6"/><path d="M91 153 C112 162 138 162 159 153" stroke="#FFF8F1" stroke-width="5" opacity="0.65"/>`),
+    "slide": icon(270, 230, `<ellipse cx="142" cy="210" rx="86" ry="12" fill="#7A4C34" opacity="0.12"/><path d="M55 190 C123 158 165 100 193 45 L226 60 C190 142 130 196 78 208 Z" fill="#8ED0F0" stroke="#7A4C34" stroke-width="8"/><path d="M184 45 H232 V202" fill="none" stroke="#7A4C34" stroke-width="8"/><path d="M188 91 H236 M176 129 H222" stroke="#7A4C34" stroke-width="6"/><path d="M88 184 C138 158 172 112 197 66" stroke="#FFF8F1" stroke-width="6" opacity="0.6"/>`),
+    "strawberry-milk": icon(100, 125, `<ellipse cx="50" cy="112" rx="31" ry="8" fill="#7A4C34" opacity="0.12"/><rect x="26" y="24" width="48" height="80" rx="14" fill="#F7B2D1" stroke="#7A4C34" stroke-width="6"/><rect x="33" y="10" width="34" height="20" rx="7" fill="#FFF8F1" stroke="#7A4C34" stroke-width="5"/><path d="M50 52 C38 38 22 50 30 67 C36 82 50 91 50 91 C50 91 64 82 70 67 C78 50 62 38 50 52 Z" fill="#FFF8F1"/><path d="M50 24 L67 5" stroke="#7A4C34" stroke-width="5"/>`),
+    "orange-juice-box": icon(96, 120, `<ellipse cx="48" cy="108" rx="30" ry="8" fill="#7A4C34" opacity="0.12"/><path d="M22 24 H74 L67 104 H29 Z" fill="#F7D66B" stroke="#7A4C34" stroke-width="6"/><path d="M30 44 H66" stroke="#FFF8F1" stroke-width="6"/><circle cx="48" cy="70" r="16" fill="#FFB45E" stroke="#7A4C34" stroke-width="4"/><path d="M48 24 L65 6" stroke="#7A4C34" stroke-width="5"/>`),
+    "cupcake-heart": icon(108, 98, `<ellipse cx="54" cy="85" rx="34" ry="8" fill="#7A4C34" opacity="0.12"/><path d="M26 48 H82 L75 83 C62 93 46 93 33 83 Z" fill="#F7D66B" stroke="#7A4C34" stroke-width="6"/><path d="M25 48 C26 20 53 25 54 25 C55 25 82 20 83 48 Z" fill="#F6A4C6" stroke="#7A4C34" stroke-width="6"/><path d="M54 36 C45 25 31 34 38 47 C43 57 54 63 54 63 C54 63 65 57 70 47 C77 34 63 25 54 36 Z" fill="#FFF8F1"/>`),
+    "sandwich-star": icon(122, 86, `<ellipse cx="61" cy="74" rx="41" ry="8" fill="#7A4C34" opacity="0.12"/><path d="M19 28 C45 8 77 8 103 28 L91 66 H31 Z" fill="#F7D66B" stroke="#7A4C34" stroke-width="6"/><path d="M30 48 H92" stroke="#9EDDBA" stroke-width="10"/><path d="M61 24 L68 38 L84 40 L72 52 L75 68 L61 60 L47 68 L50 52 L38 40 L54 38 Z" fill="#FFF8F1"/>`),
+    "tea-set": icon(135, 95, `<ellipse cx="67" cy="82" rx="46" ry="7" fill="#7A4C34" opacity="0.12"/><path d="M34 38 H84 L77 66 C65 77 53 77 41 66 Z" fill="#F6A4C6" stroke="#7A4C34" stroke-width="6"/><path d="M84 46 C109 40 104 66 84 63" fill="none" stroke="#7A4C34" stroke-width="5"/><circle cx="104" cy="66" r="12" fill="#F7D66B" stroke="#7A4C34" stroke-width="5"/><path d="M18 78 H118" stroke="#7A4C34" stroke-width="5"/>`),
+    "bubble-wand": icon(104, 134, `<ellipse cx="52" cy="119" rx="31" ry="7" fill="#7A4C34" opacity="0.1"/><path d="M34 114 L62 45" stroke="#7A4C34" stroke-width="7"/><circle cx="64" cy="36" r="23" fill="none" stroke="#8ED0F0" stroke-width="7"/><circle cx="30" cy="39" r="9" fill="#DDF3FF" stroke="#7A4C34" stroke-width="4"/><circle cx="76" cy="81" r="11" fill="#DDF3FF" stroke="#7A4C34" stroke-width="4"/><circle cx="47" cy="16" r="6" fill="#FFF8F1" stroke="#7A4C34" stroke-width="3"/>`),
+    "star-ball": icon(102, 102, `<ellipse cx="51" cy="88" rx="33" ry="8" fill="#7A4C34" opacity="0.12"/><circle cx="51" cy="50" r="36" fill="#8ED0F0" stroke="#7A4C34" stroke-width="6"/><path d="M51 24 L60 42 L80 45 L65 59 L69 79 L51 69 L33 79 L37 59 L22 45 L42 42 Z" fill="#F7D66B" stroke="#7A4C34" stroke-width="4"/>`),
+    "carrot-snack": icon(104, 92, `<ellipse cx="52" cy="79" rx="31" ry="8" fill="#7A4C34" opacity="0.12"/><path d="M32 29 C53 27 78 40 82 43 C63 68 34 76 23 72 C19 52 23 36 32 29 Z" fill="#FFB45E" stroke="#7A4C34" stroke-width="6"/><path d="M32 29 C28 9 47 21 50 28 C56 5 70 18 62 34" fill="#9EDDBA" stroke="#7A4C34" stroke-width="5"/><path d="M41 46 L60 42 M34 60 L50 56" stroke="#FFF8F1" stroke-width="4"/>`),
+    "berry-bowl": icon(110, 90, `<ellipse cx="55" cy="78" rx="38" ry="8" fill="#7A4C34" opacity="0.12"/><ellipse cx="55" cy="55" rx="39" ry="18" fill="#9EDDBA" stroke="#7A4C34" stroke-width="6"/><path d="M20 51 C31 78 79 78 90 51" fill="#FFF8F1" stroke="#7A4C34" stroke-width="6"/><circle cx="39" cy="41" r="9" fill="#F1829F" stroke="#7A4C34" stroke-width="3"/><circle cx="57" cy="35" r="9" fill="#8ED0F0" stroke="#7A4C34" stroke-width="3"/><circle cx="73" cy="43" r="9" fill="#C6A6EE" stroke="#7A4C34" stroke-width="3"/>`),
+    "rice-bone": icon(112, 80, `<ellipse cx="56" cy="68" rx="35" ry="7" fill="#7A4C34" opacity="0.12"/><path d="M30 30 C22 15 40 8 52 22 C64 8 82 15 74 30 V48 C82 63 64 70 52 56 C40 70 22 63 30 48 Z" fill="#FFF8F1" stroke="#7A4C34" stroke-width="6"/><circle cx="46" cy="40" r="3" fill="#F7D66B"/><circle cx="62" cy="40" r="3" fill="#F7D66B"/>`),
+    "pet-milk": icon(92, 110, `<ellipse cx="46" cy="98" rx="28" ry="7" fill="#7A4C34" opacity="0.12"/><rect x="25" y="23" width="42" height="70" rx="13" fill="#FFF8F1" stroke="#7A4C34" stroke-width="6"/><rect x="32" y="9" width="28" height="20" rx="6" fill="#8ED0F0" stroke="#7A4C34" stroke-width="5"/><path d="M37 54 C45 43 55 43 63 54 C55 68 45 68 37 54 Z" fill="#F6A4C6"/>`)
+  };
+}
+
+function bowl(base, accent) {
+  return icon(110, 82, `<ellipse cx="55" cy="70" rx="38" ry="8" fill="#7A4C34" opacity="0.12"/><ellipse cx="55" cy="47" rx="39" ry="18" fill="${base}" stroke="#7A4C34" stroke-width="6"/><path d="M20 44 C31 70 79 70 90 44" fill="${accent}" stroke="#7A4C34" stroke-width="6"/><path d="M33 43 C47 51 63 51 77 43" fill="none" stroke="#FFF8F1" stroke-width="5" opacity="0.66"/>`);
+}
+
+function petAccessoryAssets() {
+  return {
+    "pet-collar-pink": icon(210, 170, `<rect x="63" y="89" width="88" height="16" rx="8" fill="#F6A4C6" stroke="#7A4C34" stroke-width="5"/><circle cx="107" cy="112" r="8" fill="#F7D66B" stroke="#7A4C34" stroke-width="4"/>`),
+    "pet-bow-blue": icon(210, 170, `<path d="M96 47 L52 29 C38 60 56 78 96 63 Z" fill="#8ED0F0" stroke="#7A4C34" stroke-width="5"/><path d="M118 47 L162 29 C176 60 158 78 118 63 Z" fill="#8ED0F0" stroke="#7A4C34" stroke-width="5"/><circle cx="107" cy="55" r="14" fill="#F7D66B" stroke="#7A4C34" stroke-width="5"/>`),
+    "pet-cape-star": icon(210, 170, `<path d="M58 92 C94 128 145 128 178 92 L190 145 C145 168 75 168 28 145 Z" fill="#8ED0F0" stroke="#7A4C34" stroke-width="5"/><path d="M110 112 L118 128 L136 131 L123 143 L126 162 L110 153 L94 162 L97 143 L84 131 L102 128 Z" fill="#F7D66B"/>`),
+    "pet-glasses-round": icon(210, 170, `<circle cx="84" cy="67" r="18" fill="none" stroke="#F7D66B" stroke-width="5"/><circle cx="129" cy="67" r="18" fill="none" stroke="#F7D66B" stroke-width="5"/><path d="M102 67 H111" stroke="#F7D66B" stroke-width="5"/>`),
+    "pet-bandana-mint": icon(210, 170, `<path d="M64 96 H152 L108 138 Z" fill="#9EDDBA" stroke="#7A4C34" stroke-width="5"/><circle cx="108" cy="116" r="6" fill="#F6A4C6"/>`),
+    "pet-flower-clip": icon(210, 170, `${flower(62, 46, "#F6A4C6", "#F7D66B", 0.9)}`),
+    "pet-star-hat": icon(210, 170, `<path d="M68 48 C90 22 126 22 148 48 L156 78 C126 91 90 91 60 78 Z" fill="#F7D66B" stroke="#7A4C34" stroke-width="5"/><path d="M108 35 L114 48 L128 50 L118 60 L120 75 L108 68 L96 75 L98 60 L88 50 L102 48 Z" fill="#F6A4C6"/>`),
+    "pet-rainbow-scarf": icon(210, 170, `<path d="M62 92 H154 L144 113 H72 Z" fill="#FFF8F1" stroke="#7A4C34" stroke-width="5"/><path d="M70 101 H146" stroke="#F6A4C6" stroke-width="5"/><path d="M72 109 H144" stroke="#F7D66B" stroke-width="5"/><path d="M140 111 L170 142" stroke="#8ED0F0" stroke-width="10"/><path d="M152 111 L182 142" stroke="#9EDDBA" stroke-width="10"/>`)
+  };
+}
+
+function dogDollhouse(body, ear) {
+  return icon(210, 170, `<ellipse cx="108" cy="145" rx="70" ry="17" fill="#7A4C34" opacity="0.12"/><path d="M160 112 C193 78 194 122 178 136" fill="none" stroke="#7A4C34" stroke-width="8"/><ellipse cx="108" cy="109" rx="62" ry="42" fill="${body}" stroke="#7A4C34" stroke-width="7"/><ellipse cx="72" cy="134" rx="18" ry="28" fill="${body}" stroke="#7A4C34" stroke-width="6"/><ellipse cx="132" cy="134" rx="18" ry="28" fill="${body}" stroke="#7A4C34" stroke-width="6"/><path d="M64 63 C38 20 26 65 37 98 C51 105 63 94 70 78 Z" fill="${ear}" stroke="#7A4C34" stroke-width="6"/><path d="M132 63 C158 20 170 65 159 98 C145 105 133 94 126 78 Z" fill="${ear}" stroke="#7A4C34" stroke-width="6"/><circle cx="98" cy="72" r="52" fill="${body}" stroke="#7A4C34" stroke-width="7"/><ellipse cx="98" cy="91" rx="40" ry="27" fill="#FFF2D8" opacity="0.92"/><ellipse cx="78" cy="64" rx="18" ry="16" fill="#FFF2D8" opacity="0.5"/><circle cx="80" cy="70" r="6" fill="#4B2E20"/><circle cx="116" cy="70" r="6" fill="#4B2E20"/><circle cx="78" cy="67" r="2.4" fill="#FFFFFF"/><circle cx="114" cy="67" r="2.4" fill="#FFFFFF"/><path d="M91 87 C96 92 101 92 106 87" fill="none" stroke="#4B2E20" stroke-width="4"/><path d="M86 99 C96 109 110 109 120 99" fill="none" stroke="#4B2E20" stroke-width="4"/><ellipse cx="62" cy="89" rx="12" ry="7" fill="#F6A4C6" opacity="0.36"/><ellipse cx="134" cy="89" rx="12" ry="7" fill="#F6A4C6" opacity="0.36"/>`);
+}
+
+function star(x, y, radius, fill) {
+  return `<path d="${starPath(x, y, radius)}" fill="${fill}" stroke="#7A4C34" stroke-width="${Math.max(3, radius / 6)}"/>`;
+}
+
+function starPath(x, y, radius) {
+  return Array.from({ length: 10 }, (_, index) => {
+    const angle = -Math.PI / 2 + index * Math.PI / 5;
+    const r = index % 2 === 0 ? radius : radius * 0.46;
+    const px = round(x + Math.cos(angle) * r);
+    const py = round(y + Math.sin(angle) * r);
+    return `${index === 0 ? "M" : "L"}${px} ${py}`;
+  }).join(" ") + " Z";
+}
+
+function heart(x, y, size, fill) {
+  return `<path d="M${x} ${y - size * 0.35} C${x - size * 0.78} ${y - size * 1.18} ${x - size * 1.48} ${y - size * 0.08} ${x} ${y + size * 1.04} C${x + size * 1.48} ${y - size * 0.08} ${x + size * 0.78} ${y - size * 1.18} ${x} ${y - size * 0.35} Z" fill="${fill}" stroke="#7A4C34" stroke-width="${Math.max(3, size / 8)}"/>`;
+}
+
+function bow(x, y, size, fill) {
+  return `<path d="M${x - 5} ${y} C${x - size * 2.1} ${y - size * 1.2} ${x - size * 2.4} ${y + size * 1.3} ${x - 5} ${y + size * 0.72} Z" fill="${fill}" stroke="#7A4C34" stroke-width="4"/><path d="M${x + 5} ${y} C${x + size * 2.1} ${y - size * 1.2} ${x + size * 2.4} ${y + size * 1.3} ${x + 5} ${y + size * 0.72} Z" fill="${fill}" stroke="#7A4C34" stroke-width="4"/><circle cx="${x}" cy="${y + size * 0.25}" r="${size * 0.52}" fill="#FFF8F1" stroke="#7A4C34" stroke-width="4"/>`;
+}
+
+function flower(x, y, petal, center, scale = 1) {
+  const rx = 12 * scale;
+  const ry = 22 * scale;
+  const distance = 22 * scale;
+  return `<g stroke="#7A4C34" stroke-width="${4 * scale}" fill="${petal}">${Array.from({ length: 6 }, (_, i) => {
+    const angle = i * Math.PI / 3;
+    return `<ellipse cx="${round(x + Math.cos(angle) * distance)}" cy="${round(y + Math.sin(angle) * distance)}" rx="${rx}" ry="${ry}" transform="rotate(${round(angle * 180 / Math.PI)} ${round(x + Math.cos(angle) * distance)} ${round(y + Math.sin(angle) * distance)})"/>`;
+  }).join("")}<circle cx="${x}" cy="${y}" r="${13 * scale}" fill="${center}"/></g>`;
+}
+
+function cloud(x, y, fill) {
+  return `<path d="M${x - 48} ${y + 8} C${x - 55} ${y - 20} ${x - 24} ${y - 28} ${x - 10} ${y - 14} C${x + 4} ${y - 45} ${x + 46} ${y - 31} ${x + 42} ${y + 5} C${x + 62} ${y + 3} ${x + 65} ${y + 32} ${x + 38} ${y + 34} H${x - 34} C${x - 55} ${y + 34} ${x - 65} ${y + 14} ${x - 48} ${y + 8} Z" fill="${fill}" stroke="#7A4C34" stroke-width="4"/>`;
+}
+
+function rainbow(x, y, radius) {
+  return `<path d="M${x - radius} ${y} A${radius} ${radius} 0 0 1 ${x + radius} ${y}" fill="none" stroke="#F6A4C6" stroke-width="10"/><path d="M${x - radius + 14} ${y} A${radius - 14} ${radius - 14} 0 0 1 ${x + radius - 14} ${y}" fill="none" stroke="#F7D66B" stroke-width="10"/><path d="M${x - radius + 28} ${y} A${radius - 28} ${radius - 28} 0 0 1 ${x + radius - 28} ${y}" fill="none" stroke="#8ED0F0" stroke-width="10"/>`;
+}
+
+function strawberry(x, y, scale = 1) {
+  return `<path d="M${x} ${y - 28 * scale} C${x - 28 * scale} ${y - 58 * scale} ${x - 62 * scale} ${y - 18 * scale} ${x} ${y + 52 * scale} C${x + 62 * scale} ${y - 18 * scale} ${x + 28 * scale} ${y - 58 * scale} ${x} ${y - 28 * scale} Z" fill="#E95E7E" stroke="#7A4C34" stroke-width="${5 * scale}"/><path d="M${x - 22 * scale} ${y - 30 * scale} C${x - 4 * scale} ${y - 52 * scale} ${x + 4 * scale} ${y - 52 * scale} ${x + 22 * scale} ${y - 30 * scale}" fill="#9EDDBA" stroke="#7A4C34" stroke-width="${4 * scale}"/><circle cx="${x - 14 * scale}" cy="${y}" r="${3 * scale}" fill="#FFE7A8"/><circle cx="${x + 14 * scale}" cy="${y}" r="${3 * scale}" fill="#FFE7A8"/><circle cx="${x}" cy="${y + 24 * scale}" r="${3 * scale}" fill="#FFE7A8"/>`;
+}
+
+function round(value) {
+  return Math.round(value * 10) / 10;
 }
 
 function addExpandedAssets() {
@@ -139,14 +422,8 @@ function wrapSvg(width, height, content) {
   <filter id="soft-shadow" x="-20%" y="-20%" width="140%" height="145%">
     <feDropShadow dx="0" dy="8" stdDeviation="5" flood-color="#6E4A2C" flood-opacity="0.18"/>
   </filter>
-  <filter id="sticker-edge" x="-18%" y="-18%" width="136%" height="136%">
-    <feMorphology in="SourceAlpha" operator="dilate" radius="4" result="expanded"/>
-    <feFlood flood-color="#FFF9EF" flood-opacity="0.95" result="paper"/>
-    <feComposite in="paper" in2="expanded" operator="in"/>
-  </filter>
 </defs>
 <use href="#art-source" filter="url(#soft-shadow)"/>
-<use href="#art-source" filter="url(#sticker-edge)"/>
 <use href="#art-source"/>
 <ellipse cx="${width * 0.34}" cy="${height * 0.18}" rx="${width * 0.34}" ry="${height * 0.2}" fill="url(#gloss)" mask="url(#art-mask)" pointer-events="none"/>
 </svg>`;
