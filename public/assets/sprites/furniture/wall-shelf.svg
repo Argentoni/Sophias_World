@@ -1,1 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="180" height="110" viewBox="0 0 180 110"><rect x="26" y="56" width="128" height="18" rx="9" fill="#D8AA82" stroke="#6E4A2C" stroke-width="6"/><path d="M46 74 L34 98 M134 74 L146 98" stroke="#6E4A2C" stroke-width="6"/><path d="M78 42 L58 30 Q46 50 62 62 Z" fill="#FFB6D5" stroke="#6E4A2C" stroke-width="5"/><path d="M102 42 L122 30 Q134 50 118 62 Z" fill="#A0D8F0" stroke="#6E4A2C" stroke-width="5"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="180" height="110" viewBox="0 0 180 110">
+<defs>
+  <filter id="soft-shadow" x="-18%" y="-18%" width="136%" height="136%">
+    <feDropShadow dx="0" dy="5" stdDeviation="3" flood-color="#6E4A2C" flood-opacity="0.18"/>
+  </filter>
+</defs>
+<g filter="url(#soft-shadow)" stroke-linecap="round" stroke-linejoin="round"><rect x="26" y="56" width="128" height="18" rx="9" fill="#D8AA82" stroke="#6E4A2C" stroke-width="6"/><path d="M46 74 L34 98 M134 74 L146 98" stroke="#6E4A2C" stroke-width="6"/><path d="M78 42 L58 30 Q46 50 62 62 Z" fill="#FFB6D5" stroke="#6E4A2C" stroke-width="5"/><path d="M102 42 L122 30 Q134 50 118 62 Z" fill="#A0D8F0" stroke="#6E4A2C" stroke-width="5"/></g>
+</svg>

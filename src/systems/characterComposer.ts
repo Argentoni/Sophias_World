@@ -199,58 +199,66 @@ function ly(y: number): number {
 
 function drawBackHair(g: Phaser.GameObjects.Graphics, style: string, color: number): void {
   if (style === "bob") return;
-  g.lineStyle(7, outline, 0.72);
+  g.lineStyle(5, outline, 0.68);
   g.fillStyle(color, 1);
-  if (style === "long") {
-    g.fillRoundedRect(lx(47), ly(55), 312, 350, 106);
-    g.strokeRoundedRect(lx(47), ly(55), 312, 350, 106);
-  }
-  if (style === "waves") {
-    g.fillRoundedRect(lx(42), ly(58), 322, 378, 118);
-    g.strokeRoundedRect(lx(42), ly(58), 322, 378, 118);
-  }
   if (style === "pigtails") {
-    g.fillCircle(lx(64), ly(260), 48);
-    g.fillCircle(lx(342), ly(260), 48);
-    g.strokeCircle(lx(64), ly(260), 48);
-    g.strokeCircle(lx(342), ly(260), 48);
+    g.fillEllipse(lx(76), ly(250), 66, 140);
+    g.fillEllipse(lx(330), ly(250), 66, 140);
+    g.strokeEllipse(lx(76), ly(250), 66, 140);
+    g.strokeEllipse(lx(330), ly(250), 66, 140);
+    return;
   }
   if (style === "buns") {
-    g.fillCircle(lx(75), ly(150), 48);
-    g.fillCircle(lx(331), ly(150), 48);
-    g.strokeCircle(lx(75), ly(150), 48);
-    g.strokeCircle(lx(331), ly(150), 48);
+    g.fillCircle(lx(75), ly(139), 40);
+    g.fillCircle(lx(331), ly(139), 40);
+    g.strokeCircle(lx(75), ly(139), 40);
+    g.strokeCircle(lx(331), ly(139), 40);
+    return;
   }
   if (style === "ponytail") {
-    g.fillRoundedRect(lx(288), ly(120), 92, 240, 44);
-    g.strokeRoundedRect(lx(288), ly(120), 92, 240, 44);
+    g.fillEllipse(lx(342), ly(236), 82, 214);
+    g.strokeEllipse(lx(342), ly(236), 82, 214);
+    return;
   }
   if (style === "braids") {
-    g.fillRoundedRect(lx(54), ly(238), 46, 190, 24);
-    g.fillRoundedRect(lx(306), ly(238), 46, 190, 24);
-    g.strokeRoundedRect(lx(54), ly(238), 46, 190, 24);
-    g.strokeRoundedRect(lx(306), ly(238), 46, 190, 24);
+    for (const x of [74, 332]) {
+      g.fillCircle(lx(x), ly(220), 22);
+      g.fillCircle(lx(x), ly(258), 24);
+      g.fillCircle(lx(x), ly(300), 21);
+      g.strokeCircle(lx(x), ly(220), 22);
+      g.strokeCircle(lx(x), ly(258), 24);
+      g.strokeCircle(lx(x), ly(300), 21);
+    }
+    return;
   }
+  const height = style === "long" ? 350 : 385;
+  const width = style === "waves" ? 318 : 292;
+  g.fillRoundedRect(lx(203 - width / 2), ly(78), width, height, 96);
+  g.strokeRoundedRect(lx(203 - width / 2), ly(78), width, height, 96);
 }
 
 function drawFrontHair(g: Phaser.GameObjects.Graphics, style: string, color: number, highlight: number): void {
   if (style === "bob") return;
-  g.lineStyle(7, outline, 0.82);
+  g.lineStyle(5, outline, 0.82);
   g.fillStyle(color, 1);
-  g.fillEllipse(lx(203), ly(85), 290, 112);
-  g.strokeEllipse(lx(203), ly(85), 290, 112);
+  g.fillEllipse(lx(203), ly(122), 254, 150);
+  g.strokeEllipse(lx(203), ly(122), 254, 150);
+  g.fillRoundedRect(lx(80), ly(88), 246, 80, 40);
   if (style === "curly") {
-    for (let x = 82; x <= 324; x += 34) g.fillCircle(lx(x), ly(136 + Math.abs(203 - x) / 18), 28);
+    for (let x = 92; x <= 314; x += 32) {
+      g.fillCircle(lx(x), ly(156 + Math.abs(203 - x) / 22), 24);
+      g.strokeCircle(lx(x), ly(156 + Math.abs(203 - x) / 22), 24);
+    }
   } else {
-    g.fillTriangle(lx(78), ly(115), lx(152), ly(125), lx(112), ly(192));
-    g.fillTriangle(lx(140), ly(110), lx(224), ly(116), lx(185), ly(190));
-    g.fillTriangle(lx(218), ly(116), lx(322), ly(123), lx(276), ly(190));
+    g.fillTriangle(lx(91), ly(142), lx(155), ly(137), lx(122), ly(205));
+    g.fillTriangle(lx(139), ly(132), lx(217), ly(130), lx(180), ly(206));
+    g.fillTriangle(lx(208), ly(132), lx(315), ly(142), lx(264), ly(207));
   }
-  if (style === "bob" || style === "long" || style === "curly" || style === "waves") {
-    g.fillRoundedRect(lx(52), ly(150), 48, 154, 25);
-    g.fillRoundedRect(lx(306), ly(150), 48, 154, 25);
-    g.strokeRoundedRect(lx(52), ly(150), 48, 154, 25);
-    g.strokeRoundedRect(lx(306), ly(150), 48, 154, 25);
+  if (style === "long" || style === "curly" || style === "waves") {
+    g.fillEllipse(lx(76), ly(226), 42, style === "waves" ? 190 : 154);
+    g.fillEllipse(lx(330), ly(226), 42, style === "waves" ? 190 : 154);
+    g.strokeEllipse(lx(76), ly(226), 42, style === "waves" ? 190 : 154);
+    g.strokeEllipse(lx(330), ly(226), 42, style === "waves" ? 190 : 154);
   }
   if (style === "buns") {
     drawBow(g, 78, 150, 12, 0xff9fc8);
@@ -266,8 +274,8 @@ function drawFrontHair(g: Phaser.GameObjects.Graphics, style: string, color: num
   }
   g.lineStyle(6, highlight, 0.35);
   g.beginPath();
-  g.arc(lx(178), ly(92), 54, Math.PI * 1.05, Math.PI * 1.65, false);
-  g.arc(lx(244), ly(94), 44, Math.PI * 1.08, Math.PI * 1.58, false);
+  g.arc(lx(178), ly(112), 48, Math.PI * 1.05, Math.PI * 1.65, false);
+  g.arc(lx(244), ly(114), 40, Math.PI * 1.08, Math.PI * 1.58, false);
   g.strokePath();
 }
 
@@ -275,16 +283,33 @@ function drawTop(g: Phaser.GameObjects.Graphics, id: string): void {
   const palette = topPalette(id);
   g.lineStyle(5, outline, 1);
   g.fillStyle(palette.fill, 1);
-  g.fillRoundedRect(lx(128), ly(340), 150, 125, 28);
-  g.fillTriangle(lx(126), ly(350), lx(58), ly(504), lx(101), ly(523));
-  g.fillTriangle(lx(280), ly(350), lx(348), ly(504), lx(305), ly(523));
-  g.strokeRoundedRect(lx(128), ly(340), 150, 125, 28);
-  g.strokeTriangle(lx(126), ly(350), lx(58), ly(504), lx(101), ly(523));
-  g.strokeTriangle(lx(280), ly(350), lx(348), ly(504), lx(305), ly(523));
-  g.lineStyle(6, 0xffffff, 0.5);
   g.beginPath();
-  g.arc(lx(203), ly(346), 43, Math.PI * 0.1, Math.PI * 0.9, false);
+  g.moveTo(lx(137), ly(346));
+  g.lineTo(lx(102), ly(407));
+  g.lineTo(lx(70), ly(507));
+  g.lineTo(lx(105), ly(523));
+  g.lineTo(lx(145), ly(430));
+  g.lineTo(lx(143), ly(458));
+  g.lineTo(lx(164), ly(474));
+  g.lineTo(lx(242), ly(474));
+  g.lineTo(lx(263), ly(458));
+  g.lineTo(lx(261), ly(430));
+  g.lineTo(lx(301), ly(523));
+  g.lineTo(lx(336), ly(507));
+  g.lineTo(lx(304), ly(407));
+  g.lineTo(lx(269), ly(346));
+  g.lineTo(lx(232), ly(336));
+  g.lineTo(lx(203), ly(356));
+  g.lineTo(lx(174), ly(336));
+  g.closePath();
+  g.fillPath();
   g.strokePath();
+  g.lineStyle(6, 0xffffff, 0.46);
+  g.beginPath();
+  g.arc(lx(203), ly(346), 37, 0.15, Math.PI - 0.15, false);
+  g.strokePath();
+  g.lineStyle(4, 0xffffff, 0.25);
+  g.lineBetween(lx(148), ly(455), lx(258), ly(455));
   if (id.includes("cat")) drawCatPocket(g, 203, 410);
   else if (id.includes("cloud")) drawCloud(g, 203, 412, 1.08);
   else if (id.includes("strawberry")) drawStrawberry(g, 203, 410, 1.1);
@@ -302,10 +327,12 @@ function drawBottom(g: Phaser.GameObjects.Graphics, id: string): void {
   g.fillStyle(color, 1);
   if (id.includes("skirt") || id.includes("lilac") || id.includes("tutu")) {
     g.beginPath();
-    g.moveTo(lx(129), ly(465));
-    g.lineTo(lx(277), ly(465));
-    g.lineTo(lx(301), ly(579));
-    g.lineTo(lx(105), ly(579));
+    g.moveTo(lx(132), ly(466));
+    g.lineTo(lx(274), ly(466));
+    g.lineTo(lx(306), ly(572));
+    g.lineTo(lx(248), ly(598));
+    g.lineTo(lx(158), ly(598));
+    g.lineTo(lx(100), ly(572));
     g.closePath();
     g.fillPath();
     g.strokePath();
@@ -319,10 +346,20 @@ function drawBottom(g: Phaser.GameObjects.Graphics, id: string): void {
     }
     return;
   }
-  g.fillRoundedRect(lx(130), ly(463), 146, 100, 26);
-  g.strokeRoundedRect(lx(130), ly(463), 146, 100, 26);
-  g.lineStyle(4, 0xffffff, 0.42);
-  g.lineBetween(lx(203), ly(478), lx(203), ly(557));
+  g.beginPath();
+  g.moveTo(lx(132), ly(464));
+  g.lineTo(lx(274), ly(464));
+  g.lineTo(lx(286), ly(548));
+  g.lineTo(lx(242), ly(560));
+  g.lineTo(lx(203), ly(506));
+  g.lineTo(lx(164), ly(560));
+  g.lineTo(lx(120), ly(548));
+  g.closePath();
+  g.fillPath();
+  g.strokePath();
+  g.lineStyle(4, 0xffffff, 0.38);
+  g.lineBetween(lx(203), ly(486), lx(203), ly(543));
+  g.lineBetween(lx(142), ly(486), lx(264), ly(486));
   if (id.includes("heart")) drawHeart(g, 170, 505, 12, 0xffffff);
   if (id.includes("rainbow")) {
     [0xff9bb1, 0xffe176, 0x90d7b6, 0x83c7eb].forEach((color, index) => {
@@ -336,16 +373,35 @@ function drawDress(g: Phaser.GameObjects.Graphics, id: string): void {
   const color = dressColor(id);
   g.lineStyle(5, outline, 1);
   g.fillStyle(color, 1);
-  g.fillRoundedRect(lx(128), ly(338), 150, 120, 28);
   g.beginPath();
-  g.moveTo(lx(128), ly(430));
-  g.lineTo(lx(278), ly(430));
-  g.lineTo(lx(318), ly(620));
-  g.lineTo(lx(203), ly(655));
-  g.lineTo(lx(88), ly(620));
+  g.moveTo(lx(136), ly(345));
+  g.lineTo(lx(101), ly(412));
+  g.lineTo(lx(71), ly(506));
+  g.lineTo(lx(105), ly(523));
+  g.lineTo(lx(141), ly(433));
+  g.lineTo(lx(113), ly(620));
+  g.lineTo(lx(160), ly(646));
+  g.lineTo(lx(203), ly(656));
+  g.lineTo(lx(246), ly(646));
+  g.lineTo(lx(293), ly(620));
+  g.lineTo(lx(265), ly(433));
+  g.lineTo(lx(301), ly(523));
+  g.lineTo(lx(335), ly(506));
+  g.lineTo(lx(305), ly(412));
+  g.lineTo(lx(270), ly(345));
+  g.lineTo(lx(232), ly(336));
+  g.lineTo(lx(203), ly(356));
+  g.lineTo(lx(174), ly(336));
   g.closePath();
   g.fillPath();
-  g.strokeRoundedRect(lx(128), ly(338), 150, 120, 28);
+  g.strokePath();
+  g.lineStyle(6, 0xffffff, 0.44);
+  g.beginPath();
+  g.arc(lx(203), ly(347), 36, 0.15, Math.PI - 0.15, false);
+  g.strokePath();
+  g.lineStyle(5, 0xffffff, 0.25);
+  g.beginPath();
+  g.arc(lx(203), ly(526), 92, 0.14, Math.PI - 0.14, false);
   g.strokePath();
   if (id.includes("cupcake")) {
     drawCupcake(g, 203, 515, 1.06);

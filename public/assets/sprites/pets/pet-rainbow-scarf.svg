@@ -1,1 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="190" height="150" viewBox="0 0 190 150"><path d="M54 82 H132 L122 102 H64 Z" fill="#FAF4E8" stroke="#6E4A2C" stroke-width="5"/><path d="M60 91 H126" stroke="#FFB6D5" stroke-width="5"/><path d="M62 99 H124" stroke="#FFE8A8" stroke-width="5"/><path d="M118 100 L144 126" stroke="#A0D8F0" stroke-width="10" stroke-linecap="round"/><path d="M126 100 L152 126" stroke="#B5E6C5" stroke-width="10" stroke-linecap="round"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="190" height="150" viewBox="0 0 190 150">
+<defs>
+  <filter id="soft-shadow" x="-18%" y="-18%" width="136%" height="136%">
+    <feDropShadow dx="0" dy="5" stdDeviation="3" flood-color="#6E4A2C" flood-opacity="0.18"/>
+  </filter>
+</defs>
+<g filter="url(#soft-shadow)" stroke-linecap="round" stroke-linejoin="round"><path d="M54 82 H132 L122 102 H64 Z" fill="#FAF4E8" stroke="#6E4A2C" stroke-width="5"/><path d="M60 91 H126" stroke="#FFB6D5" stroke-width="5"/><path d="M62 99 H124" stroke="#FFE8A8" stroke-width="5"/><path d="M118 100 L144 126" stroke="#A0D8F0" stroke-width="10" stroke-linecap="round"/><path d="M126 100 L152 126" stroke="#B5E6C5" stroke-width="10" stroke-linecap="round"/></g>
+</svg>

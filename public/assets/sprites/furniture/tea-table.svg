@@ -1,1 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="180" height="140" viewBox="0 0 180 140"><ellipse cx="90" cy="72" rx="62" ry="24" fill="#FAF4E8" stroke="#6E4A2C" stroke-width="7"/><path d="M52 92 L42 128 M128 92 L138 128" stroke="#6E4A2C" stroke-width="7" stroke-linecap="round"/><path d="M70 48 H110 L104 72 H76 Z" fill="#FFB6D5" stroke="#6E4A2C" stroke-width="5"/><path d="M104 54 Q128 48 122 68 Q116 80 104 68" fill="none" stroke="#6E4A2C" stroke-width="5"/><circle cx="128" cy="68" r="10" fill="#FFE8A8" stroke="#6E4A2C" stroke-width="5"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="180" height="140" viewBox="0 0 180 140">
+<defs>
+  <filter id="soft-shadow" x="-18%" y="-18%" width="136%" height="136%">
+    <feDropShadow dx="0" dy="5" stdDeviation="3" flood-color="#6E4A2C" flood-opacity="0.18"/>
+  </filter>
+</defs>
+<g filter="url(#soft-shadow)" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="90" cy="72" rx="62" ry="24" fill="#FAF4E8" stroke="#6E4A2C" stroke-width="7"/><path d="M52 92 L42 128 M128 92 L138 128" stroke="#6E4A2C" stroke-width="7" stroke-linecap="round"/><path d="M70 48 H110 L104 72 H76 Z" fill="#FFB6D5" stroke="#6E4A2C" stroke-width="5"/><path d="M104 54 Q128 48 122 68 Q116 80 104 68" fill="none" stroke="#6E4A2C" stroke-width="5"/><circle cx="128" cy="68" r="10" fill="#FFE8A8" stroke="#6E4A2C" stroke-width="5"/></g>
+</svg>

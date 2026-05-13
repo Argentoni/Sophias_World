@@ -1,1 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="170" height="120" viewBox="0 0 170 120"><ellipse cx="85" cy="72" rx="62" ry="36" fill="#D8AA82" stroke="#6E4A2C" stroke-width="7"/><ellipse cx="85" cy="66" rx="42" ry="20" fill="#FAF4E8"/><path d="M48 58 Q85 28 122 58" fill="none" stroke="#6E4A2C" stroke-width="7" stroke-linecap="round"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="170" height="120" viewBox="0 0 170 120">
+<defs>
+  <filter id="soft-shadow" x="-18%" y="-18%" width="136%" height="136%">
+    <feDropShadow dx="0" dy="5" stdDeviation="3" flood-color="#6E4A2C" flood-opacity="0.18"/>
+  </filter>
+</defs>
+<g filter="url(#soft-shadow)" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="85" cy="72" rx="62" ry="36" fill="#D8AA82" stroke="#6E4A2C" stroke-width="7"/><ellipse cx="85" cy="66" rx="42" ry="20" fill="#FAF4E8"/><path d="M48 58 Q85 28 122 58" fill="none" stroke="#6E4A2C" stroke-width="7" stroke-linecap="round"/></g>
+</svg>

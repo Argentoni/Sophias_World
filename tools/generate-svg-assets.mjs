@@ -117,11 +117,22 @@ function addExpandedAssets() {
 }
 
 function clothing(content) {
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="512" height="768" viewBox="0 0 512 768">${content}</svg>`;
+  return wrapSvg(512, 768, content);
 }
 
 function icon(width, height, content) {
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">${content}</svg>`;
+  return wrapSvg(width, height, content);
+}
+
+function wrapSvg(width, height, content) {
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
+<defs>
+  <filter id="soft-shadow" x="-18%" y="-18%" width="136%" height="136%">
+    <feDropShadow dx="0" dy="5" stdDeviation="3" flood-color="#6E4A2C" flood-opacity="0.18"/>
+  </filter>
+</defs>
+<g filter="url(#soft-shadow)" stroke-linecap="round" stroke-linejoin="round">${content}</g>
+</svg>`;
 }
 
 function dog(color) {

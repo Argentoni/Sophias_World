@@ -1,1 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="180" height="205" viewBox="0 0 180 205"><ellipse cx="90" cy="62" rx="42" ry="48" fill="#DDEFFC" stroke="#6E4A2C" stroke-width="7"/><path d="M90 46 C74 28 48 42 56 66 C64 88 90 100 90 100 C90 100 116 88 124 66 C132 42 106 28 90 46 Z" fill="#FFD7E8" opacity="0.7"/><rect x="36" y="112" width="108" height="42" rx="14" fill="#FFB6D5" stroke="#6E4A2C" stroke-width="7"/><path d="M56 154 L46 190 M124 154 L134 190" stroke="#6E4A2C" stroke-width="7" stroke-linecap="round"/><circle cx="90" cy="134" r="7" fill="#FFE8A8"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="180" height="205" viewBox="0 0 180 205">
+<defs>
+  <filter id="soft-shadow" x="-18%" y="-18%" width="136%" height="136%">
+    <feDropShadow dx="0" dy="5" stdDeviation="3" flood-color="#6E4A2C" flood-opacity="0.18"/>
+  </filter>
+</defs>
+<g filter="url(#soft-shadow)" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="90" cy="62" rx="42" ry="48" fill="#DDEFFC" stroke="#6E4A2C" stroke-width="7"/><path d="M90 46 C74 28 48 42 56 66 C64 88 90 100 90 100 C90 100 116 88 124 66 C132 42 106 28 90 46 Z" fill="#FFD7E8" opacity="0.7"/><rect x="36" y="112" width="108" height="42" rx="14" fill="#FFB6D5" stroke="#6E4A2C" stroke-width="7"/><path d="M56 154 L46 190 M124 154 L134 190" stroke="#6E4A2C" stroke-width="7" stroke-linecap="round"/><circle cx="90" cy="134" r="7" fill="#FFE8A8"/></g>
+</svg>

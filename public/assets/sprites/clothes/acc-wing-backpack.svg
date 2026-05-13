@@ -1,1 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="512" height="768" viewBox="0 0 512 768"><path d="M124 388 Q52 336 66 458 Q114 466 144 426 Z" fill="#FAF4E8" stroke="#6E4A2C" stroke-width="7"/><path d="M388 388 Q460 336 446 458 Q398 466 368 426 Z" fill="#FAF4E8" stroke="#6E4A2C" stroke-width="7"/><path d="M318 410 Q364 398 386 438 L376 526 Q344 552 306 526 L298 438 Q302 420 318 410 Z" fill="#FFB6D5" stroke="#6E4A2C" stroke-width="7"/><path d="M342 446 l7 14 16 2-12 11 3 16-14-8-14 8 3-16-12-11 16-2z" fill="#FFE8A8"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="768" viewBox="0 0 512 768">
+<defs>
+  <filter id="soft-shadow" x="-18%" y="-18%" width="136%" height="136%">
+    <feDropShadow dx="0" dy="5" stdDeviation="3" flood-color="#6E4A2C" flood-opacity="0.18"/>
+  </filter>
+</defs>
+<g filter="url(#soft-shadow)" stroke-linecap="round" stroke-linejoin="round"><path d="M124 388 Q52 336 66 458 Q114 466 144 426 Z" fill="#FAF4E8" stroke="#6E4A2C" stroke-width="7"/><path d="M388 388 Q460 336 446 458 Q398 466 368 426 Z" fill="#FAF4E8" stroke="#6E4A2C" stroke-width="7"/><path d="M318 410 Q364 398 386 438 L376 526 Q344 552 306 526 L298 438 Q302 420 318 410 Z" fill="#FFB6D5" stroke="#6E4A2C" stroke-width="7"/><path d="M342 446 l7 14 16 2-12 11 3 16-14-8-14 8 3-16-12-11 16-2z" fill="#FFE8A8"/></g>
+</svg>

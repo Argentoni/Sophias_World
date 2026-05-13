@@ -1,1 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="512" height="768" viewBox="0 0 512 768"><path d="M180 270 Q256 222 332 270 L360 358 L322 378 L304 340 L354 590 Q256 640 158 590 L208 340 L190 378 L152 358 Z" fill="#A0D8F0" stroke="#6E4A2C" stroke-width="7" stroke-linejoin="round"/><g fill="#FFE8A8"><path d="M252 348 l8 17 18 2-13 13 3 18-16-9-16 9 3-18-13-13 18-2z"/><path d="M292 500 l7 14 15 2-11 11 3 15-14-7-14 7 3-15-11-11 15-2z"/></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="768" viewBox="0 0 512 768">
+<defs>
+  <filter id="soft-shadow" x="-18%" y="-18%" width="136%" height="136%">
+    <feDropShadow dx="0" dy="5" stdDeviation="3" flood-color="#6E4A2C" flood-opacity="0.18"/>
+  </filter>
+</defs>
+<g filter="url(#soft-shadow)" stroke-linecap="round" stroke-linejoin="round"><path d="M180 270 Q256 222 332 270 L360 358 L322 378 L304 340 L354 590 Q256 640 158 590 L208 340 L190 378 L152 358 Z" fill="#A0D8F0" stroke="#6E4A2C" stroke-width="7" stroke-linejoin="round"/><g fill="#FFE8A8"><path d="M252 348 l8 17 18 2-13 13 3 18-16-9-16 9 3-18-13-13 18-2z"/><path d="M292 500 l7 14 15 2-11 11 3 15-14-7-14 7 3-15-11-11 15-2z"/></g></g>
+</svg>

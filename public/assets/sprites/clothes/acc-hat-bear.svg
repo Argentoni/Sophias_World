@@ -1,1 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="512" height="768" viewBox="0 0 512 768"><path d="M162 132 Q256 40 350 132 Q342 176 256 184 Q170 176 162 132 Z" fill="#D8AA82" stroke="#6E4A2C" stroke-width="7"/><circle cx="190" cy="98" r="30" fill="#D8AA82" stroke="#6E4A2C" stroke-width="7"/><circle cx="322" cy="98" r="30" fill="#D8AA82" stroke="#6E4A2C" stroke-width="7"/><path d="M214 136 Q256 160 298 136" fill="none" stroke="#FAF4E8" stroke-width="7" stroke-linecap="round"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="768" viewBox="0 0 512 768">
+<defs>
+  <filter id="soft-shadow" x="-18%" y="-18%" width="136%" height="136%">
+    <feDropShadow dx="0" dy="5" stdDeviation="3" flood-color="#6E4A2C" flood-opacity="0.18"/>
+  </filter>
+</defs>
+<g filter="url(#soft-shadow)" stroke-linecap="round" stroke-linejoin="round"><path d="M162 132 Q256 40 350 132 Q342 176 256 184 Q170 176 162 132 Z" fill="#D8AA82" stroke="#6E4A2C" stroke-width="7"/><circle cx="190" cy="98" r="30" fill="#D8AA82" stroke="#6E4A2C" stroke-width="7"/><circle cx="322" cy="98" r="30" fill="#D8AA82" stroke="#6E4A2C" stroke-width="7"/><path d="M214 136 Q256 160 298 136" fill="none" stroke="#FAF4E8" stroke-width="7" stroke-linecap="round"/></g>
+</svg>

@@ -1,1 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="170" height="140" viewBox="0 0 170 140"><rect x="24" y="34" width="122" height="80" rx="18" fill="#CFEFFF" stroke="#6E4A2C" stroke-width="7"/><path d="M32 86 Q70 70 108 86 Q128 96 140 86" fill="none" stroke="#83C7EB" stroke-width="8"/><path d="M72 72 Q92 54 112 72 Q92 90 72 72 Z" fill="#FFE8A8" stroke="#6E4A2C" stroke-width="5"/><circle cx="46" cy="58" r="6" fill="#FAF4E8"/><circle cx="128" cy="54" r="5" fill="#FAF4E8"/><path d="M42 114 H128" stroke="#6E4A2C" stroke-width="7" stroke-linecap="round"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="170" height="140" viewBox="0 0 170 140">
+<defs>
+  <filter id="soft-shadow" x="-18%" y="-18%" width="136%" height="136%">
+    <feDropShadow dx="0" dy="5" stdDeviation="3" flood-color="#6E4A2C" flood-opacity="0.18"/>
+  </filter>
+</defs>
+<g filter="url(#soft-shadow)" stroke-linecap="round" stroke-linejoin="round"><rect x="24" y="34" width="122" height="80" rx="18" fill="#CFEFFF" stroke="#6E4A2C" stroke-width="7"/><path d="M32 86 Q70 70 108 86 Q128 96 140 86" fill="none" stroke="#83C7EB" stroke-width="8"/><path d="M72 72 Q92 54 112 72 Q92 90 72 72 Z" fill="#FFE8A8" stroke="#6E4A2C" stroke-width="5"/><circle cx="46" cy="58" r="6" fill="#FAF4E8"/><circle cx="128" cy="54" r="5" fill="#FAF4E8"/><path d="M42 114 H128" stroke="#6E4A2C" stroke-width="7" stroke-linecap="round"/></g>
+</svg>

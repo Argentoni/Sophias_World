@@ -1,1 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="130" height="210" viewBox="0 0 130 210"><ellipse cx="65" cy="92" rx="42" ry="62" fill="#DDEFFC" stroke="#6E4A2C" stroke-width="7"/><g fill="#FFB6D5"><ellipse cx="65" cy="18" rx="13" ry="24"/><ellipse cx="65" cy="166" rx="13" ry="24"/><ellipse cx="16" cy="92" rx="20" ry="12"/><ellipse cx="114" cy="92" rx="20" ry="12"/></g><path d="M65 154 L65 196" stroke="#6E4A2C" stroke-width="7" stroke-linecap="round"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="130" height="210" viewBox="0 0 130 210">
+<defs>
+  <filter id="soft-shadow" x="-18%" y="-18%" width="136%" height="136%">
+    <feDropShadow dx="0" dy="5" stdDeviation="3" flood-color="#6E4A2C" flood-opacity="0.18"/>
+  </filter>
+</defs>
+<g filter="url(#soft-shadow)" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="65" cy="92" rx="42" ry="62" fill="#DDEFFC" stroke="#6E4A2C" stroke-width="7"/><g fill="#FFB6D5"><ellipse cx="65" cy="18" rx="13" ry="24"/><ellipse cx="65" cy="166" rx="13" ry="24"/><ellipse cx="16" cy="92" rx="20" ry="12"/><ellipse cx="114" cy="92" rx="20" ry="12"/></g><path d="M65 154 L65 196" stroke="#6E4A2C" stroke-width="7" stroke-linecap="round"/></g>
+</svg>

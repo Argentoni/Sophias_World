@@ -1,1 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="180" height="140" viewBox="0 0 180 140"><rect x="24" y="58" width="132" height="58" rx="14" fill="#FFE8A8" stroke="#6E4A2C" stroke-width="7"/><path d="M38 58 Q90 24 142 58" fill="#FFB6D5" stroke="#6E4A2C" stroke-width="7"/><circle cx="90" cy="86" r="10" fill="#A0D8F0" stroke="#6E4A2C" stroke-width="5"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="180" height="140" viewBox="0 0 180 140">
+<defs>
+  <filter id="soft-shadow" x="-18%" y="-18%" width="136%" height="136%">
+    <feDropShadow dx="0" dy="5" stdDeviation="3" flood-color="#6E4A2C" flood-opacity="0.18"/>
+  </filter>
+</defs>
+<g filter="url(#soft-shadow)" stroke-linecap="round" stroke-linejoin="round"><rect x="24" y="58" width="132" height="58" rx="14" fill="#FFE8A8" stroke="#6E4A2C" stroke-width="7"/><path d="M38 58 Q90 24 142 58" fill="#FFB6D5" stroke="#6E4A2C" stroke-width="7"/><circle cx="90" cy="86" r="10" fill="#A0D8F0" stroke="#6E4A2C" stroke-width="5"/></g>
+</svg>

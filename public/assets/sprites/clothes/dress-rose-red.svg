@@ -1,1 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="512" height="768" viewBox="0 0 512 768"><path d="M182 270 Q256 224 330 270 L358 356 L320 378 L304 342 L352 588 Q256 636 160 588 L208 342 L192 378 L154 356 Z" fill="#FF8DAE" stroke="#6E4A2C" stroke-width="7" stroke-linejoin="round"/><path d="M256 424 C238 402 212 420 226 446 C238 470 256 482 256 482 C256 482 274 470 286 446 C300 420 274 402 256 424 Z" fill="#FAF4E8"/><path d="M238 520 Q256 492 274 520 Q256 548 238 520 Z" fill="#B5E6C5" stroke="#6E4A2C" stroke-width="4"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="768" viewBox="0 0 512 768">
+<defs>
+  <filter id="soft-shadow" x="-18%" y="-18%" width="136%" height="136%">
+    <feDropShadow dx="0" dy="5" stdDeviation="3" flood-color="#6E4A2C" flood-opacity="0.18"/>
+  </filter>
+</defs>
+<g filter="url(#soft-shadow)" stroke-linecap="round" stroke-linejoin="round"><path d="M182 270 Q256 224 330 270 L358 356 L320 378 L304 342 L352 588 Q256 636 160 588 L208 342 L192 378 L154 356 Z" fill="#FF8DAE" stroke="#6E4A2C" stroke-width="7" stroke-linejoin="round"/><path d="M256 424 C238 402 212 420 226 446 C238 470 256 482 256 482 C256 482 274 470 286 446 C300 420 274 402 256 424 Z" fill="#FAF4E8"/><path d="M238 520 Q256 492 274 520 Q256 548 238 520 Z" fill="#B5E6C5" stroke="#6E4A2C" stroke-width="4"/></g>
+</svg>

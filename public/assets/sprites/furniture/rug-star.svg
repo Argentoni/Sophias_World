@@ -1,1 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="260" height="120" viewBox="0 0 260 120"><ellipse cx="130" cy="62" rx="105" ry="42" fill="#A0D8F0" stroke="#6E4A2C" stroke-width="7"/><path d="M130 30 l10 22 24 3-17 16 4 24-21-12-21 12 4-24-17-16 24-3z" fill="#FFE8A8"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="260" height="120" viewBox="0 0 260 120">
+<defs>
+  <filter id="soft-shadow" x="-18%" y="-18%" width="136%" height="136%">
+    <feDropShadow dx="0" dy="5" stdDeviation="3" flood-color="#6E4A2C" flood-opacity="0.18"/>
+  </filter>
+</defs>
+<g filter="url(#soft-shadow)" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="130" cy="62" rx="105" ry="42" fill="#A0D8F0" stroke="#6E4A2C" stroke-width="7"/><path d="M130 30 l10 22 24 3-17 16 4 24-21-12-21 12 4-24-17-16 24-3z" fill="#FFE8A8"/></g>
+</svg>
