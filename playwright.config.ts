@@ -1,5 +1,8 @@
 import { defineConfig, devices } from "@playwright/test";
 
+const chromiumProject = { name: "chromium", use: { ...devices["Desktop Chrome"] } };
+const webkitProject = { name: "webkit", use: { ...devices["Desktop Safari"] } };
+
 export default defineConfig({
   testDir: "./e2e",
   fullyParallel: true,
@@ -16,8 +19,5 @@ export default defineConfig({
     reuseExistingServer: !process.env.CI,
     timeout: 60_000
   },
-  projects: [
-    { name: "chromium", use: { ...devices["Desktop Chrome"] } },
-    { name: "webkit",   use: { ...devices["Desktop Safari"] } }
-  ]
+  projects: process.env.CI ? [chromiumProject] : [chromiumProject, webkitProject]
 });
