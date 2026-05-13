@@ -4,7 +4,12 @@ import { SaveStateSchema, type SaveState } from "../schemas/saveState";
 import { APP_VERSION } from "../version";
 import { localDateKey, migrateSave } from "./saveMigrations";
 import type { GameStoreState } from "../store/gameStore";
-import { starterFurnitureIds, starterFurniturePlacements } from "../data/starterWorld";
+import {
+  starterClothingIds,
+  starterFoodInventory,
+  starterFurnitureIds,
+  starterFurniturePlacements
+} from "../data/starterWorld";
 
 const SAVE_KEY = "sophias-world:save";
 
@@ -41,9 +46,9 @@ export function defaultSaveState(): SaveState {
     },
     objectPositionByScene: {},
     inventory: {
-      clothes: ["outfit-001", "top-sky-heart", "bottom-denim", "shoes-pink"],
-      furniture: starterFurnitureIds,
-      food: [{ itemId: "dog-biscuit", count: 3 }]
+      clothes: [...starterClothingIds],
+      furniture: [...starterFurnitureIds],
+      food: starterFoodInventory.map((entry) => ({ ...entry }))
     },
     scenes: starterFurniturePlacements(),
     discoveredInteractions: [],
@@ -83,10 +88,11 @@ export async function loadState(): Promise<SaveState | null> {
     console.warn("[save] corruption detected, keeping raw for recovery");
     return null;
   }
-  if (migrated !== raw) {
-    await saveState(result.data);
+  const hydrated = hydrateStarterContent(result.data);
+  if (migrated !== raw || hydrated !== result.data) {
+    await saveState(hydrated);
   }
-  return result.data;
+  return hydrated;
 }
 
 export async function exportRawSave(): Promise<unknown> {
@@ -111,6 +117,38 @@ export function setupAutoSave(store: StoreApi<GameStoreState>): () => void {
       });
     }, 1000);
   });
+}
+
+function hydrateStarterContent(save: SaveState): SaveState {
+  const clothes = mergeIds(save.inventory.clothes, starterClothingIds);
+  const furniture = mergeIds(save.inventory.furniture, starterFurnitureIds);
+  const food = mergeFood(save.inventory.food, starterFoodInventory);
+  if (clothes === save.inventory.clothes && furniture === save.inventory.furniture && food === save.inventory.food) {
+    return save;
+  }
+  return {
+    ...save,
+    inventory: { ...save.inventory, clothes, furniture, food }
+  };
+}
+
+function mergeIds(current: string[], starters: string[]): string[] {
+  const merged = Array.from(new Set([...current, ...starters]));
+  return merged.length === current.length ? current : merged;
+}
+
+function mergeFood(
+  current: SaveState["inventory"]["food"],
+  starters: SaveState["inventory"]["food"]
+): SaveState["inventory"]["food"] {
+  let changed = false;
+  const counts = new Map(current.map((entry) => [entry.itemId, entry.count]));
+  for (const entry of starters) {
+    if (counts.has(entry.itemId)) continue;
+    counts.set(entry.itemId, entry.count);
+    changed = true;
+  }
+  return changed ? Array.from(counts, ([itemId, count]) => ({ itemId, count })) : current;
 }
 
 /**

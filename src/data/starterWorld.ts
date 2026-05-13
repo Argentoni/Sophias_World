@@ -1,5 +1,16 @@
 import type { FurniturePlacement } from "../schemas/saveState";
 
+export const starterClothingIds = [
+  "outfit-001",
+  "top-sky-heart",
+  "bottom-denim",
+  "bottom-tutu-pink",
+  "bottom-heart-shorts",
+  "shoes-pink",
+  "shoes-blue-sneakers",
+  "acc-flower-clip"
+];
+
 export const starterFurnitureIds = [
   "bed-pink",
   "desk-mint",
@@ -10,7 +21,17 @@ export const starterFurnitureIds = [
   "table-juice",
   "kitchen-stove",
   "fridge-star",
-  "toy-horse"
+  "toy-horse",
+  "floor-cushion-star",
+  "tea-table",
+  "plush-bunny",
+  "blocks-rainbow"
+];
+
+export const starterFoodInventory = [
+  { itemId: "dog-biscuit", count: 3 },
+  { itemId: "water-bowl", count: 1 },
+  { itemId: "apple-snack", count: 1 }
 ];
 
 export function starterFurniturePlacements(): Record<string, { furniturePlacement: FurniturePlacement[] }> {

@@ -1,9 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="512" height="768" viewBox="0 0 512 768">
-  <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D7F8D9"/><stop offset="1" stop-color="#9EDFAF"/></linearGradient></defs>
-  
-  <path d="M176 270 Q256 228 336 270 L370 352 L326 378 L306 332 L306 442 L206 442 L206 332 L186 378 L142 352 Z" fill="url(#g)" stroke="#6E4A2C" stroke-width="8" stroke-linejoin="round"/>
-  <path d="M199 284 Q256 256 313 284" fill="none" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round" opacity="0.55"/>
-  <path d="M166 342 Q178 356 190 360 M346 342 Q334 356 322 360" fill="none" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round" opacity="0.45"/>
-  <path d="M232 344 L204 326 Q194 354 214 374 Z M280 344 L308 326 Q318 354 298 374 Z" fill="#FFB6D5" stroke="#6E4A2C" stroke-width="5"/><circle cx="256" cy="348" r="14" fill="#FFE8A8" stroke="#6E4A2C" stroke-width="5"/>
-
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="768" viewBox="0 0 512 768"><path d="M174 270 Q256 232 338 270 L365 358 L324 378 L305 334 L305 438 L207 438 L207 334 L188 378 L147 358 Z" fill="#B5E6C5" stroke="#6E4A2C" stroke-width="7" stroke-linejoin="round"/><path d="M230 314 L256 335 L282 314 L282 372 L256 352 L230 372 Z" fill="#FFB6D5" stroke="#6E4A2C" stroke-width="4"/></svg>

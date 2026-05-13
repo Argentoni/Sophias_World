@@ -1,6 +1,11 @@
 import type { Character, SaveState } from "../schemas/saveState";
 import { APP_VERSION } from "../version";
-import { starterFurnitureIds, starterFurniturePlacements } from "../data/starterWorld";
+import {
+  starterClothingIds,
+  starterFoodInventory,
+  starterFurnitureIds,
+  starterFurniturePlacements
+} from "../data/starterWorld";
 
 type LegacySaveV1 = {
   version: 1;
@@ -53,9 +58,9 @@ function migrateV1ToV2(old: LegacySaveV1): SaveStateV2 {
       park: { x: 760, y: 520 }
     },
     inventory: {
-      clothes: ["outfit-001", "top-sky-heart", "bottom-denim", "shoes-pink"],
-      furniture: ["bed-pink", "desk-mint", "rug-star", "pet-bed"],
-      food: [{ itemId: "dog-biscuit", count: 3 }]
+      clothes: [...starterClothingIds],
+      furniture: [...starterFurnitureIds],
+      food: starterFoodInventory.map((entry) => ({ ...entry }))
     },
     scenes: {
       bedroom: {

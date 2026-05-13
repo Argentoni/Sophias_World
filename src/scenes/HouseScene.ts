@@ -9,11 +9,12 @@ import { applySceneObjectDisplay } from "../ui/sceneObjectPresentation";
 import { sceneObjectKey } from "../utils/assets";
 import { drawRoomBackground } from "./sceneBackgrounds";
 
-type HouseInit = { roomId?: string; decorate?: boolean };
+type HouseInit = { roomId?: string; decorate?: boolean; decorPage?: number };
 
 export class HouseScene extends Phaser.Scene {
   private roomId = "bedroom";
   private decorate = false;
+  private decorPage = 0;
   private targets: InteractiveTarget[] = [];
   private selectedPlacementId: string | null = null;
 
@@ -24,6 +25,7 @@ export class HouseScene extends Phaser.Scene {
   init(data: HouseInit): void {
     this.roomId = data.roomId ?? "bedroom";
     this.decorate = data.decorate ?? false;
+    this.decorPage = data.decorPage ?? 0;
   }
 
   create(): void {
@@ -47,11 +49,11 @@ export class HouseScene extends Phaser.Scene {
 
   private addRoomNav(): void {
     addButton(this, 110, 96, "Mapa", () => this.scene.start("MapScene"), { width: 118, height: 48, fontSize: 18 });
-    addButton(this, 270, 96, "Quarto", () => this.scene.start("HouseScene", { roomId: "bedroom", decorate: this.decorate }), { width: 118, height: 48, fontSize: 18 });
-    addButton(this, 410, 96, "Sala", () => this.scene.start("HouseScene", { roomId: "living-room", decorate: this.decorate }), { width: 108, height: 48, fontSize: 18 });
-    addButton(this, 540, 96, "Cozinha", () => this.scene.start("HouseScene", { roomId: "kitchen", decorate: this.decorate }), { width: 130, height: 48, fontSize: 18 });
+    addButton(this, 270, 96, "Quarto", () => this.scene.start("HouseScene", { roomId: "bedroom", decorate: this.decorate, decorPage: this.decorPage }), { width: 118, height: 48, fontSize: 18 });
+    addButton(this, 410, 96, "Sala", () => this.scene.start("HouseScene", { roomId: "living-room", decorate: this.decorate, decorPage: this.decorPage }), { width: 108, height: 48, fontSize: 18 });
+    addButton(this, 540, 96, "Cozinha", () => this.scene.start("HouseScene", { roomId: "kitchen", decorate: this.decorate, decorPage: this.decorPage }), { width: 130, height: 48, fontSize: 18 });
     addButton(this, 1120, 96, this.decorate ? "Brincar" : "Decorar", () => {
-      this.scene.start("HouseScene", { roomId: this.roomId, decorate: !this.decorate });
+      this.scene.start("HouseScene", { roomId: this.roomId, decorate: !this.decorate, decorPage: 0 });
     }, { width: 150, height: 48, fontSize: 18, fill: this.decorate ? 0xb5e6c5 : 0xffe8a8 });
   }
 
@@ -150,28 +152,30 @@ export class HouseScene extends Phaser.Scene {
   }
 
   private renderFoodDrag(): void {
-    const food = gameStore.getState().save.inventory.food[0];
-    if (!food || food.count <= 0) return;
-    const item = this.add.image(1160, 636, food.itemId).setDisplaySize(88, 74).setDepth(2500);
-    item.setInteractive({ useHandCursor: true });
-    this.input.setDraggable(item);
-    addSmallText(this, 1160, 690, `${food.count}x`, 70).setDepth(2500);
-    this.input.on(
-      "drag",
-      (_pointer: Phaser.Input.Pointer, obj: Phaser.GameObjects.GameObject, dragX: number, dragY: number) => {
+    const foods = gameStore.getState().save.inventory.food.filter((entry) => entry.count > 0).slice(0, 4);
+    foods.forEach((food, index) => {
+      const home = { x: 990 + index * 70, y: 636 };
+      const item = this.add.image(home.x, home.y, food.itemId).setDisplaySize(62, 52).setDepth(2500);
+      item.setInteractive({ useHandCursor: true });
+      this.input.setDraggable(item);
+      addSmallText(this, home.x, 690, `${food.count}x`, 62).setDepth(2500);
+      this.input.on(
+        "drag",
+        (_pointer: Phaser.Input.Pointer, obj: Phaser.GameObjects.GameObject, dragX: number, dragY: number) => {
+          if (obj !== item) return;
+          item.setPosition(dragX, dragY);
+        }
+      );
+      this.input.on("dragend", (_pointer: Phaser.Input.Pointer, obj: Phaser.GameObjects.GameObject) => {
         if (obj !== item) return;
-        item.setPosition(dragX, dragY);
-      }
-    );
-    this.input.on("dragend", (_pointer: Phaser.Input.Pointer, obj: Phaser.GameObjects.GameObject) => {
-      if (obj !== item) return;
-      const found = findInteraction(this.targets, item.x, item.y, "drop-item:food");
-      if (found && gameStore.getState().consumeFood(food.itemId)) {
-        void runInteraction(this, found.target, found.interaction);
-        this.time.delayedCall(450, () => this.scene.restart({ roomId: this.roomId, decorate: this.decorate }));
-        return;
-      }
-      item.setPosition(1160, 640);
+        const found = findInteraction(this.targets, item.x, item.y, "drop-item:food");
+        if (found && gameStore.getState().consumeFood(food.itemId)) {
+          void runInteraction(this, found.target, found.interaction);
+          this.time.delayedCall(450, () => this.scene.restart({ roomId: this.roomId, decorate: this.decorate }));
+          return;
+        }
+        item.setPosition(home.x, home.y);
+      });
     });
   }
 
@@ -205,28 +209,39 @@ export class HouseScene extends Phaser.Scene {
   private renderDecorPanel(): void {
     if (!this.decorate) return;
     addPanel(this, 640, 650, 980, 118, 0xfaf4e8).setDepth(2200);
+    const pageSize = 8;
     const owned = gameStore.getState().save.inventory.furniture
       .map((id) => furnitureById.get(id))
-      .filter((item): item is NonNullable<typeof item> => Boolean(item))
-      .slice(0, 8);
-    owned.forEach((item, index) => {
+      .filter((item): item is NonNullable<typeof item> => Boolean(item));
+    const visible = owned.slice(this.decorPage * pageSize, this.decorPage * pageSize + pageSize);
+    visible.forEach((item, index) => {
       const x = 240 + index * 96;
       const image = this.add.image(x, 636, item.id).setDisplaySize(62, 48).setDepth(2201);
       image.setInteractive({ useHandCursor: true });
       image.on("pointerdown", () => {
         gameStore.getState().placeFurniture(this.roomId, item.id, { x: 560 + index * 32, y: 520 });
-        this.scene.restart({ roomId: this.roomId, decorate: true });
+        this.scene.restart({ roomId: this.roomId, decorate: true, decorPage: this.decorPage });
       });
     });
+    const pageCount = Math.ceil(owned.length / pageSize);
+    if (pageCount > 1) {
+      addButton(this, 940, 590, "<", () => {
+        this.scene.restart({ roomId: this.roomId, decorate: true, decorPage: Math.max(0, this.decorPage - 1) });
+      }, { width: 48, height: 38, fontSize: 18, fill: 0xfaf4e8 }).setDepth(2201);
+      addSmallText(this, 995, 590, `${this.decorPage + 1}/${pageCount}`, 60).setDepth(2201);
+      addButton(this, 1050, 590, ">", () => {
+        this.scene.restart({ roomId: this.roomId, decorate: true, decorPage: Math.min(pageCount - 1, this.decorPage + 1) });
+      }, { width: 48, height: 38, fontSize: 18, fill: 0xfaf4e8 }).setDepth(2201);
+    }
     addButton(this, 1035, 650, "Girar", () => {
       if (!this.selectedPlacementId) return;
       gameStore.getState().rotateFurniture(this.roomId, this.selectedPlacementId);
-      this.scene.restart({ roomId: this.roomId, decorate: true });
-    }, { width: 112, height: 46, fontSize: 17, fill: 0xa0d8f0 }).setDepth(2201);
+      this.scene.restart({ roomId: this.roomId, decorate: true, decorPage: this.decorPage });
+    }, { width: 106, height: 46, fontSize: 17, fill: 0xa0d8f0 }).setDepth(2201);
     addButton(this, 1160, 650, "Remover", () => {
       if (!this.selectedPlacementId) return;
       gameStore.getState().removeFurniture(this.roomId, this.selectedPlacementId);
-      this.scene.restart({ roomId: this.roomId, decorate: true });
+      this.scene.restart({ roomId: this.roomId, decorate: true, decorPage: this.decorPage });
     }, { width: 128, height: 46, fontSize: 17, fill: 0xffb6d5 }).setDepth(2201);
   }
 

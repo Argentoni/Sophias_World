@@ -114,6 +114,9 @@ export class PetComposer {
       if (id === "pet-bow-blue") drawBow(g, -31, -62, 12, 0x83c7eb);
       if (id === "pet-glasses-round") drawGlasses(g);
       if (id === "pet-cape-star") drawCape(g);
+      if (id === "pet-flower-clip") drawFlower(g, -40, -55);
+      if (id === "pet-star-hat") drawStarHat(g);
+      if (id === "pet-rainbow-scarf") drawRainbowScarf(g);
     }
     return g;
   }
@@ -153,6 +156,38 @@ function drawCape(g: Phaser.GameObjects.Graphics): void {
   g.fillPath();
   g.strokePath();
   drawStar(g, 55, 42, 9, 0xffe176);
+}
+
+function drawFlower(g: Phaser.GameObjects.Graphics, x: number, y: number): void {
+  g.lineStyle(3, outline, 1);
+  g.fillStyle(0xff9fc8, 1);
+  for (let i = 0; i < 6; i += 1) {
+    const angle = i * Math.PI / 3;
+    g.fillEllipse(x + Math.cos(angle) * 10, y + Math.sin(angle) * 10, 14, 10);
+  }
+  g.fillStyle(0xffe176, 1);
+  g.fillCircle(x, y, 7);
+}
+
+function drawStarHat(g: Phaser.GameObjects.Graphics): void {
+  g.lineStyle(4, outline, 1);
+  g.fillStyle(0xffe176, 1);
+  g.fillEllipse(0, -70, 64, 26);
+  g.strokeEllipse(0, -70, 64, 26);
+  drawStar(g, 0, -76, 14, 0xff9fc8);
+}
+
+function drawRainbowScarf(g: Phaser.GameObjects.Graphics): void {
+  g.lineStyle(4, outline, 1);
+  g.fillStyle(0xfaf4e8, 1);
+  g.fillRoundedRect(-34, 8, 68, 16, 8);
+  g.strokeRoundedRect(-34, 8, 68, 16, 8);
+  [0xff9bb1, 0xffe176, 0x90d7b6, 0x83c7eb].forEach((color, index) => {
+    g.lineStyle(4, color, 1);
+    g.lineBetween(-28 + index * 15, 16, -10 + index * 15, 16);
+  });
+  g.lineStyle(8, 0x83c7eb, 1);
+  g.lineBetween(23, 20, 49, 44);
 }
 
 function drawGlasses(g: Phaser.GameObjects.Graphics): void {

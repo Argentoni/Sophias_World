@@ -62,7 +62,11 @@ function drawTop(g: Phaser.GameObjects.Graphics, id: string): void {
   g.beginPath();
   g.arc(0, -22, 20, Math.PI * 0.1, Math.PI * 0.9, false);
   g.strokePath();
-  if (id.includes("heart")) drawHeart(g, 0, 9, 12, palette.detail);
+  if (id.includes("cat")) drawCatPocket(g, 0, 10);
+  else if (id.includes("cloud")) drawCloud(g, 0, 10, 0.7);
+  else if (id.includes("strawberry")) drawStrawberry(g, 0, 10, 0.7);
+  else if (id.includes("sailor")) drawBow(g, 0, 10, 10, 0xff9fc8);
+  else if (id.includes("heart")) drawHeart(g, 0, 9, 12, palette.detail);
   else if (id.includes("ribbon")) drawBow(g, 0, 10, 10, palette.detail);
   else if (id.includes("sunflower")) drawFlower(g, 0, 9, 0xffe176, 0x8fb968);
   else if (id.includes("rainbow")) drawRainbow(g, 0, 19);
@@ -73,7 +77,7 @@ function drawBottom(g: Phaser.GameObjects.Graphics, id: string): void {
   const color = bottomColor(id);
   g.lineStyle(5, outline, 1);
   g.fillStyle(color, 1);
-  if (id.includes("skirt") || id.includes("lilac")) {
+  if (id.includes("skirt") || id.includes("lilac") || id.includes("tutu")) {
     g.beginPath();
     g.moveTo(-34, -24);
     g.lineTo(34, -24);
@@ -83,12 +87,26 @@ function drawBottom(g: Phaser.GameObjects.Graphics, id: string): void {
     g.fillPath();
     g.strokePath();
     if (id.includes("star")) drawStar(g, 0, 9, 12, 0xffffff);
+    if (id.includes("cloud")) drawCloud(g, 0, 8, 0.55);
+    if (id.includes("tutu")) {
+      g.lineStyle(4, 0xffffff, 0.45);
+      g.beginPath();
+      g.arc(0, 14, 28, 0.2, Math.PI - 0.2, false);
+      g.strokePath();
+    }
     return;
   }
   g.fillRoundedRect(-43, -22, 86, 54, 14);
   g.strokeRoundedRect(-43, -22, 86, 54, 14);
   g.lineStyle(3, 0xffffff, 0.42);
   g.lineBetween(0, -16, 0, 31);
+  if (id.includes("heart")) drawHeart(g, -16, 6, 7, 0xffffff);
+  if (id.includes("rainbow")) {
+    [0xff9bb1, 0xffe176, 0x90d7b6, 0x83c7eb].forEach((stripe, index) => {
+      g.lineStyle(4, stripe, 1);
+      g.lineBetween(-34, -6 + index * 10, 34, -6 + index * 10);
+    });
+  }
 }
 
 function drawDress(g: Phaser.GameObjects.Graphics, id: string): void {
@@ -113,7 +131,12 @@ function drawDress(g: Phaser.GameObjects.Graphics, id: string): void {
   g.beginPath();
   g.arc(0, -34, 20, Math.PI * 0.12, Math.PI * 0.88, false);
   g.strokePath();
-  if (id.includes("starry")) {
+  if (id.includes("cupcake")) drawCupcake(g, 0, 14, 0.66);
+  else if (id.includes("rainbow")) drawRainbow(g, 0, 16);
+  else if (id.includes("rose")) {
+    drawHeart(g, 0, 6, 13, 0xffffff);
+    drawFlower(g, 0, 36, 0xff9fc8, 0x8fb968);
+  } else if (id.includes("starry")) {
     drawStar(g, -15, 5, 9, 0xffffff);
     drawStar(g, 20, 23, 7, 0xffe176);
   } else if (id.includes("flower")) drawFlower(g, 0, 14, 0xffffff, 0xff9bb1);
@@ -207,6 +230,55 @@ function drawAccessory(g: Phaser.GameObjects.Graphics, id: string): void {
     drawStar(g, 12, 10, 9, 0xffe176);
     return;
   }
+  if (id.includes("scarf")) {
+    g.lineStyle(5, outline, 1);
+    g.fillStyle(0xfaf4e8, 1);
+    g.fillRoundedRect(-31, -8, 62, 18, 9);
+    g.strokeRoundedRect(-31, -8, 62, 18, 9);
+    [0xff9bb1, 0xffe176, 0x90d7b6, 0x83c7eb].forEach((stripe, index) => {
+      g.lineStyle(4, stripe, 1);
+      g.lineBetween(-24 + index * 14, 1, -8 + index * 14, 1);
+    });
+    return;
+  }
+  if (id.includes("flower")) {
+    drawFlower(g, 0, 0, 0xff9fc8, 0xffe176);
+    return;
+  }
+  if (id.includes("hat-bear") || id.includes("star-hat")) {
+    g.lineStyle(5, outline, 1);
+    g.fillStyle(id.includes("star") ? 0xffe176 : 0xd8aa82, 1);
+    g.fillEllipse(0, 0, 74, 32);
+    if (id.includes("bear")) {
+      g.fillCircle(-26, -17, 12);
+      g.fillCircle(26, -17, 12);
+    } else {
+      drawStar(g, 0, -4, 13, 0xff9fc8);
+    }
+    return;
+  }
+  if (id.includes("wing")) {
+    g.lineStyle(4, outline, 1);
+    g.fillStyle(0xffffff, 0.88);
+    g.fillEllipse(-24, 5, 34, 54);
+    g.fillEllipse(24, 5, 34, 54);
+    g.strokeEllipse(-24, 5, 34, 54);
+    g.strokeEllipse(24, 5, 34, 54);
+    return;
+  }
+  if (id.includes("wand")) {
+    g.lineStyle(5, outline, 1);
+    g.lineBetween(-22, 30, 20, -25);
+    drawStar(g, 24, -30, 13, 0xffe176);
+    return;
+  }
+  if (id.includes("kitty")) {
+    g.lineStyle(5, outline, 1);
+    g.fillStyle(0xffb6d5, 1);
+    g.fillTriangle(-34, 10, -18, -30, 0, 10);
+    g.fillTriangle(34, 10, 18, -30, 0, 10);
+    return;
+  }
   drawHeart(g, 0, 0, 15, 0xff7aa7);
 }
 
@@ -262,6 +334,43 @@ function drawFlower(g: Phaser.GameObjects.Graphics, x: number, y: number, petal:
   g.fillCircle(x, y, 7);
 }
 
+function drawCatPocket(g: Phaser.GameObjects.Graphics, x: number, y: number): void {
+  g.lineStyle(4, outline, 1);
+  g.fillStyle(0xffffff, 1);
+  g.fillRoundedRect(x - 19, y - 16, 38, 35, 10);
+  g.strokeRoundedRect(x - 19, y - 16, 38, 35, 10);
+  g.fillStyle(outline, 1);
+  g.fillCircle(x - 7, y, 3);
+  g.fillCircle(x + 7, y, 3);
+}
+
+function drawCloud(g: Phaser.GameObjects.Graphics, x: number, y: number, scale = 1): void {
+  g.fillStyle(0xffffff, 1);
+  g.fillCircle(x - 18 * scale, y + 2 * scale, 12 * scale);
+  g.fillCircle(x, y - 7 * scale, 16 * scale);
+  g.fillCircle(x + 18 * scale, y + 2 * scale, 12 * scale);
+  g.fillRoundedRect(x - 30 * scale, y, 60 * scale, 20 * scale, 10 * scale);
+}
+
+function drawStrawberry(g: Phaser.GameObjects.Graphics, x: number, y: number, scale = 1): void {
+  g.lineStyle(4, outline, 1);
+  g.fillStyle(0xf75b73, 1);
+  g.fillEllipse(x, y + 5 * scale, 30 * scale, 36 * scale);
+  g.strokeEllipse(x, y + 5 * scale, 30 * scale, 36 * scale);
+  g.fillStyle(0x8fb968, 1);
+  g.fillTriangle(x - 12 * scale, y - 8 * scale, x, y - 22 * scale, x + 12 * scale, y - 8 * scale);
+}
+
+function drawCupcake(g: Phaser.GameObjects.Graphics, x: number, y: number, scale = 1): void {
+  g.lineStyle(4, outline, 1);
+  g.fillStyle(0xffe176, 1);
+  g.fillRoundedRect(x - 22 * scale, y + 3 * scale, 44 * scale, 29 * scale, 7 * scale);
+  g.strokeRoundedRect(x - 22 * scale, y + 3 * scale, 44 * scale, 29 * scale, 7 * scale);
+  g.fillStyle(0xff9fc8, 1);
+  g.fillEllipse(x, y, 46 * scale, 31 * scale);
+  g.strokeEllipse(x, y, 46 * scale, 31 * scale);
+}
+
 function drawMoon(g: Phaser.GameObjects.Graphics, x: number, y: number, radius: number): void {
   g.fillStyle(0xffe176, 1);
   g.fillCircle(x, y, radius);
@@ -270,6 +379,10 @@ function drawMoon(g: Phaser.GameObjects.Graphics, x: number, y: number, radius: 
 }
 
 function topPalette(id: string): { fill: number; detail: number } {
+  if (id.includes("cat")) return { fill: 0xffd7e8, detail: 0xff82a8 };
+  if (id.includes("cloud")) return { fill: 0xcfefff, detail: 0xffe176 };
+  if (id.includes("strawberry")) return { fill: 0xffb6d5, detail: 0xf75b73 };
+  if (id.includes("sailor")) return { fill: 0xfaf4e8, detail: 0x83c7eb };
   if (id.includes("sky")) return { fill: 0xaee3ff, detail: 0xff82a8 };
   if (id.includes("mint")) return { fill: 0xbcefd0, detail: 0xff9fc8 };
   if (id.includes("sunflower")) return { fill: 0xffd27a, detail: 0xffe176 };
@@ -278,6 +391,10 @@ function topPalette(id: string): { fill: number; detail: number } {
 }
 
 function bottomColor(id: string): number {
+  if (id.includes("tutu")) return 0xffb6d5;
+  if (id.includes("heart")) return 0xff9fc8;
+  if (id.includes("cloud")) return 0xcfefff;
+  if (id.includes("rainbow")) return 0xfaf4e8;
   if (id.includes("lilac")) return 0xc9a4ff;
   if (id.includes("mint")) return 0x9bdc9d;
   if (id.includes("star")) return 0x84c5e8;
@@ -285,12 +402,17 @@ function bottomColor(id: string): number {
 }
 
 function dressColor(id: string): number {
+  if (id.includes("cupcake")) return 0xd4b8ff;
+  if (id.includes("rainbow")) return 0xfaf4e8;
+  if (id.includes("rose")) return 0xff8dae;
   if (id.includes("starry")) return 0x7fc5e8;
   if (id.includes("moon")) return 0xffd36f;
   return 0xff9fc8;
 }
 
 function shoeColor(id: string): number {
+  if (id.includes("lilac")) return 0xc9a4ff;
+  if (id.includes("blue")) return 0x83c7eb;
   if (id.includes("yellow")) return 0xffd36f;
   if (id.includes("mint")) return 0x95dfb8;
   return 0xff9fc8;

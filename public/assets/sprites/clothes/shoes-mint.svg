@@ -1,4 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="512" height="768" viewBox="0 0 512 768">
-  <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#CFF4D5"/><stop offset="1" stop-color="#8DD7A3"/></linearGradient></defs>
-  <path d="M180 632 Q222 608 252 636 L250 670 L172 670 Q155 650 180 632 Z" fill="url(#g)" stroke="#6E4A2C" stroke-width="8" stroke-linejoin="round"/><path d="M332 632 Q290 608 260 636 L262 670 L340 670 Q357 650 332 632 Z" fill="url(#g)" stroke="#6E4A2C" stroke-width="8" stroke-linejoin="round"/><path d="M182 650 H244 M268 650 H330" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" opacity="0.55"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="768" viewBox="0 0 512 768"><path d="M178 632 Q220 608 252 636 L250 668 L172 668 Q158 650 178 632 Z" fill="#B5E6C5" stroke="#6E4A2C" stroke-width="7" stroke-linejoin="round"/><path d="M334 632 Q292 608 260 636 L262 668 L340 668 Q354 650 334 632 Z" fill="#B5E6C5" stroke="#6E4A2C" stroke-width="7" stroke-linejoin="round"/></svg>

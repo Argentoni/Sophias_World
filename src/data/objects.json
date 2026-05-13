@@ -201,5 +201,267 @@
         ]
       }
     ]
+  },
+  {
+    "id": "strawberry-milk",
+    "name": "Leitinho de morango",
+    "interactions": [
+      {
+        "trigger": "drop-character",
+        "label": "Beber",
+        "icon": "suco",
+        "reward": 2,
+        "actions": [
+          { "type": "set-expression", "target": "character", "expression": "yum" },
+          { "type": "play-sound", "sound": "sip" },
+          { "type": "spawn-particle", "particle": "hearts" },
+          { "type": "give-currency", "amount": 2, "firstTimeOnly": true }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "orange-juice-box",
+    "name": "Suquinho de laranja",
+    "interactions": [
+      {
+        "trigger": "drop-character",
+        "label": "Beber",
+        "icon": "suco",
+        "reward": 2,
+        "actions": [
+          { "type": "set-expression", "target": "character", "expression": "yum" },
+          { "type": "play-sound", "sound": "sip" },
+          { "type": "give-currency", "amount": 2, "firstTimeOnly": true }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "cupcake-heart",
+    "name": "Cupcake coração",
+    "interactions": [
+      {
+        "trigger": "drop-character",
+        "label": "Comer",
+        "icon": "comida",
+        "reward": 2,
+        "actions": [
+          { "type": "set-expression", "target": "character", "expression": "yum" },
+          { "type": "play-sound", "sound": "sip" },
+          { "type": "spawn-particle", "particle": "hearts" },
+          { "type": "give-currency", "amount": 2, "firstTimeOnly": true }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sandwich-star",
+    "name": "Sanduichinho estrela",
+    "interactions": [
+      {
+        "trigger": "drop-character",
+        "label": "Comer",
+        "icon": "comida",
+        "reward": 2,
+        "actions": [
+          { "type": "set-expression", "target": "character", "expression": "yum" },
+          { "type": "play-sound", "sound": "sip" },
+          { "type": "give-currency", "amount": 2, "firstTimeOnly": true }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "plush-bunny",
+    "name": "Coelhinho",
+    "interactions": [
+      {
+        "trigger": "drop-character",
+        "label": "Abraçar",
+        "icon": "brincar",
+        "reward": 2,
+        "actions": [
+          { "type": "set-expression", "target": "character", "expression": "happy" },
+          { "type": "play-sound", "sound": "soft" },
+          { "type": "spawn-particle", "particle": "hearts" },
+          { "type": "give-currency", "amount": 2, "firstTimeOnly": true }
+        ]
+      },
+      {
+        "trigger": "drop-pet",
+        "label": "Cheirar",
+        "icon": "pet",
+        "reward": 1,
+        "actions": [
+          { "type": "pet-care", "happiness": 8, "energy": -1, "message": "O pet gostou do coelhinho" },
+          { "type": "play-sound", "sound": "soft" },
+          { "type": "give-currency", "amount": 1, "firstTimeOnly": true }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "blocks-rainbow",
+    "name": "Blocos",
+    "interactions": [
+      {
+        "trigger": "drop-character",
+        "label": "Montar",
+        "icon": "brincar",
+        "reward": 3,
+        "actions": [
+          { "type": "set-expression", "target": "character", "expression": "curious" },
+          { "type": "play-sound", "sound": "pop" },
+          { "type": "spawn-particle", "particle": "stars" },
+          { "type": "give-currency", "amount": 3, "firstTimeOnly": true }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "tea-set",
+    "name": "Jogo de chá",
+    "interactions": [
+      {
+        "trigger": "drop-character",
+        "label": "Servir chá",
+        "icon": "suco",
+        "reward": 2,
+        "actions": [
+          { "type": "set-expression", "target": "character", "expression": "happy" },
+          { "type": "play-sound", "sound": "sip" },
+          { "type": "give-currency", "amount": 2, "firstTimeOnly": true }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bubble-wand",
+    "name": "Varinha de bolhas",
+    "interactions": [
+      {
+        "trigger": "drop-character",
+        "label": "Fazer bolhas",
+        "icon": "brincar",
+        "reward": 3,
+        "actions": [
+          { "type": "set-expression", "target": "character", "expression": "surprise" },
+          { "type": "play-sound", "sound": "sparkle" },
+          { "type": "spawn-particle", "particle": "stars" },
+          { "type": "give-currency", "amount": 3, "firstTimeOnly": true }
+        ]
+      },
+      {
+        "trigger": "drop-pet",
+        "label": "Perseguir bolhas",
+        "icon": "pet",
+        "reward": 2,
+        "actions": [
+          { "type": "pet-care", "happiness": 18, "energy": -5, "message": "O pet correu atrás das bolhas" },
+          { "type": "play-sound", "sound": "pop" },
+          { "type": "give-currency", "amount": 2, "firstTimeOnly": true }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "star-ball",
+    "name": "Bola estrela",
+    "interactions": [
+      {
+        "trigger": "drop-character",
+        "label": "Chutar",
+        "icon": "brincar",
+        "reward": 2,
+        "actions": [
+          { "type": "set-expression", "target": "character", "expression": "happy" },
+          { "type": "play-sound", "sound": "pop" },
+          { "type": "give-currency", "amount": 2, "firstTimeOnly": true }
+        ]
+      },
+      {
+        "trigger": "drop-pet",
+        "label": "Buscar",
+        "icon": "bolinha",
+        "reward": 2,
+        "actions": [
+          { "type": "pet-care", "happiness": 18, "energy": -6, "message": "O pet buscou a bola" },
+          { "type": "play-sound", "sound": "pop" },
+          { "type": "spawn-particle", "particle": "hearts" },
+          { "type": "give-currency", "amount": 2, "firstTimeOnly": true }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "art-easel",
+    "name": "Pintura",
+    "interactions": [
+      {
+        "trigger": "drop-character",
+        "label": "Pintar",
+        "icon": "brincar",
+        "reward": 3,
+        "actions": [
+          { "type": "set-expression", "target": "character", "expression": "curious" },
+          { "type": "play-sound", "sound": "page" },
+          { "type": "spawn-particle", "particle": "stars" },
+          { "type": "give-currency", "amount": 3, "firstTimeOnly": true }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "dollhouse-pastel",
+    "name": "Casinha",
+    "interactions": [
+      {
+        "trigger": "drop-character",
+        "label": "Inventar história",
+        "icon": "brincar",
+        "reward": 3,
+        "actions": [
+          { "type": "set-expression", "target": "character", "expression": "happy" },
+          { "type": "play-sound", "sound": "soft" },
+          { "type": "give-currency", "amount": 3, "firstTimeOnly": true }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "toy-kitchen",
+    "name": "Cozinha de brinquedo",
+    "interactions": [
+      {
+        "trigger": "drop-character",
+        "label": "Cozinhar",
+        "icon": "comida",
+        "reward": 3,
+        "actions": [
+          { "type": "set-expression", "target": "character", "expression": "yum" },
+          { "type": "play-sound", "sound": "sip" },
+          { "type": "spawn-particle", "particle": "hearts" },
+          { "type": "give-currency", "amount": 3, "firstTimeOnly": true }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "play-tent",
+    "name": "Cabana",
+    "interactions": [
+      {
+        "trigger": "drop-character",
+        "label": "Esconder",
+        "icon": "brincar",
+        "reward": 2,
+        "actions": [
+          { "type": "set-expression", "target": "character", "expression": "happy" },
+          { "type": "play-sound", "sound": "soft" },
+          { "type": "give-currency", "amount": 2, "firstTimeOnly": true }
+        ]
+      }
+    ]
   }
 ]

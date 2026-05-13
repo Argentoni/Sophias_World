@@ -9,6 +9,9 @@
     { "id": "pet-bow-blue", "name": "Laço azul", "asset": "pets/pet-bow-blue.svg" },
     { "id": "pet-cape-star", "name": "Capinha estrela", "asset": "pets/pet-cape-star.svg" },
     { "id": "pet-glasses-round", "name": "Óculos redondo", "asset": "pets/pet-glasses-round.svg" },
-    { "id": "pet-bandana-mint", "name": "Bandana mint", "asset": "pets/pet-bandana-mint.svg" }
+    { "id": "pet-bandana-mint", "name": "Bandana mint", "asset": "pets/pet-bandana-mint.svg" },
+    { "id": "pet-flower-clip", "name": "Flor na orelha", "asset": "pets/pet-flower-clip.svg" },
+    { "id": "pet-star-hat", "name": "Chapéu estrela", "asset": "pets/pet-star-hat.svg" },
+    { "id": "pet-rainbow-scarf", "name": "Cachecol arco-íris", "asset": "pets/pet-rainbow-scarf.svg" }
   ]
 }

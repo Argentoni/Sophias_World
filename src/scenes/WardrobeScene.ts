@@ -8,12 +8,13 @@ import { drawClothingIcon, drawPetAccessoryIcon } from "../ui/chibiPreview";
 import type { Character } from "../schemas/saveState";
 
 type WardrobeTab = "skin" | "hair" | "face" | "clothes" | "pet";
-type WardrobeInit = { tab?: WardrobeTab };
+type WardrobeInit = { tab?: WardrobeTab; page?: number };
 
 const skinOptions: Character["body"]["skinTone"][] = ["1", "2", "3", "4", "5"];
 
 export class WardrobeScene extends Phaser.Scene {
   private tab: WardrobeTab = "clothes";
+  private page = 0;
 
   constructor() {
     super("WardrobeScene");
@@ -21,6 +22,7 @@ export class WardrobeScene extends Phaser.Scene {
 
   init(data: WardrobeInit): void {
     this.tab = data.tab ?? "clothes";
+    this.page = data.page ?? 0;
   }
 
   create(): void {
@@ -45,7 +47,7 @@ export class WardrobeScene extends Phaser.Scene {
       ["pet", "Pet"]
     ];
     tabs.forEach(([tab, label], index) => {
-      addButton(this, 185 + index * 128, 190, label, () => this.scene.restart({ tab }), {
+      addButton(this, 185 + index * 128, 190, label, () => this.scene.restart({ tab, page: 0 }), {
         width: 112,
         height: 42,
         fontSize: 16,
@@ -96,25 +98,31 @@ export class WardrobeScene extends Phaser.Scene {
 
   private renderFace(): void {
     eyeStyles.forEach((eyes, index) => {
-      addButton(this, 500 + index * 128, 310, eyeLabel(eyes), () => {
+      const x = 500 + (index % 4) * 135;
+      const y = 285 + Math.floor(index / 4) * 62;
+      addButton(this, x, y, eyeLabel(eyes), () => {
         const mouth = gameStore.getState().save.character.face.mouth;
         gameStore.getState().setFace(eyes, mouth);
         this.scene.restart({ tab: "face" });
-      }, { width: 112, height: 48, fontSize: 16 }).setDepth(4202);
+      }, { width: 118, height: 44, fontSize: 15 }).setDepth(4202);
     });
     mouthStyles.forEach((mouth, index) => {
-      addButton(this, 500 + index * 128, 420, mouthLabel(mouth), () => {
+      const x = 500 + (index % 4) * 135;
+      const y = 445 + Math.floor(index / 4) * 62;
+      addButton(this, x, y, mouthLabel(mouth), () => {
         const eyes = gameStore.getState().save.character.face.eyes;
         gameStore.getState().setFace(eyes, mouth);
         this.scene.restart({ tab: "face" });
-      }, { width: 112, height: 48, fontSize: 16, fill: 0xb5e6c5 }).setDepth(4202);
+      }, { width: 118, height: 44, fontSize: 15, fill: 0xb5e6c5 }).setDepth(4202);
     });
   }
 
   private renderClothes(): void {
     const save = gameStore.getState().save;
     const owned = clothes.filter((item) => save.inventory.clothes.includes(item.id));
-    owned.forEach((item, index) => {
+    const pageSize = 15;
+    const visible = owned.slice(this.page * pageSize, this.page * pageSize + pageSize);
+    visible.forEach((item, index) => {
       const x = 470 + (index % 5) * 140;
       const y = 300 + Math.floor(index / 5) * 112;
       this.add.rectangle(x, y, 116, 98, 0xffffff, 0.62).setStrokeStyle(2, 0xffffff, 0.9).setDepth(4201);
@@ -122,9 +130,10 @@ export class WardrobeScene extends Phaser.Scene {
       addButton(this, x, y + 38, item.category === "accessory" ? "Usar" : "Vestir", () => {
         if (item.category === "accessory") gameStore.getState().toggleAccessory(item.id);
         else gameStore.getState().setOutfitSlot(item.category, item.id);
-        this.scene.restart({ tab: "clothes" });
+        this.scene.restart({ tab: "clothes", page: this.page });
       }, { width: 88, height: 30, fontSize: 14, fill: 0xffe8a8 }).setDepth(4202);
     });
+    this.renderPager(owned.length, pageSize);
   }
 
   private renderPet(): void {
@@ -152,6 +161,18 @@ export class WardrobeScene extends Phaser.Scene {
         });
     });
   }
+
+  private renderPager(total: number, pageSize: number): void {
+    const pageCount = Math.ceil(total / pageSize);
+    if (pageCount <= 1) return;
+    addButton(this, 825, 628, "<", () => {
+      this.scene.restart({ tab: this.tab, page: Math.max(0, this.page - 1) });
+    }, { width: 54, height: 38, fontSize: 18, fill: 0xfaf4e8 }).setDepth(4202);
+    addSmallText(this, 905, 628, `${this.page + 1}/${pageCount}`, 70).setDepth(4202);
+    addButton(this, 985, 628, ">", () => {
+      this.scene.restart({ tab: this.tab, page: Math.min(pageCount - 1, this.page + 1) });
+    }, { width: 54, height: 38, fontSize: 18, fill: 0xfaf4e8 }).setDepth(4202);
+  }
 }
 
 function hairLabel(style: string): string {
@@ -160,6 +181,9 @@ function hairLabel(style: string): string {
   if (style === "braids") return "Tranças";
   if (style === "curly") return "Cacheado";
   if (style === "long") return "Longo";
+  if (style === "buns") return "Coques";
+  if (style === "ponytail") return "Rabo";
+  if (style === "waves") return "Ondulado";
   return "Cabelo";
 }
 
@@ -168,6 +192,9 @@ function eyeLabel(style: string): string {
   if (style === "smile") return "Feliz";
   if (style === "star") return "Estrela";
   if (style === "sleepy") return "Sono";
+  if (style === "wink") return "Piscadinha";
+  if (style === "heart") return "Coração";
+  if (style === "gentle") return "Doce";
   return "Brilho";
 }
 
@@ -176,5 +203,8 @@ function mouthLabel(style: string): string {
   if (style === "yum") return "Gostei";
   if (style === "curious") return "Curiosa";
   if (style === "sleepy") return "Sono";
+  if (style === "laugh") return "Rindo";
+  if (style === "tiny") return "Pequena";
+  if (style === "kiss") return "Beijinho";
   return "Sorriso";
 }

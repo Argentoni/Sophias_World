@@ -38,7 +38,8 @@ export async function runInteraction(
     }
     if (action.type === "set-expression") {
       const save = gameStore.getState().save;
-      gameStore.getState().setFace(save.character.face.eyes, expressionToMouth(action.expression));
+      const face = expressionToFace(action.expression, save.character.face);
+      gameStore.getState().setFace(face.eyes, face.mouth);
     }
     if (action.type === "give-currency") {
       if (!action.firstTimeOnly || !gameStore.getState().save.discoveredInteractions.includes(id)) {
@@ -60,12 +61,17 @@ export async function runInteraction(
   }
 }
 
-function expressionToMouth(expression: string): string {
-  if (expression === "yum") return "yum";
-  if (expression === "sleepy") return "sleepy";
-  if (expression === "curious") return "curious";
-  if (expression === "surprise") return "open";
-  return "smile";
+function expressionToFace(
+  expression: string,
+  fallback: { eyes: string; mouth: string }
+): { eyes: string; mouth: string } {
+  if (expression === "yum") return { eyes: "sparkle", mouth: "yum" };
+  if (expression === "sleepy") return { eyes: "sleepy", mouth: "sleepy" };
+  if (expression === "curious") return { eyes: "gentle", mouth: "curious" };
+  if (expression === "surprise") return { eyes: "round", mouth: "open" };
+  if (expression === "sparkle") return { eyes: "star", mouth: "smile" };
+  if (expression === "happy") return { eyes: "smile", mouth: "laugh" };
+  return { eyes: fallback.eyes, mouth: "smile" };
 }
 
 function spawnParticle(scene: Phaser.Scene, x: number, y: number, particle: string): void {

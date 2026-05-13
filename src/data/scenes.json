@@ -8,6 +8,9 @@
     "objects": [
       { "id": "juice-bedroom", "objectId": "juice-cup", "asset": "objects/juice-cup.svg", "x": 815, "y": 420, "scale": 1 },
       { "id": "book-bedroom", "objectId": "book-blue", "asset": "objects/book-blue.svg", "x": 475, "y": 425, "scale": 1 },
+      { "id": "milk-bedroom", "objectId": "strawberry-milk", "asset": "objects/strawberry-milk.svg", "x": 720, "y": 435, "scale": 1 },
+      { "id": "bunny-bedroom", "objectId": "plush-bunny", "asset": "furniture/plush-bunny.svg", "x": 575, "y": 575, "scale": 1 },
+      { "id": "blocks-bedroom", "objectId": "blocks-rainbow", "asset": "furniture/blocks-rainbow.svg", "x": 455, "y": 595, "scale": 1 },
       { "id": "mirror-bedroom", "objectId": "mirror-flower", "asset": "furniture/mirror-flower.svg", "x": 1100, "y": 360, "scale": 0.9 },
       { "id": "pet-bowl-bedroom", "objectId": "pet-bowl", "asset": "objects/pet-bowl.svg", "x": 1030, "y": 598, "scale": 1 },
       { "id": "pet-toy-bedroom", "objectId": "pet-toy", "asset": "objects/pet-toy.svg", "x": 910, "y": 602, "scale": 1 }
@@ -22,7 +25,10 @@
     "objects": [
       { "id": "chair-living", "objectId": "chair-heart", "asset": "furniture/chair-heart.svg", "x": 260, "y": 490, "scale": 1 },
       { "id": "juice-living", "objectId": "juice-cup", "asset": "objects/juice-cup.svg", "x": 620, "y": 450, "scale": 1 },
-      { "id": "book-living", "objectId": "book-blue", "asset": "objects/book-blue.svg", "x": 735, "y": 445, "scale": 1 }
+      { "id": "book-living", "objectId": "book-blue", "asset": "objects/book-blue.svg", "x": 735, "y": 445, "scale": 1 },
+      { "id": "tea-living", "objectId": "tea-set", "asset": "objects/tea-set.svg", "x": 500, "y": 540, "scale": 1 },
+      { "id": "cupcake-living", "objectId": "cupcake-heart", "asset": "objects/cupcake-heart.svg", "x": 805, "y": 470, "scale": 1 },
+      { "id": "ball-living", "objectId": "star-ball", "asset": "objects/star-ball.svg", "x": 990, "y": 595, "scale": 1 }
     ]
   },
   {
@@ -33,6 +39,9 @@
     "decorationArea": { "x": 150, "y": 365, "width": 970, "height": 215, "grid": 32 },
     "objects": [
       { "id": "juice-kitchen", "objectId": "juice-cup", "asset": "objects/juice-cup.svg", "x": 680, "y": 455, "scale": 1 },
+      { "id": "orange-kitchen", "objectId": "orange-juice-box", "asset": "objects/orange-juice-box.svg", "x": 770, "y": 455, "scale": 1 },
+      { "id": "sandwich-kitchen", "objectId": "sandwich-star", "asset": "objects/sandwich-star.svg", "x": 560, "y": 470, "scale": 1 },
+      { "id": "cupcake-kitchen", "objectId": "cupcake-heart", "asset": "objects/cupcake-heart.svg", "x": 465, "y": 472, "scale": 1 },
       { "id": "pet-bowl-kitchen", "objectId": "pet-bowl", "asset": "objects/pet-bowl.svg", "x": 925, "y": 590, "scale": 1 }
     ]
   },
@@ -45,7 +54,9 @@
       { "id": "swing-park", "objectId": "swing", "asset": "objects/swing.svg", "x": 345, "y": 370, "scale": 1 },
       { "id": "slide-park", "objectId": "slide", "asset": "objects/slide.svg", "x": 860, "y": 395, "scale": 1 },
       { "id": "toy-park", "objectId": "toy-horse", "asset": "furniture/toy-horse.svg", "x": 610, "y": 520, "scale": 1 },
-      { "id": "pet-toy-park", "objectId": "pet-toy", "asset": "objects/pet-toy.svg", "x": 1040, "y": 590, "scale": 1 }
+      { "id": "pet-toy-park", "objectId": "pet-toy", "asset": "objects/pet-toy.svg", "x": 1040, "y": 590, "scale": 1 },
+      { "id": "bubble-park", "objectId": "bubble-wand", "asset": "objects/bubble-wand.svg", "x": 515, "y": 575, "scale": 1 },
+      { "id": "ball-park", "objectId": "star-ball", "asset": "objects/star-ball.svg", "x": 755, "y": 590, "scale": 1 }
     ]
   }
 ]
