@@ -1,8 +1,25 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="150" height="100" viewBox="0 0 150 100">
 <defs>
-  <filter id="soft-shadow" x="-18%" y="-18%" width="136%" height="136%">
-    <feDropShadow dx="0" dy="5" stdDeviation="3" flood-color="#6E4A2C" flood-opacity="0.18"/>
+  <g id="art-source" stroke-linecap="round" stroke-linejoin="round"><path d="M75 18 l16 30 34 5-25 23 6 33-31-16-31 16 6-33-25-23 34-5z" fill="#FFE8A8" stroke="#6E4A2C" stroke-width="7" stroke-linejoin="round"/><path d="M50 62 Q75 78 100 62" fill="none" stroke="#FAF4E8" stroke-width="6" stroke-linecap="round"/></g>
+  <mask id="art-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="150" height="100">
+    <use href="#art-source" fill="#fff" stroke="#fff"/>
+  </mask>
+  <linearGradient id="gloss" x1="0" x2="0" y1="0" y2="1">
+    <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.45"/>
+    <stop offset="0.42" stop-color="#FFFFFF" stop-opacity="0.12"/>
+    <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+  </linearGradient>
+  <filter id="soft-shadow" x="-20%" y="-20%" width="140%" height="145%">
+    <feDropShadow dx="0" dy="8" stdDeviation="5" flood-color="#6E4A2C" flood-opacity="0.18"/>
+  </filter>
+  <filter id="sticker-edge" x="-18%" y="-18%" width="136%" height="136%">
+    <feMorphology in="SourceAlpha" operator="dilate" radius="4" result="expanded"/>
+    <feFlood flood-color="#FFF9EF" flood-opacity="0.95" result="paper"/>
+    <feComposite in="paper" in2="expanded" operator="in"/>
   </filter>
 </defs>
-<g filter="url(#soft-shadow)" stroke-linecap="round" stroke-linejoin="round"><path d="M75 18 l16 30 34 5-25 23 6 33-31-16-31 16 6-33-25-23 34-5z" fill="#FFE8A8" stroke="#6E4A2C" stroke-width="7" stroke-linejoin="round"/><path d="M50 62 Q75 78 100 62" fill="none" stroke="#FAF4E8" stroke-width="6" stroke-linecap="round"/></g>
+<use href="#art-source" filter="url(#soft-shadow)"/>
+<use href="#art-source" filter="url(#sticker-edge)"/>
+<use href="#art-source"/>
+<ellipse cx="51.00000000000001" cy="18" rx="51.00000000000001" ry="20" fill="url(#gloss)" mask="url(#art-mask)" pointer-events="none"/>
 </svg>

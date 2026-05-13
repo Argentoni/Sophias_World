@@ -77,14 +77,14 @@ export class WardrobeScene extends Phaser.Scene {
 
   private renderHair(): void {
     hairStyles.forEach((style, index) => {
-      addButton(this, 510 + (index % 3) * 165, 305 + Math.floor(index / 3) * 72, hairLabel(style), () => {
+      addButton(this, 485 + (index % 4) * 132, 295 + Math.floor(index / 4) * 62, hairLabel(style), () => {
         const current = gameStore.getState().save.character.hair.color;
         gameStore.getState().setHair(style, current);
         this.scene.restart({ tab: "hair" });
-      }, { width: 142, height: 48, fontSize: 17 }).setDepth(4202);
+      }, { width: 116, height: 42, fontSize: 15 }).setDepth(4202);
     });
     hairColors.forEach((color, index) => {
-      const swatch = this.add.circle(520 + index * 80, 500, 24, Phaser.Display.Color.HexStringToColor(color).color)
+      const swatch = this.add.circle(500 + index * 86, 530, 24, Phaser.Display.Color.HexStringToColor(color).color)
         .setStrokeStyle(4, 0x6e4a2c)
         .setDepth(4202)
         .setInteractive({ useHandCursor: true });
@@ -176,14 +176,18 @@ export class WardrobeScene extends Phaser.Scene {
 }
 
 function hairLabel(style: string): string {
-  if (style === "bob") return "Sem cabelo";
+  if (style === "bob") return "Chanel";
+  if (style === "soft-bangs") return "Franjinha";
   if (style === "pigtails") return "Maria";
   if (style === "braids") return "Tranças";
   if (style === "curly") return "Cacheado";
   if (style === "long") return "Longo";
   if (style === "buns") return "Coques";
+  if (style === "space-buns") return "Coquinhos";
   if (style === "ponytail") return "Rabo";
   if (style === "waves") return "Ondulado";
+  if (style === "side-braid") return "Trança lado";
+  if (style === "pixie") return "Curtinho";
   return "Cabelo";
 }
 

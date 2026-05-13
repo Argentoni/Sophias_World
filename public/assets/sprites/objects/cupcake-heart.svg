@@ -1,8 +1,25 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="95" height="90" viewBox="0 0 95 90">
 <defs>
-  <filter id="soft-shadow" x="-18%" y="-18%" width="136%" height="136%">
-    <feDropShadow dx="0" dy="5" stdDeviation="3" flood-color="#6E4A2C" flood-opacity="0.18"/>
+  <g id="art-source" stroke-linecap="round" stroke-linejoin="round"><path d="M24 44 H72 L66 78 Q48 88 30 78 Z" fill="#FFE8A8" stroke="#6E4A2C" stroke-width="6"/><path d="M22 44 Q24 18 48 24 Q72 18 74 44 Z" fill="#FFB6D5" stroke="#6E4A2C" stroke-width="6"/><path d="M48 34 C40 24 28 32 34 44 C38 52 48 58 48 58 C48 58 58 52 62 44 C68 32 56 24 48 34 Z" fill="#FAF4E8"/></g>
+  <mask id="art-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="95" height="90">
+    <use href="#art-source" fill="#fff" stroke="#fff"/>
+  </mask>
+  <linearGradient id="gloss" x1="0" x2="0" y1="0" y2="1">
+    <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.45"/>
+    <stop offset="0.42" stop-color="#FFFFFF" stop-opacity="0.12"/>
+    <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+  </linearGradient>
+  <filter id="soft-shadow" x="-20%" y="-20%" width="140%" height="145%">
+    <feDropShadow dx="0" dy="8" stdDeviation="5" flood-color="#6E4A2C" flood-opacity="0.18"/>
+  </filter>
+  <filter id="sticker-edge" x="-18%" y="-18%" width="136%" height="136%">
+    <feMorphology in="SourceAlpha" operator="dilate" radius="4" result="expanded"/>
+    <feFlood flood-color="#FFF9EF" flood-opacity="0.95" result="paper"/>
+    <feComposite in="paper" in2="expanded" operator="in"/>
   </filter>
 </defs>
-<g filter="url(#soft-shadow)" stroke-linecap="round" stroke-linejoin="round"><path d="M24 44 H72 L66 78 Q48 88 30 78 Z" fill="#FFE8A8" stroke="#6E4A2C" stroke-width="6"/><path d="M22 44 Q24 18 48 24 Q72 18 74 44 Z" fill="#FFB6D5" stroke="#6E4A2C" stroke-width="6"/><path d="M48 34 C40 24 28 32 34 44 C38 52 48 58 48 58 C48 58 58 52 62 44 C68 32 56 24 48 34 Z" fill="#FAF4E8"/></g>
+<use href="#art-source" filter="url(#soft-shadow)"/>
+<use href="#art-source" filter="url(#sticker-edge)"/>
+<use href="#art-source"/>
+<ellipse cx="32.300000000000004" cy="16.2" rx="32.300000000000004" ry="18" fill="url(#gloss)" mask="url(#art-mask)" pointer-events="none"/>
 </svg>

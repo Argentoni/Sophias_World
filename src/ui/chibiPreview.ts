@@ -12,6 +12,11 @@ export function drawClothingIcon(
   depth = 1
 ): Phaser.GameObjects.Container {
   const container = scene.add.container(x, y).setScale(scale).setDepth(depth);
+  const spritePreview = clothingSpritePreview(scene, itemId, category);
+  if (spritePreview) {
+    container.add(spritePreview);
+    return container;
+  }
   const g = scene.add.graphics();
   if (category === "bottom") drawBottom(g, itemId);
   else if (category === "dress") drawDress(g, itemId);
@@ -20,6 +25,29 @@ export function drawClothingIcon(
   else drawTop(g, itemId);
   container.add(g);
   return container;
+}
+
+function clothingSpritePreview(
+  scene: Phaser.Scene,
+  itemId: string,
+  category: string
+): Phaser.GameObjects.Image | null {
+  if (!scene.textures.exists(itemId) || category === "accessory") return null;
+  const image = scene.add.image(0, 0, itemId);
+  if (category === "top") {
+    return image.setCrop(118, 230, 276, 240).setDisplaySize(240, 360).setPosition(0, -8);
+  }
+  if (category === "bottom") {
+    return image.setCrop(145, 382, 222, 235).setDisplaySize(250, 360).setPosition(0, -42);
+  }
+  if (category === "dress") {
+    return image.setCrop(120, 218, 290, 455).setDisplaySize(220, 300).setPosition(0, -26);
+  }
+  if (category === "shoes") {
+    return image.setCrop(120, 586, 274, 106).setDisplaySize(250, 420).setPosition(0, -118);
+  }
+  image.destroy();
+  return null;
 }
 
 export function drawPetAccessoryIcon(

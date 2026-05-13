@@ -60,49 +60,69 @@ export class PetComposer {
   private drawDog(pet: Pet): Phaser.GameObjects.Graphics {
     const color = furColors[pet.color];
     const g = this.scene.add.graphics();
-    g.lineStyle(5, outline, 1);
-    g.fillStyle(color.body, 1);
-    g.fillRoundedRect(-50, -4, 104, 60, 30);
-    g.strokeRoundedRect(-50, -4, 104, 60, 30);
-    g.fillRoundedRect(-44, 38, 16, 35, 8);
-    g.fillRoundedRect(25, 38, 16, 35, 8);
-    g.strokeRoundedRect(-44, 38, 16, 35, 8);
-    g.strokeRoundedRect(25, 38, 16, 35, 8);
     g.lineStyle(8, outline, 1);
     g.beginPath();
-    g.arc(55, 8, 36, Math.PI * 1.1, Math.PI * 1.82, false);
+    g.arc(58, 9, 42, Math.PI * 1.08, Math.PI * 1.86, false);
     g.strokePath();
 
     g.lineStyle(5, outline, 1);
     g.fillStyle(color.ear, 1);
-    g.fillEllipse(-49, -28, 35, 55);
-    g.fillEllipse(49, -28, 35, 55);
-    g.strokeEllipse(-49, -28, 35, 55);
-    g.strokeEllipse(49, -28, 35, 55);
-
-    g.fillStyle(color.body, 1);
-    g.fillCircle(0, -24, 56);
-    g.strokeCircle(0, -24, 56);
-    g.fillStyle(color.patch, 1);
-    g.fillEllipse(0, -8, 54, 36);
-    g.fillEllipse(-19, -31, 26, 23);
-
-    g.fillStyle(0x3f2a1c, 1);
-    g.fillCircle(-19, -30, 6);
-    g.fillCircle(19, -30, 6);
-    g.fillRoundedRect(-6, -14, 12, 8, 5);
-    g.lineStyle(3, outline, 1);
     g.beginPath();
-    g.arc(-7, -6, 9, 0.1, Math.PI * 0.85, false);
-    g.arc(7, -6, 9, Math.PI * 0.15, Math.PI - 0.1, false);
+    g.moveTo(-42, -51);
+    g.lineTo(-72, -70);
+    g.lineTo(-72, -34);
+    g.lineTo(-56, -4);
+    g.lineTo(-36, -1);
+    g.closePath();
+    g.fillPath();
+    g.strokePath();
+    g.beginPath();
+    g.moveTo(42, -51);
+    g.lineTo(72, -70);
+    g.lineTo(72, -34);
+    g.lineTo(56, -4);
+    g.lineTo(36, -1);
+    g.closePath();
+    g.fillPath();
     g.strokePath();
 
-    g.fillStyle(0xff9bb1, 0.34);
-    g.fillEllipse(-31, -15, 16, 9);
-    g.fillEllipse(31, -15, 16, 9);
+    g.fillStyle(color.body, 1);
+    g.fillEllipse(0, 19, 110, 70);
+    g.strokeEllipse(0, 19, 110, 70);
+    g.fillStyle(color.patch, 0.42);
+    g.fillEllipse(18, 16, 46, 32);
+    g.fillStyle(color.body, 1);
+    g.fillEllipse(-37, 51, 24, 35);
+    g.fillEllipse(34, 51, 24, 35);
+    g.strokeEllipse(-37, 51, 24, 35);
+    g.strokeEllipse(34, 51, 24, 35);
+
+    g.fillStyle(color.body, 1);
+    g.fillCircle(0, -30, 58);
+    g.strokeCircle(0, -30, 58);
+    g.fillStyle(color.patch, 1);
+    g.fillEllipse(0, -10, 58, 39);
+    g.fillEllipse(-20, -39, 28, 24);
+
+    g.fillStyle(0x3f2a1c, 1);
+    g.fillCircle(-20, -34, 6.5);
+    g.fillCircle(20, -34, 6.5);
     g.fillStyle(0xffffff, 1);
-    g.fillCircle(-21, -33, 2.5);
-    g.fillCircle(17, -33, 2.5);
+    g.fillCircle(-22, -37, 2.3);
+    g.fillCircle(18, -37, 2.3);
+    g.fillStyle(0x3f2a1c, 1);
+    g.fillRoundedRect(-7, -18, 14, 9, 5);
+    g.lineStyle(3, outline, 1);
+    g.beginPath();
+    g.arc(-8, -8, 10, 0.05, Math.PI * 0.88, false);
+    g.arc(8, -8, 10, Math.PI * 0.12, Math.PI - 0.05, false);
+    g.strokePath();
+
+    g.fillStyle(0xff9bb1, 0.36);
+    g.fillEllipse(-35, -18, 18, 10);
+    g.fillEllipse(35, -18, 18, 10);
+    g.fillStyle(0xffffff, 0.42);
+    g.fillEllipse(-20, 2, 34, 18);
     return g;
   }
 

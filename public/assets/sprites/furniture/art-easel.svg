@@ -1,8 +1,25 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="150" height="190" viewBox="0 0 150 190">
 <defs>
-  <filter id="soft-shadow" x="-18%" y="-18%" width="136%" height="136%">
-    <feDropShadow dx="0" dy="5" stdDeviation="3" flood-color="#6E4A2C" flood-opacity="0.18"/>
+  <g id="art-source" stroke-linecap="round" stroke-linejoin="round"><path d="M75 24 L34 166 M75 24 L116 166 M50 126 H100" stroke="#6E4A2C" stroke-width="8" stroke-linecap="round"/><rect x="38" y="44" width="74" height="74" rx="10" fill="#FAF4E8" stroke="#6E4A2C" stroke-width="7"/><path d="M52 82 Q70 58 92 82" fill="none" stroke="#FFB6D5" stroke-width="8" stroke-linecap="round"/><circle cx="62" cy="98" r="8" fill="#A0D8F0"/><circle cx="89" cy="100" r="7" fill="#FFE8A8"/></g>
+  <mask id="art-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="150" height="190">
+    <use href="#art-source" fill="#fff" stroke="#fff"/>
+  </mask>
+  <linearGradient id="gloss" x1="0" x2="0" y1="0" y2="1">
+    <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.45"/>
+    <stop offset="0.42" stop-color="#FFFFFF" stop-opacity="0.12"/>
+    <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+  </linearGradient>
+  <filter id="soft-shadow" x="-20%" y="-20%" width="140%" height="145%">
+    <feDropShadow dx="0" dy="8" stdDeviation="5" flood-color="#6E4A2C" flood-opacity="0.18"/>
+  </filter>
+  <filter id="sticker-edge" x="-18%" y="-18%" width="136%" height="136%">
+    <feMorphology in="SourceAlpha" operator="dilate" radius="4" result="expanded"/>
+    <feFlood flood-color="#FFF9EF" flood-opacity="0.95" result="paper"/>
+    <feComposite in="paper" in2="expanded" operator="in"/>
   </filter>
 </defs>
-<g filter="url(#soft-shadow)" stroke-linecap="round" stroke-linejoin="round"><path d="M75 24 L34 166 M75 24 L116 166 M50 126 H100" stroke="#6E4A2C" stroke-width="8" stroke-linecap="round"/><rect x="38" y="44" width="74" height="74" rx="10" fill="#FAF4E8" stroke="#6E4A2C" stroke-width="7"/><path d="M52 82 Q70 58 92 82" fill="none" stroke="#FFB6D5" stroke-width="8" stroke-linecap="round"/><circle cx="62" cy="98" r="8" fill="#A0D8F0"/><circle cx="89" cy="100" r="7" fill="#FFE8A8"/></g>
+<use href="#art-source" filter="url(#soft-shadow)"/>
+<use href="#art-source" filter="url(#sticker-edge)"/>
+<use href="#art-source"/>
+<ellipse cx="51.00000000000001" cy="34.199999999999996" rx="51.00000000000001" ry="38" fill="url(#gloss)" mask="url(#art-mask)" pointer-events="none"/>
 </svg>
