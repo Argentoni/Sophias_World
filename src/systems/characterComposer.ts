@@ -198,9 +198,17 @@ function ly(y: number): number {
 }
 
 function drawBackHair(g: Phaser.GameObjects.Graphics, style: string, color: number): void {
-  if (style === "bob") return;
   g.lineStyle(5, outline, 0.68);
   g.fillStyle(color, 1);
+  if (style === "bob") {
+    g.fillRoundedRect(lx(64), ly(86), 278, 270, 104);
+    g.strokeRoundedRect(lx(64), ly(86), 278, 270, 104);
+    g.fillEllipse(lx(112), ly(270), 52, 128);
+    g.fillEllipse(lx(294), ly(270), 52, 128);
+    g.strokeEllipse(lx(112), ly(270), 52, 128);
+    g.strokeEllipse(lx(294), ly(270), 52, 128);
+    return;
+  }
   if (style === "pigtails") {
     g.fillEllipse(lx(76), ly(250), 66, 140);
     g.fillEllipse(lx(330), ly(250), 66, 140);
@@ -238,12 +246,28 @@ function drawBackHair(g: Phaser.GameObjects.Graphics, style: string, color: numb
 }
 
 function drawFrontHair(g: Phaser.GameObjects.Graphics, style: string, color: number, highlight: number): void {
-  if (style === "bob") return;
   g.lineStyle(5, outline, 0.82);
   g.fillStyle(color, 1);
   g.fillEllipse(lx(203), ly(122), 254, 150);
   g.strokeEllipse(lx(203), ly(122), 254, 150);
   g.fillRoundedRect(lx(80), ly(88), 246, 80, 40);
+  if (style === "bob") {
+    g.fillEllipse(lx(111), ly(222), 34, 108);
+    g.fillEllipse(lx(295), ly(222), 34, 108);
+    g.strokeEllipse(lx(111), ly(222), 34, 108);
+    g.strokeEllipse(lx(295), ly(222), 34, 108);
+    g.fillCircle(lx(124), ly(156), 24);
+    g.fillCircle(lx(157), ly(171), 24);
+    g.fillCircle(lx(194), ly(176), 23);
+    g.fillCircle(lx(232), ly(171), 24);
+    g.fillCircle(lx(272), ly(156), 24);
+    g.lineStyle(6, highlight, 0.35);
+    g.beginPath();
+    g.arc(lx(158), ly(116), 48, Math.PI * 1.05, Math.PI * 1.65, false);
+    g.arc(lx(244), ly(118), 44, Math.PI * 1.1, Math.PI * 1.58, false);
+    g.strokePath();
+    return;
+  }
   if (style === "curly") {
     for (let x = 92; x <= 314; x += 32) {
       g.fillCircle(lx(x), ly(156 + Math.abs(203 - x) / 22), 24);
